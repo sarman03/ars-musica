@@ -17,8 +17,8 @@ export default function ContactForm() {
       <div className="relative z-10 max-w-3xl mx-auto">
         {/* Social icons */}
         <div
-          className={`flex items-center justify-center gap-3 mb-8 transition-all duration-[1.2s] ease-[cubic-bezier(0.16,1,0.3,1)] ${
-            show ? "opacity-100 translate-y-0" : "opacity-0 translate-y-16"
+          className={`flex items-center justify-center gap-3 mb-8 transition-[opacity,transform] duration-[1.2s] ease-[cubic-bezier(0.16,1,0.3,1)] will-change-[opacity,transform] ${
+            show ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
           }`}
         >
           <div className="inline-flex items-center gap-4 bg-zinc-800/80 rounded-full px-5 py-2.5">
@@ -51,8 +51,8 @@ export default function ContactForm() {
 
         {/* Heading */}
         <h1
-          className={`text-brand-red font-black text-4xl md:text-5xl lg:text-6xl tracking-tight uppercase text-center mb-6 transition-all duration-[1.2s] ease-[cubic-bezier(0.16,1,0.3,1)] delay-200 ${
-            show ? "opacity-100 translate-y-0" : "opacity-0 translate-y-16"
+          className={`text-brand-red font-black text-4xl md:text-5xl lg:text-6xl tracking-tight uppercase text-center mb-6 transition-[opacity,transform] duration-[1.2s] ease-[cubic-bezier(0.16,1,0.3,1)] delay-200 will-change-[opacity,transform] ${
+            show ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
           }`}
         >
           Let&apos;s Get In Touch
@@ -60,8 +60,8 @@ export default function ContactForm() {
 
         {/* Subtitle */}
         <p
-          className={`text-zinc-400 text-sm md:text-base text-center max-w-md mx-auto leading-relaxed mb-8 transition-all duration-[1.2s] ease-[cubic-bezier(0.16,1,0.3,1)] delay-[400ms] ${
-            show ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+          className={`text-zinc-400 text-sm md:text-base text-center max-w-md mx-auto leading-relaxed mb-8 transition-[opacity,transform] duration-[1.2s] ease-[cubic-bezier(0.16,1,0.3,1)] delay-[400ms] will-change-[opacity,transform] ${
+            show ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
           }`}
         >
           Let&apos;s get in touch! Whether you&apos;re ready to start a project, have a question, or just want to connect, drop me a message below and I&apos;ll get back to you soon.
@@ -69,8 +69,8 @@ export default function ContactForm() {
 
         {/* Contact info */}
         <div
-          className={`flex items-center justify-center gap-6 mb-12 transition-all duration-[1.2s] ease-[cubic-bezier(0.16,1,0.3,1)] delay-[500ms] ${
-            show ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+          className={`flex items-center justify-center gap-6 mb-12 transition-[opacity,transform] duration-[1.2s] ease-[cubic-bezier(0.16,1,0.3,1)] delay-[500ms] will-change-[opacity,transform] ${
+            show ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
           }`}
         >
           <div className="flex items-center gap-2">
@@ -91,8 +91,8 @@ export default function ContactForm() {
 
         {/* Form */}
         <form
-          className={`bg-zinc-900 border border-zinc-800 rounded-2xl p-8 flex flex-col gap-6 transition-all duration-[1.2s] ease-[cubic-bezier(0.16,1,0.3,1)] delay-[600ms] ${
-            show ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
+          className={`bg-zinc-900 border border-zinc-800 rounded-2xl p-8 flex flex-col gap-6 transition-[opacity,transform] duration-[1.2s] ease-[cubic-bezier(0.16,1,0.3,1)] delay-[600ms] will-change-[opacity,transform] ${
+            show ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
           }`}
         >
           <div>

@@ -21,3 +21,25 @@ body {
 h2 {
   -webkit-text-stroke: 1px currentColor;
 }
+
+/* Spotlight animations */
+@keyframes spotlight-sway {
+  0%, 100% { transform: translateX(-50%) rotate(-1.5deg); }
+  50% { transform: translateX(-50%) rotate(1.5deg); }
+}
+
+@keyframes spotlight-pulse {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 1; }
+}
+
+@keyframes ray-shimmer {
+  0%, 100% { opacity: 0.6; }
+  30% { opacity: 1; }
+  60% { opacity: 0.4; }
+}
+
+@keyframes floor-pulse {
+  0%, 100% { opacity: 0.7; transform: translateX(-50%) scaleX(1); }
+  50% { opacity: 1; transform: translateX(-50%) scaleX(1.05); }
+}

@@ -58,7 +58,7 @@ export default function LightRaysBackground({
     <div
       aria-hidden="true"
       className={`absolute inset-0 overflow-hidden pointer-events-none ${className}`}
-      style={style}
+      style={{ ...style, willChange: "transform", contain: "strict", transform: "translateZ(0)" }}
     >
       <svg
         viewBox="0 0 1000 760"
@@ -69,29 +69,22 @@ export default function LightRaysBackground({
           <filter id={filterId} x="-8%" y="-5%" width="116%" height="115%">
             <feTurbulence
               type="fractalNoise"
-              baseFrequency="0.025 0.06"
-              numOctaves="2"
+              baseFrequency="0.03 0.07"
+              numOctaves="1"
               seed="7"
               result="turb"
-            >
-              <animate
-                attributeName="baseFrequency"
-                values="0.025 0.06;0.035 0.08;0.025 0.06"
-                dur={dur(14)}
-                repeatCount="indefinite"
-              />
-            </feTurbulence>
+            />
             <feDisplacementMap
               in="SourceGraphic" in2="turb"
-              scale="9"
+              scale="8"
               xChannelSelector="R" yChannelSelector="G"
               result="disp"
             />
-            <feGaussianBlur in="disp" stdDeviation="7" />
+            <feGaussianBlur in="disp" stdDeviation="6" />
           </filter>
 
           <filter id={grainId} x="0" y="0" width="100%" height="100%">
-            <feTurbulence type="fractalNoise" baseFrequency="0.72" numOctaves="4" stitchTiles="stitch" />
+            <feTurbulence type="fractalNoise" baseFrequency="0.72" numOctaves="2" stitchTiles="stitch" />
             <feColorMatrix type="saturate" values="0" />
           </filter>
 
