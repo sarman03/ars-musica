@@ -51,7 +51,7 @@ export default function AboutSection() {
       <div className="max-w-6xl mx-auto">
         {/* Heading */}
         <div className="flex flex-col items-center mb-20">
-          <div className="w-12 h-[3px] bg-white rounded-full mb-4" />
+          <div className="w-12 h-[2px] rounded-full mb-4" style={{ background: "linear-gradient(to right, transparent, white, transparent)" }} />
           <h2 className="text-brand-red font-black text-4xl md:text-6xl lg:text-7xl tracking-tight uppercase text-center">
             About Ars Musica
           </h2>

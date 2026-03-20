@@ -12,7 +12,7 @@ export default function ContactSection() {
       <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-zinc-900/50 to-transparent" />
 
       <div className="relative z-[1] text-center">
-        <div className="w-12 h-[3px] bg-white rounded-full mx-auto mb-6" />
+        <div className="w-12 h-[2px] rounded-full mx-auto mb-6" style={{ background: "linear-gradient(to right, transparent, white, transparent)" }} />
         <h2 className="text-white font-black text-4xl md:text-5xl lg:text-6xl tracking-tight uppercase leading-tight">
           Let&apos;s Get
           <br />

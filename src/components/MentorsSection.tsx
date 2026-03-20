@@ -1,4 +1,7 @@
+"use client";
+
 import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
 
 const mentors = [
   {
@@ -38,26 +41,63 @@ const mentors = [
   },
 ];
 
-function MentorCard({ mentor }: { mentor: (typeof mentors)[0] }) {
+// Stagger offsets in px — middle card starts lower, side cards higher
+const staggerOffsets = [-60, 40, 100];
+const staggerOffsetsRow2 = [-40, 60];
+
+function MentorCard({
+  mentor,
+  initialOffset,
+}: {
+  mentor: (typeof mentors)[0];
+  initialOffset: number;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [offset, setOffset] = useState(initialOffset);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!ref.current) return;
+      const rect = ref.current.getBoundingClientRect();
+      const windowH = window.innerHeight;
+      // progress: 0 when element enters viewport, 1 when fully visible
+      const progress = Math.min(
+        1,
+        Math.max(0, (windowH - rect.top) / (windowH * 0.6))
+      );
+      setOffset(initialOffset * (1 - progress));
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [initialOffset]);
+
   return (
-    <div className="bg-zinc-900 rounded-t-[999px] rounded-b-3xl overflow-hidden flex flex-col">
-      <div className="relative w-full aspect-[3/4] rounded-t-[999px] overflow-hidden">
-        <Image
-          src={mentor.imageSrc}
-          alt={mentor.imageAlt}
-          fill
-          className="object-cover object-top"
-        />
+    <div
+      ref={ref}
+      className="bg-zinc-900 rounded-t-[999px] rounded-b-3xl overflow-hidden flex flex-col transition-transform duration-100"
+      style={{ transform: `translateY(${offset}px)` }}
+    >
+      <div className="relative w-full aspect-[3/4] rounded-t-[999px] overflow-hidden p-3 pt-4">
+        <div className="relative w-full h-full rounded-t-[999px] overflow-hidden">
+          <Image
+            src={mentor.imageSrc}
+            alt={mentor.imageAlt}
+            fill
+            className="object-cover object-top"
+          />
+        </div>
       </div>
       <div className="p-6 flex flex-col gap-3">
-        <div className="w-8 h-[2px] bg-white rounded-full" />
+        <div className="w-8 h-[2px] rounded-full" style={{ background: "linear-gradient(to right, transparent, white, transparent)" }} />
         <h3 className="text-white font-black text-sm md:text-base uppercase tracking-tight leading-snug">
           {mentor.name}
         </h3>
         <p className="text-zinc-400 text-sm leading-relaxed">
           {mentor.description}
         </p>
-        <div className="w-6 h-[1px] bg-zinc-600 rounded-full mt-2" />
+        <div className="w-6 h-[1px] rounded-full mt-2" style={{ background: "linear-gradient(to right, transparent, #52525b, transparent)" }} />
       </div>
     </div>
   );
@@ -69,7 +109,7 @@ export default function MentorsSection() {
       <div className="max-w-6xl mx-auto">
         {/* Heading */}
         <div className="mb-16">
-          <div className="w-12 h-[3px] bg-white rounded-full mb-6" />
+          <div className="w-12 h-[2px] rounded-full mb-6" style={{ background: "linear-gradient(to right, transparent, white, transparent)" }} />
           <h2 className="text-brand-red font-black text-4xl md:text-6xl tracking-tight uppercase">
             Our Mentors
           </h2>
@@ -78,13 +118,21 @@ export default function MentorsSection() {
         {/* Mentor cards — row 1: 3 cards, row 2: 2 centered */}
         <div className="flex flex-col gap-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {mentors.slice(0, 3).map((mentor) => (
-              <MentorCard key={mentor.name} mentor={mentor} />
+            {mentors.slice(0, 3).map((mentor, i) => (
+              <MentorCard
+                key={mentor.name}
+                mentor={mentor}
+                initialOffset={staggerOffsets[i]}
+              />
             ))}
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:px-[16.67%]">
-            {mentors.slice(3).map((mentor) => (
-              <MentorCard key={mentor.name} mentor={mentor} />
+            {mentors.slice(3).map((mentor, i) => (
+              <MentorCard
+                key={mentor.name}
+                mentor={mentor}
+                initialOffset={staggerOffsetsRow2[i]}
+              />
             ))}
           </div>
         </div>

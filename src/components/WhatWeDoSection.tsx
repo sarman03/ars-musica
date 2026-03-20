@@ -67,7 +67,7 @@ export default function WhatWeDoSection() {
         <h2 className="text-brand-red font-black text-4xl md:text-6xl tracking-tight uppercase">
           What We Do
         </h2>
-        <div className="w-12 h-[3px] bg-white rounded-full" />
+        <div className="w-12 h-[2px] rounded-full" style={{ background: "linear-gradient(to right, transparent, white, transparent)" }} />
       </div>
 
       {/* Sticky card stack — each card sticks at top:0 and the next slides over it */}
