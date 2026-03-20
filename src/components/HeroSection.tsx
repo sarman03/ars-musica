@@ -24,7 +24,7 @@ export default function HeroSection() {
         </p>
 
         <a
-          href="#contact"
+          href="/contact"
           className="bg-red-600 hover:bg-red-500 text-white font-semibold px-10 py-4 rounded-full text-base transition-colors mt-2"
         >
           Let&apos;s Talk Music

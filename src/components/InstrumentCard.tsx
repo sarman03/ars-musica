@@ -13,7 +13,7 @@ export default function InstrumentCard({
   description,
   imageSrc,
   imageAlt,
-  contactHref = "#contact",
+  contactHref = "/contact",
 }: InstrumentCardProps) {
   return (
     <div className="h-screen flex items-center justify-center px-6 md:px-10 py-6">

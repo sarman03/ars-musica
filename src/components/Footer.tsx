@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export default function Footer() {
   return (
     <footer className="bg-zinc-950 px-6 md:px-16 lg:px-24 pt-0 pb-16">
@@ -6,18 +8,7 @@ export default function Footer() {
         {/* Brand */}
         <div className="max-w-sm">
           <div className="flex items-center gap-2 mb-4">
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              className="text-white"
-            >
-              <rect x="2" y="8" width="3" height="8" rx="1" fill="currentColor" />
-              <rect x="7" y="5" width="3" height="14" rx="1" fill="currentColor" />
-              <rect x="12" y="3" width="3" height="18" rx="1" fill="currentColor" />
-              <rect x="17" y="6" width="3" height="12" rx="1" fill="currentColor" />
-            </svg>
+            <Image src="/logo/logo.jpeg" alt="Ars Musica" width={24} height={24} className="rounded-sm" />
             <span className="text-white font-bold text-lg tracking-wide">
               ARS <span className="text-brand-red">MUSICA</span>
             </span>
@@ -34,11 +25,9 @@ export default function Footer() {
           <div>
             <h4 className="text-zinc-300 font-medium text-sm mb-4">Navigation</h4>
             <ul className="flex flex-col gap-3">
-              <li><a href="#" className="text-zinc-500 text-sm hover:text-zinc-300 transition-colors">Services</a></li>
+              <li><a href="#what-we-do" className="text-zinc-500 text-sm hover:text-zinc-300 transition-colors">Courses</a></li>
               <li><a href="#about" className="text-zinc-500 text-sm hover:text-zinc-300 transition-colors">About</a></li>
-              <li><a href="#work" className="text-zinc-500 text-sm hover:text-zinc-300 transition-colors">Work</a></li>
-              <li><a href="#contact" className="text-zinc-500 text-sm hover:text-zinc-300 transition-colors">Contact</a></li>
-              <li><a href="/404" className="text-zinc-500 text-sm hover:text-zinc-300 transition-colors">404</a></li>
+              <li><a href="/contact" className="text-zinc-500 text-sm hover:text-zinc-300 transition-colors">Contact</a></li>
             </ul>
           </div>
           <div>

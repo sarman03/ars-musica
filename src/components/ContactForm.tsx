@@ -5,7 +5,7 @@ import LightRaysBackground from "@/components/LightRaysBackground";
 export default function ContactForm() {
   return (
     <section className="relative bg-black min-h-screen pt-32 pb-24 px-6 overflow-hidden">
-      <LightRaysBackground />
+      <LightRaysBackground intensity={0.5} />
       <div className="relative z-10 max-w-2xl mx-auto">
         {/* Social icons */}
         <div className="flex items-center justify-center gap-3 mb-8">
