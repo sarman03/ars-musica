@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { writeFile, mkdir } from "fs/promises";
-import path from "path";
+import { put, list, del } from "@vercel/blob";
 
 export async function POST(req: NextRequest) {
   // Check auth
@@ -17,28 +16,32 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "File and path are required" }, { status: 400 });
   }
 
-  // Sanitize: only allow paths within /public and image extensions
-  const allowedExtensions = [".jpg", ".jpeg", ".png", ".webp", ".svg", ".gif"];
-  const ext = path.extname(targetPath).toLowerCase();
-  if (!allowedExtensions.includes(ext)) {
-    return NextResponse.json({ error: "Invalid file type" }, { status: 400 });
+  // Validate that the uploaded file is an image
+  if (!file.type.startsWith("image/")) {
+    return NextResponse.json({ error: "Only image files are allowed" }, { status: 400 });
   }
 
   // Prevent path traversal
-  const normalizedPath = path.normalize(targetPath);
-  if (normalizedPath.includes("..")) {
+  if (targetPath.includes("..")) {
     return NextResponse.json({ error: "Invalid path" }, { status: 400 });
   }
 
-  const publicDir = path.join(process.cwd(), "public");
-  const fullPath = path.join(publicDir, normalizedPath);
+  try {
+    // Delete any existing blob for this path (to avoid accumulating old versions)
+    const existing = await list({ prefix: `images${targetPath}` });
+    for (const blob of existing.blobs) {
+      await del(blob.url);
+    }
 
-  // Ensure the directory exists
-  await mkdir(path.dirname(fullPath), { recursive: true });
+    // Upload to Vercel Blob
+    const blob = await put(`images${targetPath}`, file, {
+      access: "public",
+      addRandomSuffix: false,
+    });
 
-  // Write the file
-  const bytes = await file.arrayBuffer();
-  await writeFile(fullPath, Buffer.from(bytes));
-
-  return NextResponse.json({ success: true, path: targetPath });
+    return NextResponse.json({ success: true, path: targetPath, url: blob.url });
+  } catch (error) {
+    console.error("Upload error:", error);
+    return NextResponse.json({ error: "Upload failed" }, { status: 500 });
+  }
 }

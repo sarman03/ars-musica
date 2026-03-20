@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Image from "next/image";
+import SiteImage from "./SiteImage";
 
 interface GalleryItem {
   src: string;
@@ -61,7 +61,7 @@ function TapedPhotoCard({ src, alt, rotate, index }: GalleryItem & { index: numb
         <div className="absolute inset-0 z-[5] bg-black opacity-0 group-hover:opacity-50 transition-opacity duration-300" />
 
         <div className="relative aspect-square w-full">
-          <Image
+          <SiteImage
             src={src}
             alt={alt}
             fill

@@ -3,38 +3,48 @@
 import { useRouter } from "next/navigation";
 import EditableImage from "../components/EditableImage";
 
-// ─── Data (mirrored from original components) ───────────────────────────────
+// ─── Data (mirrored exactly from main site components) ──────────────────────
 
 const instruments = [
-  { title: "Drums", description: "Learn rhythm, timing, drum patterns, fills, and live performance skills. Our classes help students build strong groove and coordination.", imageSrc: "/drums.jpg", imageAlt: "Drum set close-up" },
-  { title: "Guitar", description: "Acoustic and electric guitar training covering chords, strumming, scales, riffs, and popular songs for beginners to advanced learners.", imageSrc: "/guitar.jpg", imageAlt: "Person playing guitar" },
-  { title: "Vocals", description: "Improve your singing with breathing techniques, pitch control, vocal exercises, and performance training.", imageSrc: "/vocals.jpg", imageAlt: "Young singer in recording studio" },
-  { title: "Piano", description: "Learn piano fundamentals including scales, chords, melodies, and music reading with structured lessons.", imageSrc: "/piano.jpg", imageAlt: "Hands playing piano keys" },
-  { title: "Keyboard", description: "Electronic keyboard training focusing on melodies, chord progressions, and accompaniment styles.", imageSrc: "/keyboard.jpg", imageAlt: "Person playing electronic keyboard" },
-  { title: "Ukulele", description: "A fun and beginner-friendly instrument. Learn chords, strumming patterns, and play your favorite songs quickly.", imageSrc: "/ukulele.jpg", imageAlt: "Teacher and student with ukulele" },
-  { title: "Exam", description: "We prepare students for graded music exams from Trinity College London, Rockschool London, and ABRSM.", imageSrc: "/exam.jpg", imageAlt: "Music producer at mixing console" },
+  { title: "Drums", description: "Learn rhythm, timing, drum patterns, fills, and live performance skills. Our classes help students build strong groove and coordination.", imageSrc: "/about_cards/drums.jpeg", imageAlt: "Drum set close-up" },
+  { title: "Guitar", description: "Acoustic and electric guitar training covering chords, strumming, scales, riffs, and popular songs for beginners to advanced learners.", imageSrc: "/about_cards/guitar.jpeg", imageAlt: "Person playing guitar" },
+  { title: "Vocals", description: "Improve your singing with breathing techniques, pitch control, vocal exercises, and performance training.", imageSrc: "/about_cards/vocals.jpeg", imageAlt: "Young singer in recording studio" },
+  { title: "Piano", description: "Learn piano fundamentals including scales, chords, melodies, and music reading with structured lessons.", imageSrc: "/about_cards/piano.jpeg", imageAlt: "Hands playing piano keys" },
+  { title: "Keyboard", description: "Electronic keyboard training focusing on melodies, chord progressions, and accompaniment styles.", imageSrc: "/about_cards/keyboard.jpeg", imageAlt: "Person playing electronic keyboard" },
+  { title: "Ukulele", description: "A fun and beginner-friendly instrument. Learn chords, strumming patterns, and play your favorite songs quickly.", imageSrc: "/about_cards/ukele.jpeg", imageAlt: "Teacher and student with ukulele" },
+  { title: "Exam", description: "We prepare students for graded music exams from Trinity College London, Rockschool London, and ABRSM. These exams allow students to formally validate their skills as they progress.", imageSrc: "/exam.jpg", imageAlt: "Music producer at mixing console" },
+  { title: "Online Classes", description: "We offer live, interactive online classes designed to provide the same structured learning experience as in-person sessions, with personalized guidance and regular feedback.", imageSrc: "/about_cards/class.jpeg", imageAlt: "Person attending online music class on laptop" },
 ];
 
 const galleryImages = [
-  { src: "/gallery/gallery-1.jpg", alt: "Student receiving certificate" },
+  { src: "/gallery/gallery_1.jpeg", alt: "Student receiving certificate" },
   { src: "/gallery/gallery-2.jpg", alt: "Young student playing drums" },
-  { src: "/gallery/gallery-3.jpg", alt: "Student with music instructor" },
-  { src: "/gallery/gallery-4.jpg", alt: "Certificate presentation" },
-  { src: "/gallery/gallery-5.jpg", alt: "Student practicing drums" },
-  { src: "/gallery/gallery-6.jpg", alt: "Young singer performing" },
+  { src: "/gallery/gallery_3.jpeg", alt: "Student with music instructor" },
+  { src: "/gallery/gallery_4.jpeg", alt: "Certificate presentation" },
+  { src: "/gallery/gallery_5.jpeg", alt: "Student practicing drums" },
+  { src: "/gallery/gallery_last.jpg", alt: "Young singer performing" },
 ];
 
 const mentors = [
-  { name: "Nawin Rai - Ars Musica Academy", description: "He is also an accomplished drummer and percussionist...", imageSrc: "/mentors/nawin.jpg", imageAlt: "Nawin Rai playing drums" },
-  { name: "Aro Phungshok – Piano Instructor", description: "Aro Phungshok is a passionate and dedicated piano teacher...", imageSrc: "/mentors/aro.jpg", imageAlt: "Aro Phungshok at piano" },
-  { name: "Ranjan Dewan – Guitar Educator", description: "Ranjan Dewan is a dedicated guitar educator and performer...", imageSrc: "/mentors/ranjan.jpg", imageAlt: "Ranjan Dewan with guitar" },
+  { name: "Nawin Rai - Ars Musica Academy", description: "He is also an accomplished drummer and percussionist, Nawin performs with well-known rock bands such as Squarez Attached and Esmond Lama. He is regularly invited for collaborations and special sessions with leading bands and artists across the NCR music scene, earning him respect as both a performer and a collaborator.", imageSrc: "/mentors/mentor_1.jpeg", imageAlt: "Nawin Rai playing drums" },
+  { name: "Aro Phungshok \u2013 Piano Instructor", description: "Aro Phungshok is a passionate and dedicated piano teacher with a strong commitment to nurturing musical talent and inspiring students through the art of piano. With a warm and encouraging teaching approach, she focuses on helping students develop not only strong technical skills but also confidence, creativity, and a deep appreciation for music.", imageSrc: "/mentors/mentor_2.jpeg", imageAlt: "Aro Phungshok at piano" },
+  { name: "Ranjan Dewan \u2013 Guitar Educator", description: "Ranjan Dewan is a dedicated guitar educator and performer originally from Darjeeling, with over two decades of experience in teaching and performing music. He holds an ATCL certification in Western Classical Guitar from Trinity College London, which laid the foundation for his strong musical training and technical expertise.", imageSrc: "/mentors/mentor_3.jpeg", imageAlt: "Ranjan Dewan with guitar" },
+  { name: "Bonita Solomon \u2013 Piano & Music Theory Instructor | Pianist | Vocalist", description: "Bonita Solomon is a passionate musician and dedicated educator with over 18 years of experience in music performance and teaching. A trained pianist and vocalist, Bonita holds certifications from Trinity College London, UK, and has completed Grade 5 in Music Theory from ABRSM, reflecting her strong academic grounding in music.", imageSrc: "/mentors/mentor_4.jpeg", imageAlt: "Bonita Solomon" },
+  { name: "Rosemary Deosa \u2013 Co-Founder | Vocal Instructor | Singer | Performer | Songwriter | Composer", description: "Rosemary Deosa is a passionate and accomplished vocalist, performer, and music educator with over 11 years of experience in teaching and live performance. As the Co-Founder of Ars Musica Academy, she plays a vital role in shaping the academy\u2019s artistic vision, nurturing a culture that is student-focused, expressive, and rooted in musical excellence.", imageSrc: "/mentors/mentor_5.jpeg", imageAlt: "Rosemary Deosa performing" },
 ];
 
 const values = [
-  { number: "1", title: "Vision", description: "Every record begins with a clear vision. I shape raw ideas into music that feels intentional, timeless, and emotionally powerful." },
-  { number: "2", title: "Craft", description: "Details matter. From sound design to final polish, I approach every track with precision and care that makes the music shine." },
-  { number: "3", title: "Trust", description: "Collaboration only works with trust. I keep communication open, deadlines tight, and always deliver what I promise without compromise." },
-  { number: "4", title: "Energy", description: "Music should move people. I focus on creating productions that carry energy — tracks that connect instantly and stay with listeners." },
+  { number: "1", title: "Vision", description: "Inspiring a lifelong connection with music. We aim to create a space where every learner discovers the joy, confidence, and purpose that music brings into life." },
+  { number: "2", title: "Learning", description: "Structured guidance with creative freedom. Through expert mentorship and a balanced approach, we help students build strong foundations while expressing their individuality." },
+  { number: "3", title: "Community", description: "A space where every musician belongs. We foster an inclusive environment where students grow together, share ideas, and support each other\u2019s musical journey." },
+  { number: "4", title: "Expression", description: "More than skills \u2014 true artistry. We encourage students to not just learn music, but to feel it, perform it, and make it a meaningful part of their lives." },
+];
+
+const stats = [
+  { value: "18+", label: "Years in music" },
+  { value: "700+", label: "Live Performance" },
+  { value: "7+", label: "Courses Offered" },
+  { value: "1,000+", label: "Students Trained" },
 ];
 
 // ─── Dashboard Page ─────────────────────────────────────────────────────────
@@ -81,118 +91,130 @@ export default function AdminDashboard() {
       {/* Spacer for fixed top bar */}
       <div className="h-12" />
 
-      {/* ─── Hero Section (no images, just mirrored) ─── */}
-      <section className="relative flex flex-col items-center justify-center min-h-screen bg-gradient-to-b from-zinc-900 via-black to-black text-center px-4 overflow-hidden">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-red-900/20 rounded-full blur-[120px]" />
-        <div className="relative z-[1] flex flex-col items-center gap-8 mt-16">
-          <h1 className="flex flex-col gap-0 leading-none">
-            <span className="text-brand-red font-black text-6xl md:text-8xl lg:text-9xl tracking-tight uppercase">
+      {/* ─── Hero Section ─── */}
+      <section className="relative flex flex-col items-center justify-center min-h-screen bg-black text-center px-4 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-zinc-900/30 via-transparent to-transparent" />
+        <div className="relative z-[1] flex flex-col items-center gap-6 mt-16">
+          <h1 className="flex flex-col gap-0 leading-none text-center">
+            <span className="text-brand-red font-black tracking-tight uppercase" style={{ fontSize: "clamp(2rem, 5.8vw, 5.8rem)", fontWeight: 900 }}>
               Learn Music
             </span>
-            <span className="text-brand-red font-black text-6xl md:text-8xl lg:text-9xl tracking-tight uppercase">
+            <span className="text-brand-red font-black tracking-tight uppercase" style={{ fontSize: "clamp(2rem, 5.8vw, 5.8rem)", fontWeight: 900 }}>
               Play with Confidence
             </span>
           </h1>
-          <p className="text-zinc-400 text-base md:text-lg max-w-md leading-relaxed">
+          <p className="text-zinc-300 text-base md:text-lg max-w-lg leading-relaxed">
             Learn instruments and vocals with experienced teachers in a creative
             and inspiring environment.
           </p>
-          <span className="bg-red-700 text-white font-semibold px-8 py-3.5 rounded-lg text-base">
+          <span className="bg-red-600 text-white font-semibold px-10 py-4 rounded-full text-base">
             Let&apos;s Talk Music
           </span>
         </div>
-        {/* Section label */}
         <div className="absolute bottom-4 left-4 bg-zinc-800/80 text-zinc-400 text-xs px-3 py-1.5 rounded-lg">
-          Hero Section — No images
+          Hero Section &mdash; No images
         </div>
       </section>
 
-      {/* ─── What We Do Section ─── */}
-      <section className="bg-black px-6 md:px-16 lg:px-24 py-24">
-        <div className="flex flex-col items-center gap-4 mb-16">
+      {/* ─── What We Do Section (sticky card stack) ─── */}
+      <section className="bg-black">
+        <div className="flex flex-col items-center gap-4 pt-16 pb-2">
           <div className="flex items-center gap-3">
             <h2 className="text-brand-red font-black text-4xl md:text-6xl tracking-tight uppercase">
               What We Do
             </h2>
             <span className="bg-red-700/20 text-brand-red text-xs font-bold px-2.5 py-1 rounded">
-              7 IMAGES
+              {instruments.length} IMAGES
             </span>
           </div>
-          <div className="w-12 h-[3px] bg-white rounded-full" />
+          <div className="w-12 h-[2px] rounded-full" style={{ background: "linear-gradient(to right, transparent, white, transparent)" }} />
         </div>
 
-        <div className="flex flex-col gap-10 max-w-6xl mx-auto">
-          {instruments.map((instrument) => (
-            <div
-              key={instrument.title}
-              className="flex flex-col md:flex-row bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-800"
-            >
-              <div className="flex flex-col justify-center gap-5 p-8 md:p-12 md:w-1/2">
-                <div className="w-12 h-[3px] bg-white rounded-full" />
-                <h3 className="text-white font-black text-2xl md:text-3xl tracking-tight uppercase">
-                  {instrument.title}
-                </h3>
-                <p className="text-zinc-400 text-sm md:text-base leading-relaxed">
-                  {instrument.description}
-                </p>
-              </div>
-              <div className="relative md:w-1/2 h-64 md:h-auto min-h-[300px]">
-                <EditableImage
-                  src={instrument.imageSrc}
-                  alt={instrument.imageAlt}
-                  fill
-                  className="object-cover"
-                  sectionLabel={`What We Do — ${instrument.title}`}
-                />
+        {instruments.map((instrument, index) => (
+          <div
+            key={instrument.title}
+            className="sticky top-12"
+            style={{ zIndex: index + 2 }}
+          >
+            <div className="h-screen flex items-center justify-center px-6 md:px-10 py-6">
+              <div className="w-full max-w-7xl bg-zinc-900 rounded-3xl flex flex-col md:flex-row h-[88vh]">
+                <div className="flex flex-col justify-center gap-6 p-10 md:p-16 md:w-[45%]">
+                  <div className="w-10 h-[2px] rounded-full" style={{ background: "linear-gradient(to right, transparent, white, transparent)" }} />
+                  <h3 className="text-white font-black text-3xl md:text-4xl tracking-tight uppercase">
+                    {instrument.title}
+                  </h3>
+                  <p className="text-zinc-400 text-base leading-relaxed max-w-sm">
+                    {instrument.description}
+                  </p>
+                  <span className="border border-zinc-600 text-zinc-300 rounded-full px-6 py-2.5 text-sm w-fit">
+                    Contact me
+                  </span>
+                </div>
+                <div className="md:w-[55%] flex items-center p-4 md:p-6">
+                  <div className="relative w-full h-80 md:h-[95%] rounded-2xl overflow-hidden">
+                    <EditableImage
+                      src={instrument.imageSrc}
+                      alt={instrument.imageAlt}
+                      fill
+                      className="object-cover"
+                      sectionLabel={`What We Do \u2014 ${instrument.title}`}
+                    />
+                  </div>
+                </div>
               </div>
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
       </section>
 
-      {/* ─── Quote Section (no images) ─── */}
-      <section className="bg-black flex items-center justify-center py-24 px-6">
-        <div className="flex flex-col items-center text-center gap-1">
-          <p className="text-brand-red font-black text-xl md:text-3xl lg:text-4xl tracking-tight uppercase">
+      {/* ─── Quote Section ─── */}
+      <section className="bg-black flex items-end min-h-screen px-6 pb-16">
+        <div className="w-full flex flex-col items-center text-center gap-1">
+          <p className="text-brand-red/80 font-black text-xl md:text-3xl lg:text-4xl tracking-tight uppercase">
             Every Musician Starts With A Single Note
           </p>
-          <p className="text-brand-red/70 font-black text-xl md:text-3xl lg:text-4xl tracking-tight uppercase">
+          <p className="text-brand-red/30 font-black text-xl md:text-3xl lg:text-4xl tracking-tight uppercase">
             Practice Turns Notes Into Music
           </p>
-          <p className="text-brand-red/50 font-black text-xl md:text-3xl lg:text-4xl tracking-tight uppercase">
+          <p className="text-brand-red/15 font-black text-xl md:text-3xl lg:text-4xl tracking-tight uppercase">
             Confidence Turns Music Into Performance
           </p>
         </div>
       </section>
 
       {/* ─── Gallery Section ─── */}
-      <section className="bg-black px-6 md:px-16 lg:px-24 py-24">
-        <div className="max-w-6xl mx-auto">
-          <div className="mb-12">
-            <div className="w-12 h-[3px] bg-white rounded-full mb-4" />
+      <section className="bg-black px-6 md:px-24 lg:px-24 py-12">
+        <div className="mx-auto">
+          <div className="mb-10">
+            <div className="w-12 h-[2px] rounded-full mb-4" style={{ background: "linear-gradient(to right, transparent, white, transparent)" }} />
             <div className="flex items-center gap-3">
-              <h2 className="text-white font-black text-3xl md:text-4xl tracking-tight uppercase">
+              <h2 className="text-brand-red font-black text-4xl md:text-6xl tracking-tight uppercase">
                 Gallery
               </h2>
               <span className="bg-red-700/20 text-brand-red text-xs font-bold px-2.5 py-1 rounded">
-                6 IMAGES
+                {galleryImages.length} IMAGES
               </span>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-20">
             {galleryImages.map((image, i) => (
-              <div
-                key={i}
-                className="relative aspect-[4/3] rounded-lg overflow-hidden border border-zinc-800"
-              >
-                <EditableImage
-                  src={image.src}
-                  alt={image.alt}
-                  fill
-                  className="object-cover"
-                  sectionLabel={`Gallery — Image ${i + 1}`}
+              <div key={i} className="relative mt-14">
+                <div
+                  className="absolute -top-4 left-0 right-0 h-5 z-10 rounded-sm shadow-md"
+                  style={{ background: "linear-gradient(to bottom, #888, #555 40%, #3a3a3a)" }}
                 />
+                <div className="relative w-full overflow-hidden rounded-2xl" style={{ boxShadow: "0 12px 40px rgba(0,0,0,0.8), 0 2px 8px rgba(0,0,0,0.6)" }}>
+                  <div className="relative aspect-square w-full">
+                    <EditableImage
+                      src={image.src}
+                      alt={image.alt}
+                      fill
+                      className="object-cover"
+                      sectionLabel={`Gallery \u2014 Image ${i + 1}`}
+                    />
+                  </div>
+                </div>
               </div>
             ))}
           </div>
@@ -200,18 +222,13 @@ export default function AdminDashboard() {
       </section>
 
       {/* ─── About Section ─── */}
-      <section className="bg-zinc-950 px-6 md:px-16 lg:px-24 py-24">
+      <section className="bg-black px-6 md:px-16 lg:px-24 py-24">
         <div className="max-w-6xl mx-auto">
-          <div className="flex flex-col items-center gap-4 mb-16">
-            <div className="w-12 h-[3px] bg-white rounded-full" />
+          <div className="flex flex-col items-center mb-20">
+            <div className="w-12 h-[2px] rounded-full mb-4" style={{ background: "linear-gradient(to right, transparent, white, transparent)" }} />
             <div className="flex items-center gap-3">
-              <h2 className="text-center">
-                <span className="text-brand-red font-black text-4xl md:text-5xl lg:text-6xl tracking-tight uppercase">
-                  About{" "}
-                </span>
-                <span className="text-zinc-400 font-black text-4xl md:text-5xl lg:text-6xl tracking-tight uppercase">
-                  Ars Musica
-                </span>
+              <h2 className="text-brand-red font-black text-4xl md:text-6xl lg:text-7xl tracking-tight uppercase text-center">
+                About Ars Musica
               </h2>
               <span className="bg-red-700/20 text-brand-red text-xs font-bold px-2.5 py-1 rounded">
                 1 IMAGE
@@ -219,30 +236,30 @@ export default function AdminDashboard() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 items-center">
             {/* Left column */}
-            <div className="flex flex-col gap-16">
+            <div className="flex flex-col gap-20">
               {[values[0], values[2]].map((item) => (
-                <div key={item.number} className="text-center">
+                <div key={item.number} className="text-center px-4">
                   <div className="relative inline-block">
-                    <span className="text-zinc-800 font-black text-7xl md:text-8xl leading-none">
+                    <span className="text-zinc-700 font-black text-8xl md:text-9xl leading-none select-none">
                       {item.number}
                     </span>
-                    <h3 className="text-brand-red font-black text-xl md:text-2xl uppercase tracking-tight absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1">
+                    <h3 className="text-brand-red font-black text-xl md:text-2xl uppercase tracking-tight absolute bottom-1 left-1/2 -translate-x-1/2">
                       {item.title}
                     </h3>
                   </div>
-                  <p className="text-zinc-400 text-sm leading-relaxed mt-4 max-w-xs mx-auto">
+                  <p className="text-zinc-400 text-sm leading-relaxed mt-4 max-w-[260px] mx-auto">
                     {item.description}
                   </p>
                 </div>
               ))}
             </div>
 
-            {/* Center image — EDITABLE */}
-            <div className="relative aspect-[3/4] rounded-2xl overflow-hidden bg-red-700 mx-auto w-full max-w-[300px]">
+            {/* Center image */}
+            <div className="relative aspect-square rounded-none overflow-hidden mx-auto w-full max-w-[340px]">
               <EditableImage
-                src="/about.jpg"
+                src="/logo/logo.jpeg"
                 alt="About Ars Musica"
                 fill
                 className="object-cover"
@@ -251,18 +268,18 @@ export default function AdminDashboard() {
             </div>
 
             {/* Right column */}
-            <div className="flex flex-col gap-16">
+            <div className="flex flex-col gap-20">
               {[values[1], values[3]].map((item) => (
-                <div key={item.number} className="text-center">
+                <div key={item.number} className="text-center px-4">
                   <div className="relative inline-block">
-                    <span className="text-zinc-800 font-black text-7xl md:text-8xl leading-none">
+                    <span className="text-zinc-700 font-black text-8xl md:text-9xl leading-none select-none">
                       {item.number}
                     </span>
-                    <h3 className="text-brand-red font-black text-xl md:text-2xl uppercase tracking-tight absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1">
+                    <h3 className="text-brand-red font-black text-xl md:text-2xl uppercase tracking-tight absolute bottom-1 left-1/2 -translate-x-1/2">
                       {item.title}
                     </h3>
                   </div>
-                  <p className="text-zinc-400 text-sm leading-relaxed mt-4 max-w-xs mx-auto">
+                  <p className="text-zinc-400 text-sm leading-relaxed mt-4 max-w-[260px] mx-auto">
                     {item.description}
                   </p>
                 </div>
@@ -272,76 +289,101 @@ export default function AdminDashboard() {
         </div>
       </section>
 
-      {/* ─── Stats Section (no images) ─── */}
-      <section className="bg-zinc-950 border-y border-zinc-800">
-        <div className="max-w-6xl mx-auto px-6 md:px-16 lg:px-24 py-16">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {[
-              { value: "5+", label: "Years in music" },
-              { value: "50+", label: "Live Performance" },
-              { value: "7+", label: "Courses Offered" },
-              { value: "500+", label: "Students Trained" },
-            ].map((stat) => (
-              <div key={stat.label} className="text-center">
-                <p className="text-zinc-400 font-black text-4xl md:text-5xl lg:text-6xl tracking-tight">
-                  {stat.value}
-                </p>
-                <p className="text-zinc-500 text-sm md:text-base mt-2">
-                  {stat.label}
-                </p>
-              </div>
-            ))}
-          </div>
+      {/* ─── Stats Section ─── */}
+      <section className="bg-black py-16 px-6 md:px-16 lg:px-24">
+        <div className="grid grid-cols-2 md:grid-cols-4 w-full">
+          {stats.map((stat) => (
+            <div key={stat.label} className="flex flex-col items-center justify-center text-center py-4">
+              <p className="text-zinc-300 font-black text-4xl md:text-5xl lg:text-6xl tracking-tight">
+                {stat.value}
+              </p>
+              <p className="text-zinc-400 text-sm md:text-base mt-3 font-normal">
+                {stat.label}
+              </p>
+            </div>
+          ))}
         </div>
+        <div className="mt-16 w-full h-[2px] rounded-full" style={{ background: "linear-gradient(to right, transparent, #3f3f46, transparent)" }} />
       </section>
 
       {/* ─── Mentors Section ─── */}
       <section className="bg-black px-6 md:px-16 lg:px-24 py-24">
         <div className="max-w-6xl mx-auto">
-          <div className="flex flex-col items-center gap-4 mb-16">
-            <div className="w-12 h-[3px] bg-white rounded-full" />
+          <div className="mb-16">
+            <div className="w-12 h-[2px] rounded-full mb-6" style={{ background: "linear-gradient(to right, transparent, white, transparent)" }} />
             <div className="flex items-center gap-3">
-              <h2 className="text-center">
-                <span className="text-brand-red font-black text-4xl md:text-5xl tracking-tight uppercase">
-                  Our Ment
-                </span>
-                <span className="text-zinc-500 font-black text-4xl md:text-5xl tracking-tight uppercase">
-                  ors
-                </span>
+              <h2 className="text-brand-red font-black text-4xl md:text-6xl tracking-tight uppercase">
+                Our Mentors
               </h2>
               <span className="bg-red-700/20 text-brand-red text-xs font-bold px-2.5 py-1 rounded">
-                3 IMAGES
+                {mentors.length} IMAGES
               </span>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {mentors.map((mentor) => (
-              <div
-                key={mentor.name}
-                className="bg-zinc-900/50 border border-zinc-800 rounded-t-[80px] rounded-b-lg overflow-hidden flex flex-col"
-              >
-                <div className="relative h-72 mx-4 mt-4 rounded-t-[72px] overflow-hidden">
-                  <EditableImage
-                    src={mentor.imageSrc}
-                    alt={mentor.imageAlt}
-                    fill
-                    className="object-cover"
-                    sectionLabel={`Mentor — ${mentor.name.split(" –")[0].split(" -")[0]}`}
-                  />
+          <div className="flex flex-col gap-6">
+            {/* Row 1: 3 cards */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {mentors.slice(0, 3).map((mentor) => (
+                <div
+                  key={mentor.name}
+                  className="bg-zinc-900 rounded-t-[999px] rounded-b-3xl overflow-hidden flex flex-col"
+                >
+                  <div className="relative w-full aspect-[3/4] rounded-t-[999px] overflow-hidden p-3 pt-4">
+                    <div className="relative w-full h-full rounded-t-[999px] overflow-hidden">
+                      <EditableImage
+                        src={mentor.imageSrc}
+                        alt={mentor.imageAlt}
+                        fill
+                        className="object-cover object-top"
+                        sectionLabel={`Mentor \u2014 ${mentor.name.split(" \u2013")[0].split(" -")[0]}`}
+                      />
+                    </div>
+                  </div>
+                  <div className="p-6 flex flex-col gap-3">
+                    <div className="w-8 h-[2px] rounded-full" style={{ background: "linear-gradient(to right, transparent, white, transparent)" }} />
+                    <h3 className="text-white font-black text-sm md:text-base uppercase tracking-tight leading-snug">
+                      {mentor.name}
+                    </h3>
+                    <p className="text-zinc-400 text-sm leading-relaxed">
+                      {mentor.description}
+                    </p>
+                    <div className="w-6 h-[1px] rounded-full mt-2" style={{ background: "linear-gradient(to right, transparent, #52525b, transparent)" }} />
+                  </div>
                 </div>
-                <div className="p-6 flex flex-col gap-3 flex-1">
-                  <div className="w-8 h-[2px] bg-white rounded-full" />
-                  <h3 className="text-white font-black text-sm md:text-base uppercase tracking-tight leading-tight">
-                    {mentor.name}
-                  </h3>
-                  <p className="text-zinc-500 text-xs md:text-sm leading-relaxed">
-                    {mentor.description}
-                  </p>
-                  <div className="w-6 h-[1px] bg-zinc-600 rounded-full mt-auto" />
+              ))}
+            </div>
+            {/* Row 2: 2 cards centered */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:px-[16.67%]">
+              {mentors.slice(3).map((mentor) => (
+                <div
+                  key={mentor.name}
+                  className="bg-zinc-900 rounded-t-[999px] rounded-b-3xl overflow-hidden flex flex-col"
+                >
+                  <div className="relative w-full aspect-[3/4] rounded-t-[999px] overflow-hidden p-3 pt-4">
+                    <div className="relative w-full h-full rounded-t-[999px] overflow-hidden">
+                      <EditableImage
+                        src={mentor.imageSrc}
+                        alt={mentor.imageAlt}
+                        fill
+                        className="object-cover object-top"
+                        sectionLabel={`Mentor \u2014 ${mentor.name.split(" \u2013")[0].split(" -")[0]}`}
+                      />
+                    </div>
+                  </div>
+                  <div className="p-6 flex flex-col gap-3">
+                    <div className="w-8 h-[2px] rounded-full" style={{ background: "linear-gradient(to right, transparent, white, transparent)" }} />
+                    <h3 className="text-white font-black text-sm md:text-base uppercase tracking-tight leading-snug">
+                      {mentor.name}
+                    </h3>
+                    <p className="text-zinc-400 text-sm leading-relaxed">
+                      {mentor.description}
+                    </p>
+                    <div className="w-6 h-[1px] rounded-full mt-2" style={{ background: "linear-gradient(to right, transparent, #52525b, transparent)" }} />
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </section>

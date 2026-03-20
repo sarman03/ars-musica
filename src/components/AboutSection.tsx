@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Image from "next/image";
+import SiteImage from "./SiteImage";
 
 function useReveal(threshold = 0.15) {
   const ref = useRef<HTMLDivElement>(null);
@@ -106,7 +106,7 @@ export default function AboutSection() {
               centerImage.visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-16"
             }`}
           >
-            <Image
+            <SiteImage
               src="/logo/logo.jpeg"
               alt="About Ars Musica"
               fill

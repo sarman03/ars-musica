@@ -1,4 +1,4 @@
-import Image from "next/image";
+import SiteImage from "./SiteImage";
 
 interface InstrumentCardProps {
   title: string;
@@ -38,7 +38,7 @@ export default function InstrumentCard({
         {/* Image */}
         <div className="md:w-[55%] flex items-center p-4 md:p-6">
           <div className="relative w-full h-80 md:h-[95%] rounded-2xl overflow-hidden">
-            <Image
+            <SiteImage
               src={imageSrc}
               alt={imageAlt}
               fill

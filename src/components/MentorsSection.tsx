@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import SiteImage from "./SiteImage";
 import { useEffect, useRef, useState } from "react";
 
 const mentors = [
@@ -96,7 +96,7 @@ function MentorCard({
     >
       <div className="relative w-full aspect-[3/4] rounded-t-[999px] overflow-hidden p-3 pt-4">
         <div className="relative w-full h-full rounded-t-[999px] overflow-hidden">
-          <Image
+          <SiteImage
             src={mentor.imageSrc}
             alt={mentor.imageAlt}
             fill

@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
-// Hardcoded admin credentials — change these
-const ADMIN_EMAIL = "admin@arsmusica.com";
-const ADMIN_PASSWORD = "arsmusica2024";
+const ADMIN_EMAIL = process.env.ADMIN_EMAIL!;
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD!;
 
 export async function POST(req: NextRequest) {
   const { email, password } = await req.json();

@@ -1,7 +1,7 @@
 "use client";
 
-import Image from "next/image";
 import { useRef, useState } from "react";
+import { useImageOverride } from "@/components/ImageOverrideProvider";
 
 interface EditableImageProps {
   src: string;
@@ -21,7 +21,10 @@ export default function EditableImage({
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
   const [uploaded, setUploaded] = useState(false);
-  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const resolvedSrc = useImageOverride(src);
+  const [displaySrc, setDisplaySrc] = useState<string | null>(null);
+
+  const currentSrc = displaySrc || resolvedSrc;
 
   const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -29,17 +32,12 @@ export default function EditableImage({
 
     // Show preview immediately
     const preview = URL.createObjectURL(file);
-    setPreviewUrl(preview);
+    setDisplaySrc(preview);
     setUploading(true);
-
-    // Determine the target path — keep the same extension as original or use uploaded file's extension
-    const originalExt = src.substring(src.lastIndexOf("."));
-    const uploadExt = file.name.substring(file.name.lastIndexOf("."));
-    const targetPath = uploadExt === originalExt ? src : src.replace(originalExt, uploadExt);
 
     const formData = new FormData();
     formData.append("file", file);
-    formData.append("path", targetPath);
+    formData.append("path", src);
 
     try {
       const res = await fetch("/api/upload", { method: "POST", body: formData });
@@ -47,41 +45,34 @@ export default function EditableImage({
 
       if (data.success) {
         setUploaded(true);
-        setTimeout(() => setUploaded(false), 2000);
+        setTimeout(() => {
+          URL.revokeObjectURL(preview);
+          // Use the blob URL returned from upload
+          setDisplaySrc(data.url || resolvedSrc);
+          setUploaded(false);
+        }, 2000);
       } else {
         alert("Upload failed: " + (data.error || "Unknown error"));
-        setPreviewUrl(null);
+        setDisplaySrc(null);
       }
     } catch {
       alert("Upload failed. Please try again.");
-      setPreviewUrl(null);
+      setDisplaySrc(null);
     } finally {
       setUploading(false);
     }
+
+    if (fileInputRef.current) fileInputRef.current.value = "";
   };
 
-  const displaySrc = previewUrl || src;
-
   return (
-    <div className="relative group">
-      {fill ? (
-        <Image
-          src={displaySrc}
-          alt={alt}
-          fill
-          className={className}
-          unoptimized={!!previewUrl}
-        />
-      ) : (
-        <Image
-          src={displaySrc}
-          alt={alt}
-          width={400}
-          height={300}
-          className={className}
-          unoptimized={!!previewUrl}
-        />
-      )}
+    <div className={`group ${fill ? "absolute inset-0" : "relative"}`}>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={currentSrc}
+        alt={alt}
+        className={`${className} ${fill ? "absolute inset-0 w-full h-full" : ""}`}
+      />
 
       {/* Edit overlay */}
       <div className="absolute inset-0 bg-black/0 group-hover:bg-black/60 transition-all duration-200 flex items-center justify-center z-10">
