@@ -25,18 +25,18 @@ export default function Footer() {
           <div>
             <h4 className="text-zinc-300 font-medium text-sm mb-4">Navigation</h4>
             <ul className="flex flex-col gap-3">
-              <li><a href="#what-we-do" className="text-zinc-500 text-sm hover:text-zinc-300 transition-colors">Courses</a></li>
-              <li><a href="#about" className="text-zinc-500 text-sm hover:text-zinc-300 transition-colors">About</a></li>
+              <li><a href="/#what-we-do" className="text-zinc-500 text-sm hover:text-zinc-300 transition-colors">Courses</a></li>
+              <li><a href="/#about" className="text-zinc-500 text-sm hover:text-zinc-300 transition-colors">About</a></li>
               <li><a href="/contact" className="text-zinc-500 text-sm hover:text-zinc-300 transition-colors">Contact</a></li>
             </ul>
           </div>
           <div>
             <h4 className="text-zinc-300 font-medium text-sm mb-4">Socials</h4>
             <ul className="flex flex-col gap-3">
-              <li><a href="#" className="text-zinc-500 text-sm hover:text-zinc-300 transition-colors">Instagram</a></li>
+              <li><a href="https://www.instagram.com/arsmusica.academy?igsh=Zno2MXZxcXNrNmNu" target="_blank" rel="noopener noreferrer" className="text-zinc-500 text-sm hover:text-zinc-300 transition-colors">Instagram</a></li>
               <li><a href="#" className="text-zinc-500 text-sm hover:text-zinc-300 transition-colors">Twitter</a></li>
               <li><a href="#" className="text-zinc-500 text-sm hover:text-zinc-300 transition-colors">Youtube</a></li>
-              <li><a href="#" className="text-zinc-500 text-sm hover:text-zinc-300 transition-colors">Facebook</a></li>
+              <li><a href="https://www.facebook.com/profile.php?id=61579686133656" target="_blank" rel="noopener noreferrer" className="text-zinc-500 text-sm hover:text-zinc-300 transition-colors">Facebook</a></li>
             </ul>
           </div>
         </div>

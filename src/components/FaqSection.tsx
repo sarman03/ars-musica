@@ -34,7 +34,7 @@ export default function FaqSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
-    <section className="bg-black px-6 md:px-16 lg:px-24 py-24">
+    <section className="relative z-10 bg-black px-6 md:px-16 lg:px-24 py-24">
       <div className="max-w-2xl mx-auto">
         {/* Heading */}
         <div className="mb-16 flex flex-col items-center text-center">
