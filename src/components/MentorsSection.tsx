@@ -48,19 +48,21 @@ const staggerOffsetsRow2 = [-40, 60];
 function MentorCard({
   mentor,
   initialOffset,
+  delay = 0,
 }: {
   mentor: (typeof mentors)[0];
   initialOffset: number;
+  delay?: number;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const [offset, setOffset] = useState(initialOffset);
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
       if (!ref.current) return;
       const rect = ref.current.getBoundingClientRect();
       const windowH = window.innerHeight;
-      // progress: 0 when element enters viewport, 1 when fully visible
       const progress = Math.min(
         1,
         Math.max(0, (windowH - rect.top) / (windowH * 0.6))
@@ -73,11 +75,24 @@ function MentorCard({
     return () => window.removeEventListener("scroll", handleScroll);
   }, [initialOffset]);
 
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([e]) => { if (e.isIntersecting) { setVisible(true); obs.disconnect(); } },
+      { threshold: 0.15 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
   return (
     <div
       ref={ref}
-      className="bg-zinc-900 rounded-t-[999px] rounded-b-3xl overflow-hidden flex flex-col transition-transform duration-100"
-      style={{ transform: `translateY(${offset}px)` }}
+      className={`bg-zinc-900 rounded-t-[999px] rounded-b-3xl overflow-hidden flex flex-col transition-all duration-[1.2s] ease-[cubic-bezier(0.16,1,0.3,1)] ${
+        visible ? "opacity-100" : "opacity-0"
+      }`}
+      style={{ transform: `translateY(${visible ? offset : offset + 60}px)`, transitionDelay: `${delay}ms` }}
     >
       <div className="relative w-full aspect-[3/4] rounded-t-[999px] overflow-hidden p-3 pt-4">
         <div className="relative w-full h-full rounded-t-[999px] overflow-hidden">
@@ -104,11 +119,30 @@ function MentorCard({
 }
 
 export default function MentorsSection() {
+  const headingRef = useRef<HTMLDivElement>(null);
+  const [headingVisible, setHeadingVisible] = useState(false);
+
+  useEffect(() => {
+    const el = headingRef.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([e]) => { if (e.isIntersecting) { setHeadingVisible(true); obs.disconnect(); } },
+      { threshold: 0.15 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
   return (
     <section className="bg-black px-6 md:px-16 lg:px-24 py-24">
       <div className="max-w-6xl mx-auto">
         {/* Heading */}
-        <div className="mb-16">
+        <div
+          ref={headingRef}
+          className={`mb-16 transition-all duration-[1.2s] ease-[cubic-bezier(0.16,1,0.3,1)] ${
+            headingVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-16"
+          }`}
+        >
           <div className="w-12 h-[2px] rounded-full mb-6" style={{ background: "linear-gradient(to right, transparent, white, transparent)" }} />
           <h2 className="text-brand-red font-black text-4xl md:text-6xl tracking-tight uppercase">
             Our Mentors
@@ -123,6 +157,7 @@ export default function MentorsSection() {
                 key={mentor.name}
                 mentor={mentor}
                 initialOffset={staggerOffsets[i]}
+                delay={i * 150}
               />
             ))}
           </div>
@@ -132,6 +167,7 @@ export default function MentorsSection() {
                 key={mentor.name}
                 mentor={mentor}
                 initialOffset={staggerOffsetsRow2[i]}
+                delay={i * 150}
               />
             ))}
           </div>

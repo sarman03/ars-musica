@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 
 interface GalleryItem {
@@ -15,9 +18,29 @@ const galleryImages: GalleryItem[] = [
   { src: "/gallery/gallery_last.jpg", alt: "Young singer performing",        rotate: "rotate-1"  },
 ];
 
-function TapedPhotoCard({ src, alt, rotate }: GalleryItem) {
+function TapedPhotoCard({ src, alt, rotate, index }: GalleryItem & { index: number }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setVisible(true); observer.disconnect(); } },
+      { threshold: 0.15 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <div className={`group relative mt-14 ${rotate} transition-transform duration-300 hover:rotate-0 hover:scale-105`}>
+    <div
+      ref={ref}
+      className={`group relative mt-14 ${rotate} transition-all duration-[1.2s] ease-[cubic-bezier(0.16,1,0.3,1)] hover:rotate-0 hover:scale-105 ${
+        visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-16"
+      }`}
+      style={{ transitionDelay: `${index % 3 * 150}ms` }}
+    >
       {/* Bar — floats above the image, detached */}
       <div
         className="absolute -top-4 left-0 right-0 h-5 z-10 rounded-sm shadow-md transition-all duration-300"
@@ -65,7 +88,7 @@ export default function GallerySection() {
         {/* Taped photo grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-20">
           {galleryImages.map((image, i) => (
-            <TapedPhotoCard key={i} {...image} />
+            <TapedPhotoCard key={i} {...image} index={i} />
           ))}
         </div>
       </div>
