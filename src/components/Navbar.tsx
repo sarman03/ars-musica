@@ -1,19 +1,16 @@
+import Image from "next/image";
+
 export default function Navbar() {
   return (
     <nav className="flex items-center justify-between px-10 py-6 w-full absolute top-0 left-0 z-20">
       <div className="flex items-center gap-2">
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          className="text-white"
-        >
-          <rect x="2" y="8" width="3" height="8" rx="1" fill="currentColor" />
-          <rect x="7" y="5" width="3" height="14" rx="1" fill="currentColor" />
-          <rect x="12" y="3" width="3" height="18" rx="1" fill="currentColor" />
-          <rect x="17" y="6" width="3" height="12" rx="1" fill="currentColor" />
-        </svg>
+        <Image
+          src="/logo/logo.jpeg"
+          alt="Ars Musica"
+          width={24}
+          height={24}
+          className="rounded-sm"
+        />
         <span className="text-white font-bold text-lg tracking-wide">
           ARS <span className="text-brand-red">MUSICA</span>
         </span>

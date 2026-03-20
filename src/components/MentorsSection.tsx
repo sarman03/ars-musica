@@ -5,35 +5,35 @@ const mentors = [
     name: "Nawin Rai - Ars Musica Academy",
     description:
       "He is also an accomplished drummer and percussionist, Nawin performs with well-known rock bands such as Squarez Attached and Esmond Lama. He is regularly invited for collaborations and special sessions with leading bands and artists across the NCR music scene, earning him respect as both a performer and a collaborator.",
-    imageSrc: "/mentors/nawin.jpg",
+    imageSrc: "/mentors/mentor_1.jpeg",
     imageAlt: "Nawin Rai playing drums",
   },
   {
     name: "Aro Phungshok \u2013 Piano Instructor",
     description:
       "Aro Phungshok is a passionate and dedicated piano teacher with a strong commitment to nurturing musical talent and inspiring students through the art of piano. With a warm and encouraging teaching approach, she focuses on helping students develop not only strong technical skills but also confidence, creativity, and a deep appreciation for music.",
-    imageSrc: "/mentors/aro.jpg",
+    imageSrc: "/mentors/mentor_2.jpeg",
     imageAlt: "Aro Phungshok at piano",
   },
   {
     name: "Ranjan Dewan \u2013 Guitar Educator",
     description:
       "Ranjan Dewan is a dedicated guitar educator and performer originally from Darjeeling, with over two decades of experience in teaching and performing music. He holds an ATCL certification in Western Classical Guitar from Trinity College London, which laid the foundation for his strong musical training and technical expertise.",
-    imageSrc: "/mentors/ranjan.jpg",
+    imageSrc: "/mentors/mentor_3.jpeg",
     imageAlt: "Ranjan Dewan with guitar",
   },
   {
     name: "Bonita Solomon \u2013 Piano & Music Theory Instructor | Pianist | Vocalist",
     description:
       "Bonita Solomon is a passionate musician and dedicated educator with over 18 years of experience in music performance and teaching. A trained pianist and vocalist, Bonita holds certifications from Trinity College London, UK, and has completed Grade 5 in Music Theory from ABRSM, reflecting her strong academic grounding in music.",
-    imageSrc: "/mentors/bonita.jpg",
+    imageSrc: "/mentors/mentor_4.jpeg",
     imageAlt: "Bonita Solomon",
   },
   {
     name: "Rosemary Deosa \u2013 Co-Founder | Vocal Instructor | Singer | Performer | Songwriter | Composer",
     description:
       "Rosemary Deosa is a passionate and accomplished vocalist, performer, and music educator with over 11 years of experience in teaching and live performance. As the Co-Founder of Ars Musica Academy, she plays a vital role in shaping the academy's artistic vision, nurturing a culture that is student-focused, expressive, and rooted in musical excellence.",
-    imageSrc: "/mentors/rosemary.jpg",
+    imageSrc: "/mentors/mentor_5.jpeg",
     imageAlt: "Rosemary Deosa performing",
   },
 ];

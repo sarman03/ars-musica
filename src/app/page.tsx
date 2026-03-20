@@ -16,14 +16,18 @@ export default function Home() {
       <Navbar />
       <HeroSection />
       <WhatWeDoSection />
-      <QuoteSection />
-      <GallerySection />
-      <AboutSection />
-      <StatsSection />
-      <MentorsSection />
-      <FaqSection />
-      <ContactSection />
-      <Footer />
+      <div className="sticky top-0 z-[1]">
+        <QuoteSection />
+      </div>
+      <div className="relative z-[2]">
+        <GallerySection />
+        <AboutSection />
+        <StatsSection />
+        <MentorsSection />
+        <FaqSection />
+        <ContactSection />
+        <Footer />
+      </div>
     </main>
   );
 }

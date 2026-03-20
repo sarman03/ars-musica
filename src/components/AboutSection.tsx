@@ -50,9 +50,12 @@ export default function AboutSection() {
     <section id="about" className="bg-black px-6 md:px-16 lg:px-24 py-24">
       <div className="max-w-6xl mx-auto">
         {/* Heading */}
-        <h2 className="text-brand-red font-black text-4xl md:text-6xl lg:text-7xl tracking-tight uppercase text-center mb-20">
-          About Ars Musica
-        </h2>
+        <div className="flex flex-col items-center mb-20">
+          <div className="w-12 h-[3px] bg-white rounded-full mb-4" />
+          <h2 className="text-brand-red font-black text-4xl md:text-6xl lg:text-7xl tracking-tight uppercase text-center">
+            About Ars Musica
+          </h2>
+        </div>
 
         {/* 3-column grid: left values | center image | right values */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 items-center">
@@ -62,10 +65,10 @@ export default function AboutSection() {
             <ValueCard item={values[2]} />
           </div>
 
-          {/* Center image */}
+          {/* Center logo */}
           <div className="relative aspect-square rounded-none overflow-hidden mx-auto w-full max-w-[340px]">
             <Image
-              src="/about.jpg"
+              src="/logo/logo.jpeg"
               alt="About Ars Musica"
               fill
               className="object-cover"

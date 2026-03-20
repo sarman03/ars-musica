@@ -11,6 +11,10 @@ const roboto = Roboto({
 export const metadata: Metadata = {
   title: "Ars Musica",
   description: "Learn instruments and vocals with experienced teachers in a creative and inspiring environment.",
+  icons: {
+    icon: "/logo/logo.jpeg",
+    apple: "/logo/logo.jpeg",
+  },
 };
 
 export default function RootLayout({
