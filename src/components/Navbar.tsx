@@ -15,21 +15,21 @@ export default function Navbar() {
           <rect x="17" y="6" width="3" height="12" rx="1" fill="currentColor" />
         </svg>
         <span className="text-white font-bold text-lg tracking-wide">
-          ARS <span className="text-red-600">MUSICA</span>
+          ARS <span className="text-brand-red">MUSICA</span>
         </span>
       </div>
 
       <div className="flex items-center gap-8">
-        <a href="#about" className="text-red-600 hover:text-red-500 transition-colors text-sm font-medium">
+        <a href="#about" className="text-brand-red hover:text-brand-red transition-colors text-sm font-medium">
           About
         </a>
-        <a href="#courses" className="text-red-600 hover:text-red-500 transition-colors text-sm font-medium">
+        <a href="#what-we-do" className="text-brand-red hover:text-brand-red transition-colors text-sm font-medium">
           Courses
         </a>
       </div>
 
       <a
-        href="#contact"
+        href="/contact"
         className="border border-zinc-500 text-zinc-300 rounded-full px-5 py-2 text-sm hover:border-zinc-300 transition-colors"
       >
         Get in touch

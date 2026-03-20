@@ -19,7 +19,7 @@ const instruments = [
     title: "Vocals",
     description:
       "Improve your singing with breathing techniques, pitch control, vocal exercises, and performance training.",
-    imageSrc: "/vocals.jpg",
+    imageSrc: "/about_cards/vocals.jpeg",
     imageAlt: "Young singer in recording studio",
   },
   {
@@ -54,10 +54,10 @@ const instruments = [
 
 export default function WhatWeDoSection() {
   return (
-    <section className="bg-black">
+    <section id="what-we-do" className="bg-black">
       {/* Section heading */}
       <div className="flex flex-col items-center gap-4 pt-16 pb-2">
-        <h2 className="text-red-700 font-black text-4xl md:text-6xl tracking-tight uppercase">
+        <h2 className="text-brand-red font-black text-4xl md:text-6xl tracking-tight uppercase">
           What We Do
         </h2>
         <div className="w-12 h-[3px] bg-white rounded-full" />

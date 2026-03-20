@@ -19,7 +19,7 @@ export default function Footer() {
               <rect x="17" y="6" width="3" height="12" rx="1" fill="currentColor" />
             </svg>
             <span className="text-white font-bold text-lg tracking-wide">
-              ARS <span className="text-red-600">MUSICA</span>
+              ARS <span className="text-brand-red">MUSICA</span>
             </span>
           </div>
           <p className="text-zinc-500 text-sm leading-relaxed">

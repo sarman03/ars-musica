@@ -1,9 +1,12 @@
 "use client";
 
+import LightRaysBackground from "@/components/LightRaysBackground";
+
 export default function ContactForm() {
   return (
-    <section className="bg-black min-h-screen pt-32 pb-24 px-6">
-      <div className="max-w-2xl mx-auto">
+    <section className="relative bg-black min-h-screen pt-32 pb-24 px-6 overflow-hidden">
+      <LightRaysBackground />
+      <div className="relative z-10 max-w-2xl mx-auto">
         {/* Social icons */}
         <div className="flex items-center justify-center gap-3 mb-8">
           {/* TikTok */}
@@ -33,7 +36,7 @@ export default function ContactForm() {
         </div>
 
         {/* Heading */}
-        <h1 className="text-red-700 font-black text-4xl md:text-5xl lg:text-6xl tracking-tight uppercase text-center mb-6">
+        <h1 className="text-brand-red font-black text-4xl md:text-5xl lg:text-6xl tracking-tight uppercase text-center mb-6">
           Let&apos;s Get In Touch
         </h1>
 

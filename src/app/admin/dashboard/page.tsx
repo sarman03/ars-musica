@@ -70,7 +70,7 @@ export default function AdminDashboard() {
             </a>
             <button
               onClick={handleLogout}
-              className="text-zinc-400 hover:text-red-500 text-sm transition-colors"
+              className="text-zinc-400 hover:text-brand-red text-sm transition-colors"
             >
               Logout
             </button>
@@ -86,10 +86,10 @@ export default function AdminDashboard() {
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-red-900/20 rounded-full blur-[120px]" />
         <div className="relative z-[1] flex flex-col items-center gap-8 mt-16">
           <h1 className="flex flex-col gap-0 leading-none">
-            <span className="text-red-600 font-black text-6xl md:text-8xl lg:text-9xl tracking-tight uppercase">
+            <span className="text-brand-red font-black text-6xl md:text-8xl lg:text-9xl tracking-tight uppercase">
               Learn Music
             </span>
-            <span className="text-red-700 font-black text-6xl md:text-8xl lg:text-9xl tracking-tight uppercase">
+            <span className="text-brand-red font-black text-6xl md:text-8xl lg:text-9xl tracking-tight uppercase">
               Play with Confidence
             </span>
           </h1>
@@ -111,10 +111,10 @@ export default function AdminDashboard() {
       <section className="bg-black px-6 md:px-16 lg:px-24 py-24">
         <div className="flex flex-col items-center gap-4 mb-16">
           <div className="flex items-center gap-3">
-            <h2 className="text-red-700 font-black text-4xl md:text-6xl tracking-tight uppercase">
+            <h2 className="text-brand-red font-black text-4xl md:text-6xl tracking-tight uppercase">
               What We Do
             </h2>
-            <span className="bg-red-700/20 text-red-500 text-xs font-bold px-2.5 py-1 rounded">
+            <span className="bg-red-700/20 text-brand-red text-xs font-bold px-2.5 py-1 rounded">
               7 IMAGES
             </span>
           </div>
@@ -153,13 +153,13 @@ export default function AdminDashboard() {
       {/* ─── Quote Section (no images) ─── */}
       <section className="bg-black flex items-center justify-center py-24 px-6">
         <div className="flex flex-col items-center text-center gap-1">
-          <p className="text-red-700 font-black text-xl md:text-3xl lg:text-4xl tracking-tight uppercase">
+          <p className="text-brand-red font-black text-xl md:text-3xl lg:text-4xl tracking-tight uppercase">
             Every Musician Starts With A Single Note
           </p>
-          <p className="text-red-900/70 font-black text-xl md:text-3xl lg:text-4xl tracking-tight uppercase">
+          <p className="text-brand-red/70 font-black text-xl md:text-3xl lg:text-4xl tracking-tight uppercase">
             Practice Turns Notes Into Music
           </p>
-          <p className="text-red-900/50 font-black text-xl md:text-3xl lg:text-4xl tracking-tight uppercase">
+          <p className="text-brand-red/50 font-black text-xl md:text-3xl lg:text-4xl tracking-tight uppercase">
             Confidence Turns Music Into Performance
           </p>
         </div>
@@ -174,7 +174,7 @@ export default function AdminDashboard() {
               <h2 className="text-white font-black text-3xl md:text-4xl tracking-tight uppercase">
                 Gallery
               </h2>
-              <span className="bg-red-700/20 text-red-500 text-xs font-bold px-2.5 py-1 rounded">
+              <span className="bg-red-700/20 text-brand-red text-xs font-bold px-2.5 py-1 rounded">
                 6 IMAGES
               </span>
             </div>
@@ -206,14 +206,14 @@ export default function AdminDashboard() {
             <div className="w-12 h-[3px] bg-white rounded-full" />
             <div className="flex items-center gap-3">
               <h2 className="text-center">
-                <span className="text-red-700 font-black text-4xl md:text-5xl lg:text-6xl tracking-tight uppercase">
+                <span className="text-brand-red font-black text-4xl md:text-5xl lg:text-6xl tracking-tight uppercase">
                   About{" "}
                 </span>
                 <span className="text-zinc-400 font-black text-4xl md:text-5xl lg:text-6xl tracking-tight uppercase">
                   Ars Musica
                 </span>
               </h2>
-              <span className="bg-red-700/20 text-red-500 text-xs font-bold px-2.5 py-1 rounded">
+              <span className="bg-red-700/20 text-brand-red text-xs font-bold px-2.5 py-1 rounded">
                 1 IMAGE
               </span>
             </div>
@@ -228,7 +228,7 @@ export default function AdminDashboard() {
                     <span className="text-zinc-800 font-black text-7xl md:text-8xl leading-none">
                       {item.number}
                     </span>
-                    <h3 className="text-red-600 font-black text-xl md:text-2xl uppercase tracking-tight absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1">
+                    <h3 className="text-brand-red font-black text-xl md:text-2xl uppercase tracking-tight absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1">
                       {item.title}
                     </h3>
                   </div>
@@ -258,7 +258,7 @@ export default function AdminDashboard() {
                     <span className="text-zinc-800 font-black text-7xl md:text-8xl leading-none">
                       {item.number}
                     </span>
-                    <h3 className="text-red-600 font-black text-xl md:text-2xl uppercase tracking-tight absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1">
+                    <h3 className="text-brand-red font-black text-xl md:text-2xl uppercase tracking-tight absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1">
                       {item.title}
                     </h3>
                   </div>
@@ -302,14 +302,14 @@ export default function AdminDashboard() {
             <div className="w-12 h-[3px] bg-white rounded-full" />
             <div className="flex items-center gap-3">
               <h2 className="text-center">
-                <span className="text-red-700 font-black text-4xl md:text-5xl tracking-tight uppercase">
+                <span className="text-brand-red font-black text-4xl md:text-5xl tracking-tight uppercase">
                   Our Ment
                 </span>
                 <span className="text-zinc-500 font-black text-4xl md:text-5xl tracking-tight uppercase">
                   ors
                 </span>
               </h2>
-              <span className="bg-red-700/20 text-red-500 text-xs font-bold px-2.5 py-1 rounded">
+              <span className="bg-red-700/20 text-brand-red text-xs font-bold px-2.5 py-1 rounded">
                 3 IMAGES
               </span>
             </div>
@@ -359,7 +359,7 @@ export default function AdminDashboard() {
                 <rect x="17" y="6" width="3" height="12" rx="1" fill="currentColor" />
               </svg>
               <span className="text-white font-bold text-lg tracking-wide">
-                ARS <span className="text-red-600">MUSICA</span>
+                ARS <span className="text-brand-red">MUSICA</span>
               </span>
             </div>
             <p className="text-zinc-500 text-sm leading-relaxed">

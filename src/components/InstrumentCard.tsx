@@ -17,7 +17,7 @@ export default function InstrumentCard({
 }: InstrumentCardProps) {
   return (
     <div className="h-screen flex items-center justify-center px-6 md:px-10 py-6">
-      <div className="w-full max-w-7xl bg-zinc-900 rounded-3xl overflow-hidden flex flex-col md:flex-row h-[88vh]">
+      <div className="w-full max-w-7xl bg-zinc-900 rounded-3xl flex flex-col md:flex-row h-[88vh]">
         {/* Text content */}
         <div className="flex flex-col justify-center gap-6 p-10 md:p-16 md:w-[45%]">
           <div className="w-10 h-[3px] bg-white rounded-full" />
@@ -36,13 +36,15 @@ export default function InstrumentCard({
         </div>
 
         {/* Image */}
-        <div className="relative md:w-[55%] h-72 md:h-auto">
-          <Image
-            src={imageSrc}
-            alt={imageAlt}
-            fill
-            className="object-cover"
-          />
+        <div className="md:w-[55%] flex items-center p-4 md:p-6">
+          <div className="relative w-full h-80 md:h-[95%] rounded-2xl overflow-hidden">
+            <Image
+              src={imageSrc}
+              alt={imageAlt}
+              fill
+              className="object-cover"
+            />
+          </div>
         </div>
       </div>
     </div>

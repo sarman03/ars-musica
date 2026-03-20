@@ -54,7 +54,7 @@ export default function AdminLogin() {
             <rect x="17" y="6" width="3" height="12" rx="1" fill="currentColor" />
           </svg>
           <span className="text-white font-bold text-lg tracking-wide">
-            ARS <span className="text-red-600">MUSICA</span>
+            ARS <span className="text-brand-red">MUSICA</span>
           </span>
         </div>
 
@@ -96,7 +96,7 @@ export default function AdminLogin() {
             </div>
 
             {error && (
-              <p className="text-red-500 text-sm text-center">{error}</p>
+              <p className="text-brand-red text-sm text-center">{error}</p>
             )}
 
             <button

@@ -10,10 +10,10 @@ export default function HeroSection() {
 
       <div className="relative z-[1] flex flex-col items-center gap-6 mt-16">
         <h1 className="flex flex-col gap-0 leading-none text-center">
-          <span className="text-red-600 font-black tracking-tight uppercase" style={{ fontSize: "clamp(2rem, 5.8vw, 5.8rem)", fontWeight: 900 }}>
+          <span className="text-brand-red font-black tracking-tight uppercase" style={{ fontSize: "clamp(2rem, 5.8vw, 5.8rem)", fontWeight: 900 }}>
             Learn Music
           </span>
-          <span className="text-red-600 font-black tracking-tight uppercase" style={{ fontSize: "clamp(2rem, 5.8vw, 5.8rem)", fontWeight: 900 }}>
+          <span className="text-brand-red font-black tracking-tight uppercase" style={{ fontSize: "clamp(2rem, 5.8vw, 5.8rem)", fontWeight: 900 }}>
             Play with Confidence
           </span>
         </h1>

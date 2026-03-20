@@ -39,7 +39,7 @@ export default function FaqSection() {
         {/* Heading */}
         <div className="mb-16 flex flex-col items-center text-center">
           <div className="w-12 h-[3px] bg-white rounded-full mb-6" />
-          <h2 className="text-red-600 font-black text-3xl md:text-5xl lg:text-6xl tracking-tight uppercase leading-none whitespace-nowrap">
+          <h2 className="text-brand-red font-black text-3xl md:text-5xl lg:text-6xl tracking-tight uppercase leading-none whitespace-nowrap">
             Everything You Need To Know
           </h2>
         </div>
