@@ -63,7 +63,7 @@ export default function LightRaysBackground({
       <svg
         viewBox="0 0 1000 760"
         preserveAspectRatio="xMidYTop slice"
-        style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}
+        className="absolute top-0 left-0 w-full h-[60%] md:h-full"
       >
         <defs>
           <filter id={filterId} x="-8%" y="-5%" width="116%" height="115%">

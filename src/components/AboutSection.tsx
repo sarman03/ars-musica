@@ -91,8 +91,29 @@ export default function AboutSection() {
           </h2>
         </div>
 
-        {/* 3-column grid: left values | center image | right values */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 items-center">
+        {/* Mobile: sequential 1-2-3-4 then logo */}
+        <div className="flex flex-col gap-12 md:hidden">
+          <ValueCard item={values[0]} delay={0} />
+          <ValueCard item={values[1]} delay={100} />
+          <ValueCard item={values[2]} delay={200} />
+          <ValueCard item={values[3]} delay={300} />
+          <div
+            ref={centerImage.ref}
+            className={`relative aspect-square rounded-none overflow-hidden mx-auto w-full max-w-[340px] transition-all duration-[1.2s] ease-[cubic-bezier(0.16,1,0.3,1)] delay-100 ${
+              centerImage.visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-16"
+            }`}
+          >
+            <SiteImage
+              src="/logo/logo.jpeg"
+              alt="About Ars Musica"
+              fill
+              className="object-cover"
+            />
+          </div>
+        </div>
+
+        {/* Desktop: 3-column grid: left values | center image | right values */}
+        <div className="hidden md:grid md:grid-cols-3 gap-12 items-center">
           {/* Left column */}
           <div className="flex flex-col gap-20">
             <ValueCard item={values[0]} delay={0} />
@@ -101,10 +122,7 @@ export default function AboutSection() {
 
           {/* Center logo */}
           <div
-            ref={centerImage.ref}
-            className={`relative aspect-square rounded-none overflow-hidden mx-auto w-full max-w-[340px] transition-all duration-[1.2s] ease-[cubic-bezier(0.16,1,0.3,1)] delay-100 ${
-              centerImage.visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-16"
-            }`}
+            className={`relative aspect-square rounded-none overflow-hidden mx-auto w-full max-w-[340px] transition-all duration-[1.2s] ease-[cubic-bezier(0.16,1,0.3,1)] delay-100`}
           >
             <SiteImage
               src="/logo/logo.jpeg"
