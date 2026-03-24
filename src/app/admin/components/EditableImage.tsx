@@ -27,14 +27,19 @@ export default function EditableImage({
 
   const currentSrc = displaySrc || resolvedSrc;
 
+  console.log(`[EditableImage] src="${src}" | resolvedSrc="${resolvedSrc}" | displaySrc="${displaySrc}" | currentSrc="${currentSrc}"`);
+
   const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
+
+    console.log(`[EditableImage] Upload started for path="${src}", file="${file.name}"`);
 
     // Show preview immediately
     const preview = URL.createObjectURL(file);
     setDisplaySrc(preview);
     setUploading(true);
+    console.log(`[EditableImage] Preview set: ${preview}`);
 
     const formData = new FormData();
     formData.append("file", file);
@@ -43,21 +48,26 @@ export default function EditableImage({
     try {
       const res = await fetch("/api/upload", { method: "POST", body: formData });
       const data = await res.json();
+      console.log(`[EditableImage] Upload response:`, data);
 
       if (data.success) {
         setUploaded(true);
         // Refresh the global overrides so all images pick up the new URL
+        console.log(`[EditableImage] Calling refreshOverrides()...`);
         refreshOverrides();
         setTimeout(() => {
+          console.log(`[EditableImage] Timeout fired. Clearing displaySrc. resolvedSrc is now="${resolvedSrc}"`);
           URL.revokeObjectURL(preview);
           setDisplaySrc(null); // Let the refreshed context handle it
           setUploaded(false);
         }, 2000);
       } else {
+        console.log(`[EditableImage] Upload failed:`, data.error);
         alert("Upload failed: " + (data.error || "Unknown error"));
         setDisplaySrc(null);
       }
-    } catch {
+    } catch (err) {
+      console.error(`[EditableImage] Upload error:`, err);
       alert("Upload failed. Please try again.");
       setDisplaySrc(null);
     } finally {
