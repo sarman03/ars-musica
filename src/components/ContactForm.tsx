@@ -51,7 +51,7 @@ export default function ContactForm() {
 
         {/* Heading */}
         <h1
-          className={`text-brand-red font-black text-4xl md:text-5xl lg:text-6xl tracking-tight uppercase text-center mb-6 transition-[opacity,transform] duration-[1.2s] ease-[cubic-bezier(0.16,1,0.3,1)] delay-200 will-change-[opacity,transform] ${
+          className={`text-brand-red font-semibold text-4xl md:text-5xl lg:text-6xl tracking-tight uppercase text-center mb-6 transition-[opacity,transform] duration-[1.2s] ease-[cubic-bezier(0.16,1,0.3,1)] delay-200 will-change-[opacity,transform] ${
             show ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
           }`}
         >

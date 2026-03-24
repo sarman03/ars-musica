@@ -80,7 +80,7 @@ export default function GallerySection() {
         {/* Heading */}
         <div className="mb-10">
           <div className="w-12 h-[2px] rounded-full mb-4" style={{ background: "linear-gradient(to right, transparent, white, transparent)" }} />
-          <h2 className="text-brand-red font-black text-4xl md:text-6xl tracking-tight uppercase">
+          <h2 className="text-brand-red font-semibold text-4xl md:text-6xl tracking-tight uppercase">
             Gallery
           </h2>
         </div>

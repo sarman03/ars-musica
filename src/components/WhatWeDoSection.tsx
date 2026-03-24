@@ -64,7 +64,7 @@ export default function WhatWeDoSection() {
     <section id="what-we-do" className="bg-black">
       {/* Section heading */}
       <div className="flex flex-col items-center gap-4 pt-16 pb-2">
-        <h2 className="text-brand-red font-black text-4xl md:text-6xl tracking-tight uppercase">
+        <h2 className="text-brand-red font-semibold text-4xl md:text-6xl tracking-tight uppercase">
           What We Do
         </h2>
         <div className="w-12 h-[2px] rounded-full" style={{ background: "linear-gradient(to right, transparent, white, transparent)" }} />

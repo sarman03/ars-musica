@@ -51,7 +51,7 @@ function AnimatedNumber({ value, suffix }: { value: number; suffix: string }) {
   return (
     <p
       ref={ref}
-      className="text-zinc-300 font-black text-4xl md:text-5xl lg:text-6xl tracking-tight"
+      className="text-zinc-300 font-semibold text-4xl md:text-5xl lg:text-6xl tracking-tight"
     >
       {formatNumber(count)}
       {suffix}

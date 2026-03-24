@@ -96,10 +96,10 @@ export default function AdminDashboard() {
         <div className="absolute inset-0 bg-gradient-to-b from-zinc-900/30 via-transparent to-transparent" />
         <div className="relative z-[1] flex flex-col items-center gap-6 mt-16">
           <h1 className="flex flex-col gap-0 leading-none text-center">
-            <span className="text-brand-red font-black tracking-tight uppercase" style={{ fontSize: "clamp(2rem, 5.8vw, 5.8rem)", fontWeight: 900 }}>
+            <span className="text-brand-red font-semibold tracking-tight uppercase" style={{ fontSize: "clamp(2rem, 5.8vw, 5.8rem)"}}>
               Learn Music
             </span>
-            <span className="text-brand-red font-black tracking-tight uppercase" style={{ fontSize: "clamp(2rem, 5.8vw, 5.8rem)", fontWeight: 900 }}>
+            <span className="text-brand-red font-semibold tracking-tight uppercase" style={{ fontSize: "clamp(2rem, 5.8vw, 5.8rem)"}}>
               Play with Confidence
             </span>
           </h1>
@@ -120,7 +120,7 @@ export default function AdminDashboard() {
       <section className="bg-black">
         <div className="flex flex-col items-center gap-4 pt-16 pb-2">
           <div className="flex items-center gap-3">
-            <h2 className="text-brand-red font-black text-4xl md:text-6xl tracking-tight uppercase">
+            <h2 className="text-brand-red font-semibold text-4xl md:text-6xl tracking-tight uppercase">
               What We Do
             </h2>
             <span className="bg-red-700/20 text-brand-red text-xs font-bold px-2.5 py-1 rounded">
@@ -140,7 +140,7 @@ export default function AdminDashboard() {
               <div className="w-full max-w-7xl bg-zinc-900 rounded-3xl flex flex-col md:flex-row h-[88vh]">
                 <div className="flex flex-col justify-center gap-6 p-10 md:p-16 md:w-[45%]">
                   <div className="w-10 h-[2px] rounded-full" style={{ background: "linear-gradient(to right, transparent, white, transparent)" }} />
-                  <h3 className="text-white font-black text-3xl md:text-4xl tracking-tight uppercase">
+                  <h3 className="text-white font-semibold text-3xl md:text-4xl tracking-tight uppercase">
                     {instrument.title}
                   </h3>
                   <p className="text-zinc-400 text-base leading-relaxed max-w-sm">
@@ -170,13 +170,13 @@ export default function AdminDashboard() {
       {/* ─── Quote Section ─── */}
       <section className="bg-black flex items-end min-h-screen px-6 pb-16">
         <div className="w-full flex flex-col items-center text-center gap-1">
-          <p className="font-heading text-brand-red/80 font-black text-xl md:text-3xl lg:text-4xl tracking-tight uppercase">
+          <p className="font-heading text-brand-red/80 font-semibold text-xl md:text-3xl lg:text-4xl tracking-tight uppercase">
             Every Musician Starts With A Single Note
           </p>
-          <p className="font-heading text-brand-red/30 font-black text-xl md:text-3xl lg:text-4xl tracking-tight uppercase">
+          <p className="font-heading text-brand-red/30 font-semibold text-xl md:text-3xl lg:text-4xl tracking-tight uppercase">
             Practice Turns Notes Into Music
           </p>
-          <p className="font-heading text-brand-red/15 font-black text-xl md:text-3xl lg:text-4xl tracking-tight uppercase">
+          <p className="font-heading text-brand-red/15 font-semibold text-xl md:text-3xl lg:text-4xl tracking-tight uppercase">
             Confidence Turns Music Into Performance
           </p>
         </div>
@@ -188,7 +188,7 @@ export default function AdminDashboard() {
           <div className="mb-10">
             <div className="w-12 h-[2px] rounded-full mb-4" style={{ background: "linear-gradient(to right, transparent, white, transparent)" }} />
             <div className="flex items-center gap-3">
-              <h2 className="text-brand-red font-black text-4xl md:text-6xl tracking-tight uppercase">
+              <h2 className="text-brand-red font-semibold text-4xl md:text-6xl tracking-tight uppercase">
                 Gallery
               </h2>
               <span className="bg-red-700/20 text-brand-red text-xs font-bold px-2.5 py-1 rounded">
@@ -227,7 +227,7 @@ export default function AdminDashboard() {
           <div className="flex flex-col items-center mb-20">
             <div className="w-12 h-[2px] rounded-full mb-4" style={{ background: "linear-gradient(to right, transparent, white, transparent)" }} />
             <div className="flex items-center gap-3">
-              <h2 className="text-brand-red font-black text-4xl md:text-6xl lg:text-7xl tracking-tight uppercase text-center">
+              <h2 className="text-brand-red font-semibold text-4xl md:text-6xl lg:text-7xl tracking-tight uppercase text-center">
                 About Ars Musica
               </h2>
               <span className="bg-red-700/20 text-brand-red text-xs font-bold px-2.5 py-1 rounded">
@@ -242,10 +242,10 @@ export default function AdminDashboard() {
               {[values[0], values[2]].map((item) => (
                 <div key={item.number} className="text-center px-4">
                   <div className="relative inline-block">
-                    <span className="text-zinc-700 font-black text-8xl md:text-9xl leading-none select-none">
+                    <span className="text-zinc-700 font-semibold text-8xl md:text-9xl leading-none select-none">
                       {item.number}
                     </span>
-                    <h3 className="text-brand-red font-black text-xl md:text-2xl uppercase tracking-tight absolute bottom-1 left-1/2 -translate-x-1/2">
+                    <h3 className="text-brand-red font-semibold text-xl md:text-2xl uppercase tracking-tight absolute bottom-1 left-1/2 -translate-x-1/2">
                       {item.title}
                     </h3>
                   </div>
@@ -272,10 +272,10 @@ export default function AdminDashboard() {
               {[values[1], values[3]].map((item) => (
                 <div key={item.number} className="text-center px-4">
                   <div className="relative inline-block">
-                    <span className="text-zinc-700 font-black text-8xl md:text-9xl leading-none select-none">
+                    <span className="text-zinc-700 font-semibold text-8xl md:text-9xl leading-none select-none">
                       {item.number}
                     </span>
-                    <h3 className="text-brand-red font-black text-xl md:text-2xl uppercase tracking-tight absolute bottom-1 left-1/2 -translate-x-1/2">
+                    <h3 className="text-brand-red font-semibold text-xl md:text-2xl uppercase tracking-tight absolute bottom-1 left-1/2 -translate-x-1/2">
                       {item.title}
                     </h3>
                   </div>
@@ -294,7 +294,7 @@ export default function AdminDashboard() {
         <div className="grid grid-cols-2 md:grid-cols-4 w-full">
           {stats.map((stat) => (
             <div key={stat.label} className="flex flex-col items-center justify-center text-center py-4">
-              <p className="text-zinc-300 font-black text-4xl md:text-5xl lg:text-6xl tracking-tight">
+              <p className="text-zinc-300 font-semibold text-4xl md:text-5xl lg:text-6xl tracking-tight">
                 {stat.value}
               </p>
               <p className="text-zinc-400 text-sm md:text-base mt-3 font-normal">
@@ -312,7 +312,7 @@ export default function AdminDashboard() {
           <div className="mb-16">
             <div className="w-12 h-[2px] rounded-full mb-6" style={{ background: "linear-gradient(to right, transparent, white, transparent)" }} />
             <div className="flex items-center gap-3">
-              <h2 className="text-brand-red font-black text-4xl md:text-6xl tracking-tight uppercase">
+              <h2 className="text-brand-red font-semibold text-4xl md:text-6xl tracking-tight uppercase">
                 Our Mentors
               </h2>
               <span className="bg-red-700/20 text-brand-red text-xs font-bold px-2.5 py-1 rounded">
@@ -342,7 +342,7 @@ export default function AdminDashboard() {
                   </div>
                   <div className="p-6 flex flex-col gap-3">
                     <div className="w-8 h-[2px] rounded-full" style={{ background: "linear-gradient(to right, transparent, white, transparent)" }} />
-                    <h3 className="text-white font-black text-sm md:text-base uppercase tracking-tight leading-snug">
+                    <h3 className="text-white font-semibold text-sm md:text-base uppercase tracking-tight leading-snug">
                       {mentor.name}
                     </h3>
                     <p className="text-zinc-400 text-sm leading-relaxed">
@@ -373,7 +373,7 @@ export default function AdminDashboard() {
                   </div>
                   <div className="p-6 flex flex-col gap-3">
                     <div className="w-8 h-[2px] rounded-full" style={{ background: "linear-gradient(to right, transparent, white, transparent)" }} />
-                    <h3 className="text-white font-black text-sm md:text-base uppercase tracking-tight leading-snug">
+                    <h3 className="text-white font-semibold text-sm md:text-base uppercase tracking-tight leading-snug">
                       {mentor.name}
                     </h3>
                     <p className="text-zinc-400 text-sm leading-relaxed">

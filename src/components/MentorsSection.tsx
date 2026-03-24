@@ -106,7 +106,7 @@ function MentorCard({
       </div>
       <div className="p-6 flex flex-col gap-3">
         <div className="w-8 h-[2px] rounded-full" style={{ background: "linear-gradient(to right, transparent, white, transparent)" }} />
-        <h3 className="text-white font-black text-sm md:text-base uppercase tracking-tight leading-snug">
+        <h3 className="text-white font-semibold text-sm md:text-base uppercase tracking-tight leading-snug">
           {mentor.name}
         </h3>
         <p className="text-zinc-400 text-sm leading-relaxed">
@@ -144,7 +144,7 @@ export default function MentorsSection() {
           }`}
         >
           <div className="w-12 h-[2px] rounded-full mb-6" style={{ background: "linear-gradient(to right, transparent, white, transparent)" }} />
-          <h2 className="text-brand-red font-black text-4xl md:text-6xl tracking-tight uppercase">
+          <h2 className="text-brand-red font-semibold text-4xl md:text-6xl tracking-tight uppercase">
             Our Mentors
           </h2>
         </div>

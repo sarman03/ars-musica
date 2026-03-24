@@ -22,10 +22,11 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
   font-family: "Clash Display", sans-serif;
+  font-weight: 600;
 }
 
 h2 {
-  -webkit-text-stroke: 1px currentColor;
+  -webkit-text-stroke: 0px currentColor;
 }
 
 /* Spotlight animations */

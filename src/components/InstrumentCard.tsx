@@ -33,7 +33,7 @@ export default function InstrumentCard({
         {/* Text content */}
         <div className="md:order-1 flex flex-col justify-center gap-4 md:gap-6 px-6 pb-6 md:p-16 md:w-[45%]">
           <div className="w-10 h-[2px] rounded-full" style={{ background: "linear-gradient(to right, transparent, white, transparent)" }} />
-          <h3 className="text-white font-black text-2xl md:text-4xl tracking-tight uppercase">
+          <h3 className="text-white font-semibold text-2xl md:text-4xl tracking-tight uppercase">
             {title}
           </h3>
           <p className="text-zinc-400 text-sm md:text-base leading-relaxed max-w-sm">

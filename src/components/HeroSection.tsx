@@ -1,47 +1,99 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useState, useCallback } from "react"
+import Image from "next/image"
 import WaveBars from "@/components/WaveBars"
-import LightRaysBackground from "@/components/LightRaysBackground"
+
+const slides = [
+  { src: "/hero/AAAArs.png", alt: "Ars Musica Academy" },
+  { src: "/hero/coming soon.png", alt: "Summer Camp Coming Soon" },
+]
 
 export default function HeroSection() {
   const [show, setShow] = useState(false)
+  const [current, setCurrent] = useState(0)
 
   useEffect(() => {
     const t = setTimeout(() => setShow(true), 100)
     return () => clearTimeout(t)
   }, [])
 
+  const next = useCallback(() => {
+    setCurrent((prev) => (prev + 1) % slides.length)
+  }, [])
+
+  const prev = useCallback(() => {
+    setCurrent((prev) => (prev - 1 + slides.length) % slides.length)
+  }, [])
+
+  // Auto-slide every 5 seconds
+  useEffect(() => {
+    const interval = setInterval(next, 5000)
+    return () => clearInterval(interval)
+  }, [next])
+
   return (
-    <section className="relative flex flex-col items-center justify-center min-h-screen bg-black text-center px-4 overflow-hidden">
-      <LightRaysBackground intensity={0.7} speed={1} />
+    <section className="relative flex flex-col items-center min-h-screen bg-black text-center overflow-hidden">
+      {/* Image Carousel — full width, starts right below navbar */}
+      <div className="relative w-full flex-1 mt-16 md:mt-[72px]">
+        <div className="absolute inset-0 overflow-hidden">
+          {slides.map((slide, i) => (
+            <div
+              key={slide.src}
+              className="absolute inset-0 transition-opacity duration-700 ease-in-out"
+              style={{ opacity: i === current ? 1 : 0 }}
+            >
+              <Image
+                src={slide.src}
+                alt={slide.alt}
+                fill
+                className="object-cover"
+                priority={i === 0}
+              />
+            </div>
+          ))}
+        </div>
 
-      <div className="relative z-[1] flex flex-col items-center gap-6 mt-16">
-        <h1
-          className={`flex flex-col gap-0 leading-none text-center transition-all duration-[1.2s] ease-[cubic-bezier(0.16,1,0.3,1)] ${
-            show ? "opacity-100 translate-y-0" : "opacity-0 translate-y-16"
-          }`}
+        {/* Navigation arrows */}
+        <button
+          onClick={prev}
+          className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-10 w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full bg-black/40 hover:bg-black/70 border border-white/20 text-white transition-all"
+          aria-label="Previous slide"
         >
-          <span className="text-brand-red font-black tracking-tight uppercase" style={{ fontSize: "clamp(2rem, 5.8vw, 5.8rem)", fontWeight: 900 }}>
-            Learn Music
-          </span>
-          <span className="text-brand-red font-black tracking-tight uppercase" style={{ fontSize: "clamp(2rem, 5.8vw, 5.8rem)", fontWeight: 900 }}>
-            Play with Confidence
-          </span>
-        </h1>
-
-        <p
-          className={`text-zinc-300 text-base md:text-lg max-w-lg leading-relaxed transition-all duration-[1.2s] ease-[cubic-bezier(0.16,1,0.3,1)] delay-200 ${
-            show ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-          }`}
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="15 18 9 12 15 6" />
+          </svg>
+        </button>
+        <button
+          onClick={next}
+          className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-10 w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full bg-black/40 hover:bg-black/70 border border-white/20 text-white transition-all"
+          aria-label="Next slide"
         >
-          Learn instruments and vocals with experienced teachers in a creative
-          and inspiring environment.
-        </p>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="9 18 15 12 9 6" />
+          </svg>
+        </button>
 
+        {/* Slide indicators — inside carousel */}
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 flex gap-2">
+        {slides.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => setCurrent(i)}
+            className={`h-2 rounded-full transition-all duration-300 ${
+              i === current ? "bg-white w-6" : "bg-white/40 w-2"
+            }`}
+            aria-label={`Go to slide ${i + 1}`}
+          />
+        ))}
+        </div>
+      </div>
+
+      {/* CTA Button */}
+      <div className="relative z-[2] mb-28">
         <a
           href="/contact"
-          className={`bg-red-600 hover:bg-red-500 text-white font-semibold px-10 py-4 rounded-full text-base mt-2 transition-all duration-[1.2s] ease-[cubic-bezier(0.16,1,0.3,1)] delay-[400ms] ${
+          className={`bg-red-600 hover:bg-red-500 text-white font-semibold px-10 py-4 rounded-full text-base transition-all duration-[1.2s] ease-[cubic-bezier(0.16,1,0.3,1)] delay-[400ms] ${
             show ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
           }`}
         >
@@ -51,7 +103,7 @@ export default function HeroSection() {
 
       {/* Animated wave bars at bottom — mobile version */}
       <div
-        className={`md:hidden absolute bottom-0 left-1/2 -translate-x-1/2 h-24 w-[85%] transition-all duration-[1.4s] ease-[cubic-bezier(0.16,1,0.3,1)] delay-[600ms] ${
+        className={`md:hidden absolute bottom-0 left-1/2 -translate-x-1/2 h-24 w-[85%] z-[2] transition-all duration-[1.4s] ease-[cubic-bezier(0.16,1,0.3,1)] delay-[600ms] ${
           show ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
         }`}
       >
@@ -69,7 +121,7 @@ export default function HeroSection() {
 
       {/* Animated wave bars at bottom — desktop version */}
       <div
-        className={`hidden md:block absolute bottom-0 left-1/2 -translate-x-1/2 h-24 w-[55%] transition-all duration-[1.4s] ease-[cubic-bezier(0.16,1,0.3,1)] delay-[600ms] ${
+        className={`hidden md:block absolute bottom-0 left-1/2 -translate-x-1/2 h-24 w-[55%] z-[2] transition-all duration-[1.4s] ease-[cubic-bezier(0.16,1,0.3,1)] delay-[600ms] ${
           show ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
         }`}
       >
