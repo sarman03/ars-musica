@@ -16,9 +16,7 @@ export default function Home() {
       <Navbar />
       <HeroSection />
       <WhatWeDoSection />
-      <div className="sticky top-0 z-[1]">
-        <QuoteSection />
-      </div>
+      <QuoteSection />
       <div className="relative z-[2]">
         <GallerySection />
         <AboutSection />

@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import EditableImage from "../components/EditableImage";
+import HeroSlidesManager from "../components/HeroSlidesManager";
 
 // ─── Data (mirrored exactly from main site components) ──────────────────────
 
@@ -31,6 +32,7 @@ const mentors = [
   { name: "Ranjan Dewan \u2013 Guitar Educator", description: "Ranjan Dewan is a dedicated guitar educator and performer originally from Darjeeling, with over two decades of experience in teaching and performing music. He holds an ATCL certification in Western Classical Guitar from Trinity College London, which laid the foundation for his strong musical training and technical expertise.", imageSrc: "/mentors/mentor_3.jpeg", imageAlt: "Ranjan Dewan with guitar" },
   { name: "Aro Phungshok \u2013 Piano Instructor", description: "Aro Phungshok is a passionate and dedicated piano teacher with a strong commitment to nurturing musical talent and inspiring students through the art of piano. With a warm and encouraging teaching approach, she focuses on helping students develop not only strong technical skills but also confidence, creativity, and a deep appreciation for music.", imageSrc: "/mentors/mentor_2.jpeg", imageAlt: "Aro Phungshok at piano" },
   { name: "Bonita Solomon \u2013 Piano & Music Theory Instructor | Pianist | Vocalist", description: "Bonita Solomon is a passionate musician and dedicated educator with over 18 years of experience in music performance and teaching. A trained pianist and vocalist, Bonita holds certifications from Trinity College London, UK, and has completed Grade 5 in Music Theory from ABRSM, reflecting her strong academic grounding in music.", imageSrc: "/mentors/mentor_4.jpeg", imageAlt: "Bonita Solomon" },
+  { name: "Ahao Gachui \u2013 Guitar Instructor", description: "Ahao Gachui is a passionate music educator with over 25 years of experience, specializing in guitar. He holds a Grade 8 Guitar Certification from Trinity College London. With extensive experience performing in gospel and contemporary bands, Ahao brings real-world musical insight into his teaching. He currently serves as Music Director at New Life Church, Gurgaon.", imageSrc: "/mentors/mentor_6.jpg", imageAlt: "Ahao Gachui playing guitar" },
 ];
 
 const values = [
@@ -92,27 +94,18 @@ export default function AdminDashboard() {
       <div className="h-12" />
 
       {/* ─── Hero Section ─── */}
-      <section className="relative flex flex-col items-center justify-center min-h-screen bg-black text-center px-4 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-zinc-900/30 via-transparent to-transparent" />
-        <div className="relative z-[1] flex flex-col items-center gap-6 mt-16">
-          <h1 className="flex flex-col gap-0 leading-none text-center">
-            <span className="text-brand-red font-semibold tracking-tight uppercase" style={{ fontSize: "clamp(2rem, 5.8vw, 5.8rem)"}}>
-              Learn Music
-            </span>
-            <span className="text-brand-red font-semibold tracking-tight uppercase" style={{ fontSize: "clamp(2rem, 5.8vw, 5.8rem)"}}>
-              Play with Confidence
-            </span>
-          </h1>
-          <p className="text-zinc-300 text-base md:text-lg max-w-lg leading-relaxed">
-            Learn instruments and vocals with experienced teachers in a creative
-            and inspiring environment.
+      <section className="bg-black py-8">
+        <div className="max-w-6xl mx-auto">
+          <div className="flex items-center gap-3 px-6 mb-2">
+            <div className="w-12 h-[2px] rounded-full" style={{ background: "linear-gradient(to right, transparent, white, transparent)" }} />
+            <h2 className="text-brand-red font-semibold text-2xl tracking-tight uppercase">
+              Hero Carousel
+            </h2>
+          </div>
+          <p className="text-zinc-500 text-sm px-6 mb-4">
+            Add, remove, or reorder the slides shown on the homepage hero section.
           </p>
-          <span className="bg-red-600 text-white font-semibold px-10 py-4 rounded-full text-base">
-            Let&apos;s Talk Music
-          </span>
-        </div>
-        <div className="absolute bottom-4 left-4 bg-zinc-800/80 text-zinc-400 text-xs px-3 py-1.5 rounded-lg">
-          Hero Section &mdash; No images
+          <HeroSlidesManager />
         </div>
       </section>
 

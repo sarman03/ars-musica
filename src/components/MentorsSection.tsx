@@ -39,11 +39,18 @@ const mentors = [
     imageSrc: "/mentors/mentor_4.jpeg",
     imageAlt: "Bonita Solomon",
   },
+  {
+    name: "Ahao Gachui \u2013 Guitar Instructor",
+    description:
+      "Ahao Gachui is a passionate music educator with over 25 years of experience, specializing in guitar. He holds a Grade 8 Guitar Certification from Trinity College London. With extensive experience performing in gospel and contemporary bands, Ahao brings real-world musical insight into his teaching. He currently serves as Music Director at New Life Church, Gurgaon.",
+    imageSrc: "/mentors/mentor_6.jpg",
+    imageAlt: "Ahao Gachui playing guitar",
+  },
 ];
 
 // Stagger offsets in px — middle card starts lower, side cards higher
 const staggerOffsets = [-60, 40, 100];
-const staggerOffsetsRow2 = [-40, 60];
+const staggerOffsetsRow2 = [-60, 40, 100];
 
 function MentorCard({
   mentor,
@@ -149,7 +156,7 @@ export default function MentorsSection() {
           </h2>
         </div>
 
-        {/* Mentor cards — row 1: 3 cards, row 2: 2 centered */}
+        {/* Mentor cards — row 1: 3 cards, row 2: 3 cards */}
         <div className="flex flex-col gap-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {mentors.slice(0, 3).map((mentor, i) => (
@@ -161,7 +168,7 @@ export default function MentorsSection() {
               />
             ))}
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:px-[16.67%]">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {mentors.slice(3).map((mentor, i) => (
               <MentorCard
                 key={mentor.name}

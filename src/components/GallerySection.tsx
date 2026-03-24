@@ -86,7 +86,7 @@ export default function GallerySection() {
         </div>
 
         {/* Taped photo grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-20">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-20 max-w-5xl mx-auto">
           {galleryImages.map((image, i) => (
             <TapedPhotoCard key={i} {...image} index={i} />
           ))}
