@@ -91,6 +91,16 @@ export default function GallerySection() {
             <TapedPhotoCard key={i} {...image} index={i} />
           ))}
         </div>
+
+        {/* Load More */}
+        <div className="flex justify-center mt-20">
+          <a
+            href="/gallery"
+            className="bg-red-600 hover:bg-red-500 text-white font-semibold px-10 py-4 rounded-full text-base transition-colors"
+          >
+            Load More
+          </a>
+        </div>
       </div>
     </section>
   );

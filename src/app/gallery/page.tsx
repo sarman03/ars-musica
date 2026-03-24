@@ -1,15 +1,21 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import GallerySection from "@/components/GallerySection";
+import GalleryPageContent from "@/components/GalleryPageContent";
+import LightRaysBackground from "@/components/LightRaysBackground";
 
 export default function GalleryPage() {
   return (
-    <main className="relative">
-      <Navbar />
-      <div className="pt-24">
-        <GallerySection />
+    <main className="relative bg-black">
+      <div className="fixed inset-0 z-0 pointer-events-none">
+        <LightRaysBackground intensity={0.5} />
       </div>
-      <Footer />
+      <div className="relative z-10">
+        <Navbar />
+        <div className="pt-24">
+          <GalleryPageContent />
+        </div>
+        <Footer />
+      </div>
     </main>
   );
 }

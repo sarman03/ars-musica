@@ -39,12 +39,20 @@ export default function InstrumentCard({
           <p className="text-zinc-400 text-sm md:text-base leading-relaxed max-w-sm">
             {description}
           </p>
-          <a
-            href={contactHref}
-            className="hidden md:inline-block border border-zinc-600 text-zinc-300 rounded-full px-6 py-2.5 text-sm w-fit hover:border-zinc-400 transition-colors"
-          >
-            Contact me
-          </a>
+          <div className="hidden md:flex gap-3">
+            <a
+              href={contactHref}
+              className="inline-block border border-zinc-600 text-zinc-300 rounded-full px-6 py-2.5 text-sm w-fit hover:border-zinc-400 transition-colors"
+            >
+              Contact me
+            </a>
+            <button
+              type="button"
+              className="bg-red-600 hover:bg-red-500 text-white font-semibold rounded-full px-6 py-2.5 text-sm transition-colors"
+            >
+              Book a Demo
+            </button>
+          </div>
         </div>
       </div>
     </div>

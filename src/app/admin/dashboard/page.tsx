@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import EditableImage from "../components/EditableImage";
 import HeroSlidesManager from "../components/HeroSlidesManager";
 import AffiliationsManager from "../components/AffiliationsManager";
+import GalleryImagesManager from "../components/GalleryImagesManager";
 
 // ─── Data (mirrored exactly from main site components) ──────────────────────
 
@@ -177,41 +178,18 @@ export default function AdminDashboard() {
       </section>
 
       {/* ─── Gallery Section ─── */}
-      <section className="bg-black px-6 md:px-24 lg:px-24 py-12">
-        <div className="mx-auto">
-          <div className="mb-10">
-            <div className="w-12 h-[2px] rounded-full mb-4" style={{ background: "linear-gradient(to right, transparent, white, transparent)" }} />
-            <div className="flex items-center gap-3">
-              <h2 className="text-brand-red font-semibold text-4xl md:text-6xl tracking-tight uppercase">
-                Gallery
-              </h2>
-              <span className="bg-red-700/20 text-brand-red text-xs font-bold px-2.5 py-1 rounded">
-                {galleryImages.length} IMAGES
-              </span>
-            </div>
+      <section className="bg-black py-8">
+        <div className="max-w-6xl mx-auto">
+          <div className="flex items-center gap-3 px-6 mb-2">
+            <div className="w-12 h-[2px] rounded-full" style={{ background: "linear-gradient(to right, transparent, white, transparent)" }} />
+            <h2 className="text-brand-red font-semibold text-2xl tracking-tight uppercase">
+              Gallery Images
+            </h2>
           </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-20">
-            {galleryImages.map((image, i) => (
-              <div key={i} className="relative mt-14">
-                <div
-                  className="absolute -top-4 left-0 right-0 h-5 z-10 rounded-sm shadow-md"
-                  style={{ background: "linear-gradient(to bottom, #888, #555 40%, #3a3a3a)" }}
-                />
-                <div className="relative w-full overflow-hidden rounded-2xl" style={{ boxShadow: "0 12px 40px rgba(0,0,0,0.8), 0 2px 8px rgba(0,0,0,0.6)" }}>
-                  <div className="relative aspect-square w-full">
-                    <EditableImage
-                      src={image.src}
-                      alt={image.alt}
-                      fill
-                      className="object-cover"
-                      sectionLabel={`Gallery \u2014 Image ${i + 1}`}
-                    />
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+          <p className="text-zinc-500 text-sm px-6 mb-4">
+            Add or remove gallery images shown on the gallery page.
+          </p>
+          <GalleryImagesManager />
         </div>
       </section>
 
