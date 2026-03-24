@@ -32,6 +32,9 @@ export default function Navbar() {
             <a href="/#what-we-do" className="text-brand-red hover:text-brand-red transition-colors text-sm font-medium">
               Courses
             </a>
+            <a href="/gallery" className="text-brand-red hover:text-brand-red transition-colors text-sm font-medium">
+              Gallery
+            </a>
           </div>
 
           {/* Desktop CTA */}
@@ -103,6 +106,13 @@ export default function Navbar() {
             className="text-brand-red text-lg font-medium"
           >
             Courses
+          </a>
+          <a
+            href="/gallery"
+            onClick={() => setOpen(false)}
+            className="text-brand-red text-lg font-medium"
+          >
+            Gallery
           </a>
           <a
             href="/contact"

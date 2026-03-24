@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { useImageOverride } from "@/components/ImageOverrideProvider";
+import { useImageOverride, useImageOverrideRefresh } from "@/components/ImageOverrideProvider";
 
 interface EditableImageProps {
   src: string;
@@ -22,6 +22,7 @@ export default function EditableImage({
   const [uploading, setUploading] = useState(false);
   const [uploaded, setUploaded] = useState(false);
   const resolvedSrc = useImageOverride(src);
+  const refreshOverrides = useImageOverrideRefresh();
   const [displaySrc, setDisplaySrc] = useState<string | null>(null);
 
   const currentSrc = displaySrc || resolvedSrc;
@@ -45,10 +46,11 @@ export default function EditableImage({
 
       if (data.success) {
         setUploaded(true);
+        // Refresh the global overrides so all images pick up the new URL
+        refreshOverrides();
         setTimeout(() => {
           URL.revokeObjectURL(preview);
-          // Use the blob URL returned from upload
-          setDisplaySrc(data.url || resolvedSrc);
+          setDisplaySrc(null); // Let the refreshed context handle it
           setUploaded(false);
         }, 2000);
       } else {
