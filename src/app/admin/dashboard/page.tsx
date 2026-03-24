@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import EditableImage from "../components/EditableImage";
 import HeroSlidesManager from "../components/HeroSlidesManager";
+import AffiliationsManager from "../components/AffiliationsManager";
 
 // ─── Data (mirrored exactly from main site components) ──────────────────────
 
@@ -297,6 +298,22 @@ export default function AdminDashboard() {
           ))}
         </div>
         <div className="mt-16 w-full h-[2px] rounded-full" style={{ background: "linear-gradient(to right, transparent, #3f3f46, transparent)" }} />
+      </section>
+
+      {/* ─── Affiliations Section ─── */}
+      <section className="bg-black py-8">
+        <div className="max-w-6xl mx-auto">
+          <div className="flex items-center gap-3 px-6 mb-2">
+            <div className="w-12 h-[2px] rounded-full" style={{ background: "linear-gradient(to right, transparent, white, transparent)" }} />
+            <h2 className="text-brand-red font-semibold text-2xl tracking-tight uppercase">
+              Affiliations
+            </h2>
+          </div>
+          <p className="text-zinc-500 text-sm px-6 mb-4">
+            Add or remove affiliation logos shown on the homepage.
+          </p>
+          <AffiliationsManager />
+        </div>
       </section>
 
       {/* ─── Mentors Section ─── */}

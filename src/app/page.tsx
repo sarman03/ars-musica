@@ -5,6 +5,7 @@ import QuoteSection from "@/components/QuoteSection";
 import GallerySection from "@/components/GallerySection";
 import AboutSection from "@/components/AboutSection";
 import StatsSection from "@/components/StatsSection";
+import AffiliationSection from "@/components/AffiliationSection";
 import MentorsSection from "@/components/MentorsSection";
 import FaqSection from "@/components/FaqSection";
 import ContactSection from "@/components/ContactSection";
@@ -21,6 +22,7 @@ export default function Home() {
         <GallerySection />
         <AboutSection />
         <StatsSection />
+        <AffiliationSection />
         <MentorsSection />
         <FaqSection />
         <ContactSection />

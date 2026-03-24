@@ -75,12 +75,6 @@ export default function StatsSection() {
           </div>
         ))}
       </div>
-      <div
-        className="mt-16 w-full h-[2px] rounded-full"
-        style={{
-          background: "linear-gradient(to right, transparent, #3f3f46, transparent)",
-        }}
-      />
     </section>
   );
 }
