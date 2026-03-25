@@ -114,7 +114,7 @@ export default function HeroSection() {
       </div>
 
       {/* CTA Button */}
-      <div className="relative z-[2] mb-28">
+      <div className="relative z-[2] mt-6 mb-28">
         <a
           href="/contact"
           className={`bg-red-600 hover:bg-red-500 text-white font-semibold px-10 py-4 rounded-full text-base transition-all duration-[1.2s] ease-[cubic-bezier(0.16,1,0.3,1)] delay-[400ms] ${

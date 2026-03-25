@@ -33,7 +33,7 @@ export default function InstrumentCard({
         {/* Text content */}
         <div className="md:order-1 flex flex-col justify-center gap-4 md:gap-6 px-6 pb-6 md:p-16 md:w-[45%]">
           <div className="w-10 h-[2px] rounded-full" style={{ background: "linear-gradient(to right, transparent, white, transparent)" }} />
-          <h3 className="text-white font-semibold text-2xl md:text-4xl tracking-tight uppercase">
+          <h3 className="text-brand-red font-semibold text-2xl md:text-4xl tracking-tight uppercase">
             {title}
           </h3>
           <p className="text-zinc-400 text-sm md:text-base leading-relaxed max-w-sm">
@@ -46,12 +46,14 @@ export default function InstrumentCard({
             >
               Contact me
             </a>
-            <button
-              type="button"
+            <a
+              href="https://wa.me/919818759189?text=Hi%2C%20I%20would%20like%20to%20book%20a%20demo"
+              target="_blank"
+              rel="noopener noreferrer"
               className="bg-red-600 hover:bg-red-500 text-white font-semibold rounded-full px-6 py-2.5 text-sm transition-colors"
             >
               Book a Demo
-            </button>
+            </a>
           </div>
         </div>
       </div>

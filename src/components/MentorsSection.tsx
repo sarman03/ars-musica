@@ -49,8 +49,8 @@ const mentors = [
 ];
 
 // Stagger offsets in px — middle card starts lower, side cards higher
-const staggerOffsets = [-60, 40, 100];
-const staggerOffsetsRow2 = [-60, 40, 100];
+const staggerOffsets = [-20, 15, 30];
+const staggerOffsetsRow2 = [-20, 15, 30];
 
 function MentorCard({
   mentor,
@@ -101,7 +101,7 @@ function MentorCard({
       }`}
       style={{ transform: `translateY(${visible ? offset : offset + 60}px)`, transitionDelay: `${delay}ms` }}
     >
-      <div className="relative w-full aspect-[3/4] rounded-t-[999px] overflow-hidden p-3 pt-4">
+      <div className="relative w-full aspect-square rounded-t-[999px] overflow-hidden p-3 pt-4">
         <div className="relative w-full h-full rounded-t-[999px] overflow-hidden">
           <SiteImage
             src={mentor.imageSrc}

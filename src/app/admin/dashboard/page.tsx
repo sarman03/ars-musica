@@ -5,6 +5,7 @@ import EditableImage from "../components/EditableImage";
 import HeroSlidesManager from "../components/HeroSlidesManager";
 import AffiliationsManager from "../components/AffiliationsManager";
 import GalleryImagesManager from "../components/GalleryImagesManager";
+import GalleryVideosManager from "../components/GalleryVideosManager";
 
 // ─── Data (mirrored exactly from main site components) ──────────────────────
 
@@ -177,19 +178,68 @@ export default function AdminDashboard() {
         </div>
       </section>
 
-      {/* ─── Gallery Section ─── */}
+      {/* ─── Home Page Gallery ─── */}
+      <section className="bg-black py-8">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="flex items-center gap-3 mb-2">
+            <div className="w-12 h-[2px] rounded-full" style={{ background: "linear-gradient(to right, transparent, white, transparent)" }} />
+            <h2 className="text-brand-red font-semibold text-2xl tracking-tight uppercase">
+              Home Page Gallery
+            </h2>
+            <span className="bg-red-700/20 text-brand-red text-xs font-bold px-2.5 py-1 rounded">
+              {galleryImages.length} IMAGES
+            </span>
+          </div>
+          <p className="text-zinc-500 text-sm mb-6">
+            Click on any image to replace it. These are shown on the homepage gallery section.
+          </p>
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+            {galleryImages.map((image, i) => (
+              <div
+                key={i}
+                className="relative aspect-square rounded-xl overflow-hidden border border-zinc-700/40"
+              >
+                <EditableImage
+                  src={image.src}
+                  alt={image.alt}
+                  fill
+                  className="object-cover"
+                  sectionLabel={`Home Gallery — Image ${i + 1}`}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ─── Gallery Page ─── */}
       <section className="bg-black py-8">
         <div className="max-w-6xl mx-auto">
           <div className="flex items-center gap-3 px-6 mb-2">
             <div className="w-12 h-[2px] rounded-full" style={{ background: "linear-gradient(to right, transparent, white, transparent)" }} />
             <h2 className="text-brand-red font-semibold text-2xl tracking-tight uppercase">
-              Gallery Images
+              Gallery Page — Photos
             </h2>
           </div>
           <p className="text-zinc-500 text-sm px-6 mb-4">
-            Add or remove gallery images shown on the gallery page.
+            Add or remove photos shown on the /gallery page.
           </p>
           <GalleryImagesManager />
+        </div>
+      </section>
+
+      <section className="bg-black py-8">
+        <div className="max-w-6xl mx-auto">
+          <div className="flex items-center gap-3 px-6 mb-2">
+            <div className="w-12 h-[2px] rounded-full" style={{ background: "linear-gradient(to right, transparent, white, transparent)" }} />
+            <h2 className="text-brand-red font-semibold text-2xl tracking-tight uppercase">
+              Gallery Page — Videos
+            </h2>
+          </div>
+          <p className="text-zinc-500 text-sm px-6 mb-4">
+            Add or remove videos shown on the /gallery page.
+          </p>
+          <GalleryVideosManager />
         </div>
       </section>
 

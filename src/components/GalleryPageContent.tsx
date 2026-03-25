@@ -1,7 +1,8 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-const videos = [
+
+const DEFAULT_VIDEOS = [
   "https://c1tjfnbjayx7u69m.public.blob.vercel-storage.com/gallery-videos/VID-20230718-WA0002_1.mp4",
   "https://c1tjfnbjayx7u69m.public.blob.vercel-storage.com/gallery-videos/VID-20230718-WA0002_2.mp4",
   "https://c1tjfnbjayx7u69m.public.blob.vercel-storage.com/gallery-videos/IMG_1865.MOV",
@@ -44,7 +45,7 @@ function useReveal(threshold = 0.15) {
   return { ref, visible };
 }
 
-function VideoCarousel({ videosHeading }: { videosHeading: { ref: React.RefObject<HTMLDivElement | null>; visible: boolean } }) {
+function VideoCarousel({ videosHeading, videos }: { videosHeading: { ref: React.RefObject<HTMLDivElement | null>; visible: boolean }; videos: string[] }) {
   const [active, setActive] = useState(0);
   const sectionRef = useRef<HTMLDivElement>(null);
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
@@ -60,7 +61,7 @@ function VideoCarousel({ videosHeading }: { videosHeading: { ref: React.RefObjec
 
   const handleEnded = useCallback(() => {
     setActive((a) => (a + 1) % videos.length);
-  }, []);
+  }, [videos.length]);
 
   // Detect when section enters viewport — lazy load videos
   useEffect(() => {
@@ -126,7 +127,7 @@ function VideoCarousel({ videosHeading }: { videosHeading: { ref: React.RefObjec
         </div>
 
         {/* Center (active) */}
-        <div className="flex-1 aspect-video bg-zinc-900 rounded-2xl border border-zinc-700/40 overflow-hidden transition-all duration-500">
+        <div className="relative flex-1 aspect-video bg-zinc-900 rounded-2xl border border-zinc-700/40 overflow-hidden transition-all duration-500">
           {hasBeenInView && (
             <video
               ref={(el) => { videoRefs.current[active] = el; }}
@@ -137,6 +138,30 @@ function VideoCarousel({ videosHeading }: { videosHeading: { ref: React.RefObjec
               preload="auto"
               onEnded={handleEnded}
             />
+          )}
+
+          {/* Navigation arrows */}
+          {videos.length > 1 && (
+            <>
+              <button
+                onClick={() => goTo(prev)}
+                className="absolute left-4 md:left-6 top-1/2 -translate-y-1/2 z-10 w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full bg-black/40 hover:bg-black/70 border border-white/20 text-white transition-all"
+                aria-label="Previous video"
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="15 18 9 12 15 6" />
+                </svg>
+              </button>
+              <button
+                onClick={() => goTo(next)}
+                className="absolute right-4 md:right-6 top-1/2 -translate-y-1/2 z-10 w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full bg-black/40 hover:bg-black/70 border border-white/20 text-white transition-all"
+                aria-label="Next video"
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="9 18 15 12 9 6" />
+                </svg>
+              </button>
+            </>
           )}
         </div>
 
@@ -179,12 +204,22 @@ export default function GalleryPageContent() {
   const photosHeading = useReveal();
   const videosHeading = useReveal();
   const [galleryImages, setGalleryImages] = useState<GalleryImage[]>(DEFAULT_IMAGES);
+  const [videoUrls, setVideoUrls] = useState<string[]>(DEFAULT_VIDEOS);
 
   useEffect(() => {
     fetch("/api/gallery-images")
       .then((res) => res.json())
       .then((data) => {
         if (Array.isArray(data) && data.length > 0) setGalleryImages(data);
+      })
+      .catch(() => {});
+
+    fetch("/api/gallery-videos")
+      .then((res) => res.json())
+      .then((data) => {
+        if (Array.isArray(data) && data.length > 0) {
+          setVideoUrls(data.map((v: { src: string }) => v.src));
+        }
       })
       .catch(() => {});
   }, []);
@@ -267,7 +302,9 @@ export default function GalleryPageContent() {
       </div>
 
       {/* ─── Videos ─── */}
-      <VideoCarousel videosHeading={videosHeading} />
+      {videoUrls.length > 0 && (
+        <VideoCarousel videosHeading={videosHeading} videos={videoUrls} />
+      )}
     </section>
   );
 }

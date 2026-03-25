@@ -37,13 +37,23 @@ export default function Navbar() {
             </a>
           </div>
 
-          {/* Desktop CTA */}
-          <a
-            href="/contact"
-            className="hidden md:block border border-zinc-500 text-zinc-300 rounded-full px-5 py-2 text-sm hover:border-zinc-300 transition-colors"
-          >
-            Get in touch
-          </a>
+          {/* Desktop CTAs */}
+          <div className="hidden md:flex items-center gap-3">
+            <a
+              href="https://wa.me/919818759189?text=Hi%2C%20I%20would%20like%20to%20book%20a%20demo"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-red-600 hover:bg-red-500 text-white font-semibold rounded-full px-5 py-2 text-sm transition-colors"
+            >
+              Book a Demo
+            </a>
+            <a
+              href="/contact"
+              className="border border-zinc-500 text-zinc-300 rounded-full px-5 py-2 text-sm hover:border-zinc-300 transition-colors"
+            >
+              Get in touch
+            </a>
+          </div>
 
           {/* Mobile hamburger */}
           <button
