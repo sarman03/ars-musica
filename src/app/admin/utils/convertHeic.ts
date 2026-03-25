@@ -1,5 +1,3 @@
-import heic2any from "heic2any";
-
 const HEIC_TYPES = ["image/heic", "image/heif", "image/heic-sequence", "image/heif-sequence"];
 
 function isHeicFile(file: File): boolean {
@@ -10,6 +8,8 @@ function isHeicFile(file: File): boolean {
 
 export async function convertIfHeic(file: File): Promise<Blob> {
   if (!isHeicFile(file)) return file;
+
+  const heic2any = (await import("heic2any")).default;
 
   const converted = await heic2any({
     blob: file,
