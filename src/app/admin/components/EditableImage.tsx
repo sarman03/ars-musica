@@ -3,6 +3,7 @@
 import { useRef, useState } from "react";
 import { useImageOverride, useImageOverrideRefresh } from "@/components/ImageOverrideProvider";
 import ImageCropModal from "./ImageCropModal";
+import { convertIfHeic } from "../utils/convertHeic";
 
 interface EditableImageProps {
   src: string;
@@ -29,15 +30,19 @@ export default function EditableImage({
 
   const currentSrc = displaySrc || resolvedSrc;
 
-  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    // Open cropper with the selected file
-    const preview = URL.createObjectURL(file);
-    setCropSrc(preview);
-
     if (fileInputRef.current) fileInputRef.current.value = "";
+
+    try {
+      const converted = await convertIfHeic(file);
+      const preview = URL.createObjectURL(converted);
+      setCropSrc(preview);
+    } catch {
+      alert("Could not load this image. Please try a different format.");
+    }
   };
 
   const handleCropComplete = async (croppedBlob: Blob) => {

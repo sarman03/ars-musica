@@ -5,11 +5,40 @@ import LightRaysBackground from "@/components/LightRaysBackground";
 
 export default function ContactForm() {
   const [show, setShow] = useState(false);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [city, setCity] = useState("");
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
     const t = setTimeout(() => setShow(true), 100);
     return () => clearTimeout(t);
   }, []);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!name || !email || !phone || !city) return;
+
+    const text = [
+      `Hello Ars Musica,`,
+      ``,
+      `I'm interested in learning more about your music classes. Here are my details:`,
+      ``,
+      `Name: ${name}`,
+      `Email: ${email}`,
+      `Phone: ${phone}`,
+      `City: ${city}`,
+      ...(message ? [``, `Message: ${message}`] : []),
+      ``,
+      `Looking forward to hearing from you.`,
+    ].join("\n");
+
+    window.open(
+      `https://wa.me/919818759189?text=${encodeURIComponent(text)}`,
+      "_blank"
+    );
+  };
 
   return (
     <section className="relative bg-black min-h-screen pt-32 pb-24 px-6 overflow-hidden">
@@ -91,6 +120,7 @@ export default function ContactForm() {
 
         {/* Form */}
         <form
+          onSubmit={handleSubmit}
           className={`bg-zinc-900 border border-zinc-800 rounded-2xl p-8 flex flex-col gap-6 transition-[opacity,transform] duration-[1.2s] ease-[cubic-bezier(0.16,1,0.3,1)] delay-[600ms] will-change-[opacity,transform] ${
             show ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
           }`}
@@ -99,6 +129,9 @@ export default function ContactForm() {
             <label className="text-zinc-300 text-sm font-medium mb-2 block">Your Name*</label>
             <input
               type="text"
+              required
+              value={name}
+              onChange={(e) => setName(e.target.value)}
               placeholder="Jane Smith"
               className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-3 text-sm text-zinc-300 placeholder:text-zinc-600 outline-none focus:border-zinc-500 transition-colors"
             />
@@ -107,7 +140,10 @@ export default function ContactForm() {
             <label className="text-zinc-300 text-sm font-medium mb-2 block">Your Email*</label>
             <input
               type="email"
-              placeholder="arsmusica.academy@gmail.com"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="your@email.com"
               className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-3 text-sm text-zinc-300 placeholder:text-zinc-600 outline-none focus:border-zinc-500 transition-colors"
             />
           </div>
@@ -115,7 +151,10 @@ export default function ContactForm() {
             <label className="text-zinc-300 text-sm font-medium mb-2 block">Your Phone*</label>
             <input
               type="tel"
-              placeholder="Collaboration request"
+              required
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              placeholder="+91 98765 43210"
               className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-3 text-sm text-zinc-300 placeholder:text-zinc-600 outline-none focus:border-zinc-500 transition-colors"
             />
           </div>
@@ -123,13 +162,18 @@ export default function ContactForm() {
             <label className="text-zinc-300 text-sm font-medium mb-2 block">Your City*</label>
             <input
               type="text"
-              placeholder="Collaboration request"
+              required
+              value={city}
+              onChange={(e) => setCity(e.target.value)}
+              placeholder="New Delhi"
               className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-3 text-sm text-zinc-300 placeholder:text-zinc-600 outline-none focus:border-zinc-500 transition-colors"
             />
           </div>
           <div>
             <label className="text-zinc-300 text-sm font-medium mb-2 block">Your Message (optional)</label>
             <textarea
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
               placeholder="Let's make something happen..."
               rows={5}
               className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-3 text-sm text-zinc-300 placeholder:text-zinc-600 outline-none focus:border-zinc-500 transition-colors resize-y"
