@@ -141,7 +141,7 @@ export default function MentorsSection() {
   }, []);
 
   return (
-    <section className="bg-black px-6 md:px-16 lg:px-24 py-24">
+    <section id="mentors" className="bg-black px-6 md:px-16 lg:px-24 py-24">
       <div className="max-w-6xl mx-auto">
         {/* Heading */}
         <div

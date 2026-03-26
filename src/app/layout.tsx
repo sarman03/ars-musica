@@ -2,12 +2,72 @@ import type { Metadata } from "next";
 import { ImageOverrideProvider } from "@/components/ImageOverrideProvider";
 import "./globals.css";
 
+const siteUrl = "https://arsmusicaacademy.com";
+
 export const metadata: Metadata = {
-  title: "Ars Musica",
-  description: "Learn instruments and vocals with experienced teachers in a creative and inspiring environment.",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: "Ars Musica Academy — Music Classes in Faridabad",
+    template: "%s | Ars Musica Academy",
+  },
+  description:
+    "Ars Musica Academy offers professional music classes in Faridabad — Guitar, Piano, Drums, Vocals, Keyboard, Ukulele & more. Trinity, Rockschool & ABRSM exam preparation. Enroll today!",
+  keywords: [
+    "music classes Faridabad",
+    "guitar classes Faridabad",
+    "piano classes Faridabad",
+    "drum classes Faridabad",
+    "vocal training Faridabad",
+    "keyboard classes Faridabad",
+    "ukulele classes Faridabad",
+    "music academy Faridabad",
+    "Trinity exam preparation",
+    "Rockschool exam",
+    "ABRSM exam India",
+    "online music classes India",
+    "Ars Musica Academy",
+  ],
   icons: {
     icon: "/logo/logo.jpeg",
     apple: "/logo/logo.jpeg",
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_IN",
+    url: siteUrl,
+    siteName: "Ars Musica Academy",
+    title: "Ars Musica Academy — Music Classes in Faridabad",
+    description:
+      "Professional music classes in Faridabad — Guitar, Piano, Drums, Vocals & more. Trinity, Rockschool & ABRSM exam preparation.",
+    images: [
+      {
+        url: "/logo/logo.jpeg",
+        width: 800,
+        height: 800,
+        alt: "Ars Musica Academy",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Ars Musica Academy — Music Classes in Faridabad",
+    description:
+      "Professional music classes in Faridabad — Guitar, Piano, Drums, Vocals & more. Trinity, Rockschool & ABRSM exam preparation.",
+    images: ["/logo/logo.jpeg"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  alternates: {
+    canonical: siteUrl,
   },
 };
 
