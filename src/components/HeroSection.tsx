@@ -52,9 +52,9 @@ export default function HeroSection() {
   }, [next, slides.length])
 
   return (
-    <section className="relative flex flex-col items-center min-h-screen bg-black text-center overflow-hidden">
+    <section className="relative flex flex-col items-center min-h-[auto] md:min-h-screen bg-black text-center overflow-hidden">
       {/* Image Carousel — full width, starts right below navbar */}
-      <div className="relative w-full flex-1 mt-16 md:mt-[72px]">
+      <div className="relative w-full h-[45vh] md:h-auto md:flex-1 mt-16 md:mt-[72px]">
         <div className="absolute inset-0 overflow-hidden">
           {slides.map((slide, i) => (
             <div
@@ -66,7 +66,7 @@ export default function HeroSection() {
                 src={slide.src}
                 alt={slide.alt}
                 fill
-                className="object-cover"
+                className="object-contain md:object-cover"
                 priority={i === 0}
                 unoptimized={slide.src.startsWith("http")}
               />
@@ -114,7 +114,7 @@ export default function HeroSection() {
       </div>
 
       {/* CTA Button */}
-      <div className="relative z-[2] mt-6">
+      <div className="relative z-[2] mt-5 mb-6 md:mt-6 md:mb-0">
         <a
           href="/contact"
           className={`bg-red-600 hover:bg-red-500 text-white font-semibold px-10 py-4 rounded-full text-base transition-all duration-[1.2s] ease-[cubic-bezier(0.16,1,0.3,1)] delay-[400ms] ${
@@ -127,7 +127,7 @@ export default function HeroSection() {
 
       {/* Animated wave bars at bottom — mobile version */}
       <div
-        className={`md:hidden relative z-[2] mt-8 mb-2 h-16 w-[85%] transition-all duration-[1.4s] ease-[cubic-bezier(0.16,1,0.3,1)] delay-[600ms] ${
+        className={`md:hidden relative z-[2] mt-4 mb-6 h-16 w-[85%] transition-all duration-[1.4s] ease-[cubic-bezier(0.16,1,0.3,1)] delay-[600ms] ${
           show ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
         }`}
       >

@@ -6,7 +6,7 @@ export default function ContactSection() {
   return (
     <section
       id="contact"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-black"
+      className="relative min-h-[65vh] md:min-h-screen flex items-center justify-center overflow-hidden bg-black"
     >
       {/* Background image */}
       <div
