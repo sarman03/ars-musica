@@ -63,7 +63,7 @@ export default function WhatWeDoSection() {
   return (
     <section id="what-we-do" className="bg-black">
       {/* Section heading */}
-      <div className="flex flex-col items-center gap-4 pt-16 pb-2">
+      <div className="flex flex-col items-center gap-4 pt-8 pb-2">
         <h2 className="text-brand-red font-semibold text-4xl md:text-6xl tracking-tight uppercase">
           What We Do
         </h2>

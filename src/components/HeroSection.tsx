@@ -127,7 +127,7 @@ export default function HeroSection() {
 
       {/* Animated wave bars at bottom — mobile version */}
       <div
-        className={`md:hidden relative z-[2] mt-6 mb-4 h-16 w-[85%] transition-all duration-[1.4s] ease-[cubic-bezier(0.16,1,0.3,1)] delay-[600ms] ${
+        className={`md:hidden relative z-[2] mt-8 mb-2 h-16 w-[85%] transition-all duration-[1.4s] ease-[cubic-bezier(0.16,1,0.3,1)] delay-[600ms] ${
           show ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
         }`}
       >
@@ -145,7 +145,7 @@ export default function HeroSection() {
 
       {/* Animated wave bars at bottom — desktop version */}
       <div
-        className={`hidden md:block relative z-[2] mt-6 mb-4 h-16 w-[55%] transition-all duration-[1.4s] ease-[cubic-bezier(0.16,1,0.3,1)] delay-[600ms] ${
+        className={`hidden md:block relative z-[2] mt-12 mb-2 h-16 w-[55%] transition-all duration-[1.4s] ease-[cubic-bezier(0.16,1,0.3,1)] delay-[600ms] ${
           show ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
         }`}
       >
