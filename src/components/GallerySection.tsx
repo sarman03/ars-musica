@@ -98,7 +98,7 @@ export default function GallerySection() {
             href="/gallery"
             className="bg-red-600 hover:bg-red-500 text-white font-semibold px-10 py-4 rounded-full text-base transition-colors"
           >
-            Load More
+            Explore More
           </a>
         </div>
       </div>
