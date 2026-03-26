@@ -9,6 +9,7 @@ import AffiliationSection from "@/components/AffiliationSection";
 import MentorsSection from "@/components/MentorsSection";
 import FaqSection from "@/components/FaqSection";
 import ContactSection from "@/components/ContactSection";
+import MapSection from "@/components/MapSection";
 import Footer from "@/components/Footer";
 
 export default function Home() {
@@ -26,6 +27,7 @@ export default function Home() {
         <MentorsSection />
         <FaqSection />
         <ContactSection />
+        <MapSection />
         <Footer />
       </div>
     </main>
