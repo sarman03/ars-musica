@@ -3,7 +3,14 @@
 import SiteImage from "./SiteImage";
 import { useEffect, useRef, useState } from "react";
 
-const mentors = [
+interface MentorData {
+  name: string;
+  description: string;
+  imageSrc: string;
+  imageAlt: string;
+}
+
+const DEFAULT_MENTORS: MentorData[] = [
   {
     name: "Nawin Rai - Ars Musica Academy",
     description:
@@ -57,7 +64,7 @@ function MentorCard({
   initialOffset,
   delay = 0,
 }: {
-  mentor: (typeof mentors)[0];
+  mentor: MentorData;
   initialOffset: number;
   delay?: number;
 }) {
@@ -128,6 +135,16 @@ function MentorCard({
 export default function MentorsSection() {
   const headingRef = useRef<HTMLDivElement>(null);
   const [headingVisible, setHeadingVisible] = useState(false);
+  const [mentors, setMentors] = useState<MentorData[] | null>(null);
+
+  useEffect(() => {
+    fetch("/api/mentors")
+      .then((res) => res.json())
+      .then((data) => {
+        setMentors(Array.isArray(data) && data.length > 0 ? data : DEFAULT_MENTORS);
+      })
+      .catch(() => setMentors(DEFAULT_MENTORS));
+  }, []);
 
   useEffect(() => {
     const el = headingRef.current;
@@ -139,6 +156,12 @@ export default function MentorsSection() {
     obs.observe(el);
     return () => obs.disconnect();
   }, []);
+
+  const items = mentors ?? [];
+  const rows: MentorData[][] = [];
+  for (let i = 0; i < items.length; i += 3) {
+    rows.push(items.slice(i, i + 3));
+  }
 
   return (
     <section id="mentors" className="bg-black px-6 md:px-16 lg:px-24 py-24">
@@ -156,28 +179,20 @@ export default function MentorsSection() {
           </h2>
         </div>
 
-        {/* Mentor cards — row 1: 3 cards, row 2: 3 cards */}
+        {/* Mentor cards — rows of 3 */}
         <div className="flex flex-col gap-6">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {mentors.slice(0, 3).map((mentor, i) => (
-              <MentorCard
-                key={mentor.name}
-                mentor={mentor}
-                initialOffset={staggerOffsets[i]}
-                delay={i * 150}
-              />
-            ))}
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {mentors.slice(3).map((mentor, i) => (
-              <MentorCard
-                key={mentor.name}
-                mentor={mentor}
-                initialOffset={staggerOffsetsRow2[i]}
-                delay={i * 150}
-              />
-            ))}
-          </div>
+          {rows.map((row, rowIndex) => (
+            <div key={rowIndex} className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {row.map((mentor, i) => (
+                <MentorCard
+                  key={mentor.name}
+                  mentor={mentor}
+                  initialOffset={staggerOffsets[i % 3]}
+                  delay={i * 150}
+                />
+              ))}
+            </div>
+          ))}
         </div>
       </div>
     </section>

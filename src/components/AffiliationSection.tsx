@@ -17,15 +17,15 @@ interface Affiliation {
 export default function AffiliationSection() {
   const headingRef = useRef<HTMLDivElement>(null);
   const [headingVisible, setHeadingVisible] = useState(false);
-  const [affiliations, setAffiliations] = useState<Affiliation[]>(DEFAULT_AFFILIATIONS);
+  const [affiliations, setAffiliations] = useState<Affiliation[] | null>(null);
 
   useEffect(() => {
     fetch("/api/affiliations")
       .then((res) => res.json())
       .then((data) => {
-        if (Array.isArray(data) && data.length > 0) setAffiliations(data);
+        setAffiliations(Array.isArray(data) && data.length > 0 ? data : DEFAULT_AFFILIATIONS);
       })
-      .catch(() => {});
+      .catch(() => setAffiliations(DEFAULT_AFFILIATIONS));
   }, []);
 
   useEffect(() => {
@@ -45,7 +45,8 @@ export default function AffiliationSection() {
   }, []);
 
   // Duplicate items for seamless loop
-  const items = [...affiliations, ...affiliations];
+  const resolved = affiliations ?? [];
+  const items = [...resolved, ...resolved];
 
   return (
     <section className="bg-black px-6 md:px-16 lg:px-24 py-24 overflow-hidden">

@@ -6,19 +6,10 @@ import HeroSlidesManager from "../components/HeroSlidesManager";
 import AffiliationsManager from "../components/AffiliationsManager";
 import GalleryImagesManager from "../components/GalleryImagesManager";
 import GalleryVideosManager from "../components/GalleryVideosManager";
+import CoursesManager from "../components/CoursesManager";
+import MentorsManager from "../components/MentorsManager";
 
 // ─── Data (mirrored exactly from main site components) ──────────────────────
-
-const instruments = [
-  { title: "Drums", description: "Learn rhythm, timing, drum patterns, fills, and live performance skills. Our classes help students build strong groove and coordination.", imageSrc: "/about_cards/drums.jpeg", imageAlt: "Drum set close-up" },
-  { title: "Guitar", description: "Acoustic and electric guitar training covering chords, strumming, scales, riffs, and popular songs for beginners to advanced learners.", imageSrc: "/about_cards/guitar.jpeg", imageAlt: "Person playing guitar" },
-  { title: "Vocals", description: "Improve your singing with breathing techniques, pitch control, vocal exercises, and performance training.", imageSrc: "/about_cards/vocals.jpeg", imageAlt: "Young singer in recording studio" },
-  { title: "Piano", description: "Learn piano fundamentals including scales, chords, melodies, and music reading with structured lessons.", imageSrc: "/about_cards/piano.jpeg", imageAlt: "Hands playing piano keys" },
-  { title: "Keyboard", description: "Electronic keyboard training focusing on melodies, chord progressions, and accompaniment styles.", imageSrc: "/about_cards/keyboard.jpeg", imageAlt: "Person playing electronic keyboard" },
-  { title: "Ukulele", description: "A fun and beginner-friendly instrument. Learn chords, strumming patterns, and play your favorite songs quickly.", imageSrc: "/about_cards/ukele.jpeg", imageAlt: "Teacher and student with ukulele" },
-  { title: "Exam", description: "We prepare students for graded music exams from Trinity College London, Rockschool London, and ABRSM. These exams allow students to formally validate their skills as they progress.", imageSrc: "/exam.jpg", imageAlt: "Music producer at mixing console" },
-  { title: "Online Classes", description: "We offer live, interactive online classes designed to provide the same structured learning experience as in-person sessions, with personalized guidance and regular feedback.", imageSrc: "/about_cards/class.jpeg", imageAlt: "Person attending online music class on laptop" },
-];
 
 const galleryImages = [
   { src: "/gallery/gallery_1.jpeg", alt: "Student receiving certificate" },
@@ -27,15 +18,6 @@ const galleryImages = [
   { src: "/gallery/gallery_4.jpeg", alt: "Certificate presentation" },
   { src: "/gallery/gallery_5.jpeg", alt: "Student practicing drums" },
   { src: "/gallery/gallery_last.jpg", alt: "Young singer performing" },
-];
-
-const mentors = [
-  { name: "Nawin Rai - Ars Musica Academy", description: "He is also an accomplished drummer and percussionist, Nawin performs with well-known rock bands such as Squarez Attached and Esmond Lama. He is regularly invited for collaborations and special sessions with leading bands and artists across the NCR music scene, earning him respect as both a performer and a collaborator.", imageSrc: "/mentors/mentor_1.jpeg", imageAlt: "Nawin Rai playing drums" },
-  { name: "Rosemary Deosa \u2013 Co-Founder | Vocal Instructor | Singer | Performer | Songwriter | Composer", description: "Rosemary Deosa is a passionate and accomplished vocalist, performer, and music educator with over 11 years of experience in teaching and live performance. As the Co-Founder of Ars Musica Academy, she plays a vital role in shaping the academy\u2019s artistic vision, nurturing a culture that is student-focused, expressive, and rooted in musical excellence.", imageSrc: "/mentors/mentor_5.jpeg", imageAlt: "Rosemary Deosa performing" },
-  { name: "Ranjan Dewan \u2013 Guitar Educator", description: "Ranjan Dewan is a dedicated guitar educator and performer originally from Darjeeling, with over two decades of experience in teaching and performing music. He holds an ATCL certification in Western Classical Guitar from Trinity College London, which laid the foundation for his strong musical training and technical expertise.", imageSrc: "/mentors/mentor_3.jpeg", imageAlt: "Ranjan Dewan with guitar" },
-  { name: "Aro Phungshok \u2013 Piano Instructor", description: "Aro Phungshok is a passionate and dedicated piano teacher with a strong commitment to nurturing musical talent and inspiring students through the art of piano. With a warm and encouraging teaching approach, she focuses on helping students develop not only strong technical skills but also confidence, creativity, and a deep appreciation for music.", imageSrc: "/mentors/mentor_2.jpeg", imageAlt: "Aro Phungshok at piano" },
-  { name: "Bonita Solomon \u2013 Piano & Music Theory Instructor | Pianist | Vocalist", description: "Bonita Solomon is a passionate musician and dedicated educator with over 18 years of experience in music performance and teaching. A trained pianist and vocalist, Bonita holds certifications from Trinity College London, UK, and has completed Grade 5 in Music Theory from ABRSM, reflecting her strong academic grounding in music.", imageSrc: "/mentors/mentor_4.jpeg", imageAlt: "Bonita Solomon" },
-  { name: "Ahao Gachui \u2013 Guitar Instructor", description: "Ahao Gachui is a passionate music educator with over 25 years of experience, specializing in guitar. He holds a Grade 8 Guitar Certification from Trinity College London. With extensive experience performing in gospel and contemporary bands, Ahao brings real-world musical insight into his teaching. He currently serves as Music Director at New Life Church, Gurgaon.", imageSrc: "/mentors/mentor_6.jpg", imageAlt: "Ahao Gachui playing guitar" },
 ];
 
 const values = [
@@ -112,55 +94,20 @@ export default function AdminDashboard() {
         </div>
       </section>
 
-      {/* ─── What We Do Section (sticky card stack) ─── */}
-      <section className="bg-black">
-        <div className="flex flex-col items-center gap-4 pt-16 pb-2">
-          <div className="flex items-center gap-3">
-            <h2 className="text-brand-red font-semibold text-4xl md:text-6xl tracking-tight uppercase">
-              What We Do
+      {/* ─── What We Do Section ─── */}
+      <section className="bg-black py-8">
+        <div className="max-w-6xl mx-auto">
+          <div className="flex items-center gap-3 px-6 mb-2">
+            <div className="w-12 h-[2px] rounded-full" style={{ background: "linear-gradient(to right, transparent, white, transparent)" }} />
+            <h2 className="text-brand-red font-semibold text-2xl tracking-tight uppercase">
+              What We Do — Courses
             </h2>
-            <span className="bg-red-700/20 text-brand-red text-xs font-bold px-2.5 py-1 rounded">
-              {instruments.length} IMAGES
-            </span>
           </div>
-          <div className="w-12 h-[2px] rounded-full" style={{ background: "linear-gradient(to right, transparent, white, transparent)" }} />
+          <p className="text-zinc-500 text-sm px-6 mb-4">
+            Add, edit, or remove the course cards shown on the homepage. Hover over a card to edit or delete it.
+          </p>
+          <CoursesManager />
         </div>
-
-        {instruments.map((instrument, index) => (
-          <div
-            key={instrument.title}
-            className="sticky top-12"
-            style={{ zIndex: index + 2 }}
-          >
-            <div className="h-screen flex items-center justify-center px-6 md:px-10 py-6">
-              <div className="w-full max-w-7xl bg-zinc-900 rounded-3xl flex flex-col md:flex-row h-[88vh]">
-                <div className="flex flex-col justify-center gap-6 p-10 md:p-16 md:w-[45%]">
-                  <div className="w-10 h-[2px] rounded-full" style={{ background: "linear-gradient(to right, transparent, white, transparent)" }} />
-                  <h3 className="text-white font-semibold text-3xl md:text-4xl tracking-tight uppercase">
-                    {instrument.title}
-                  </h3>
-                  <p className="text-zinc-400 text-base leading-relaxed max-w-sm">
-                    {instrument.description}
-                  </p>
-                  <span className="border border-zinc-600 text-zinc-300 rounded-full px-6 py-2.5 text-sm w-fit">
-                    Contact me
-                  </span>
-                </div>
-                <div className="md:w-[55%] flex items-center p-4 md:p-6">
-                  <div className="relative w-full h-80 md:h-[95%] rounded-2xl overflow-hidden">
-                    <EditableImage
-                      src={instrument.imageSrc}
-                      alt={instrument.imageAlt}
-                      fill
-                      className="object-cover"
-                      sectionLabel={`What We Do \u2014 ${instrument.title}`}
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        ))}
       </section>
 
       {/* ─── Quote Section ─── */}
@@ -345,84 +292,18 @@ export default function AdminDashboard() {
       </section>
 
       {/* ─── Mentors Section ─── */}
-      <section className="bg-black px-6 md:px-16 lg:px-24 py-24">
+      <section className="bg-black py-8">
         <div className="max-w-6xl mx-auto">
-          <div className="mb-16">
-            <div className="w-12 h-[2px] rounded-full mb-6" style={{ background: "linear-gradient(to right, transparent, white, transparent)" }} />
-            <div className="flex items-center gap-3">
-              <h2 className="text-brand-red font-semibold text-4xl md:text-6xl tracking-tight uppercase">
-                Our Mentors
-              </h2>
-              <span className="bg-red-700/20 text-brand-red text-xs font-bold px-2.5 py-1 rounded">
-                {mentors.length} IMAGES
-              </span>
-            </div>
+          <div className="flex items-center gap-3 px-6 mb-2">
+            <div className="w-12 h-[2px] rounded-full" style={{ background: "linear-gradient(to right, transparent, white, transparent)" }} />
+            <h2 className="text-brand-red font-semibold text-2xl tracking-tight uppercase">
+              Our Mentors
+            </h2>
           </div>
-
-          <div className="flex flex-col gap-6">
-            {/* Row 1: 3 cards */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {mentors.slice(0, 3).map((mentor) => (
-                <div
-                  key={mentor.name}
-                  className="bg-zinc-900 rounded-t-[999px] rounded-b-3xl overflow-hidden flex flex-col"
-                >
-                  <div className="relative w-full aspect-[3/4] rounded-t-[999px] overflow-hidden p-3 pt-4">
-                    <div className="relative w-full h-full rounded-t-[999px] overflow-hidden">
-                      <EditableImage
-                        src={mentor.imageSrc}
-                        alt={mentor.imageAlt}
-                        fill
-                        className="object-cover object-top"
-                        sectionLabel={`Mentor \u2014 ${mentor.name.split(" \u2013")[0].split(" -")[0]}`}
-                      />
-                    </div>
-                  </div>
-                  <div className="p-6 flex flex-col gap-3">
-                    <div className="w-8 h-[2px] rounded-full" style={{ background: "linear-gradient(to right, transparent, white, transparent)" }} />
-                    <h3 className="text-white font-semibold text-sm md:text-base uppercase tracking-tight leading-snug">
-                      {mentor.name}
-                    </h3>
-                    <p className="text-zinc-400 text-sm leading-relaxed">
-                      {mentor.description}
-                    </p>
-                    <div className="w-6 h-[1px] rounded-full mt-2" style={{ background: "linear-gradient(to right, transparent, #52525b, transparent)" }} />
-                  </div>
-                </div>
-              ))}
-            </div>
-            {/* Row 2: 2 cards centered */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:px-[16.67%]">
-              {mentors.slice(3).map((mentor) => (
-                <div
-                  key={mentor.name}
-                  className="bg-zinc-900 rounded-t-[999px] rounded-b-3xl overflow-hidden flex flex-col"
-                >
-                  <div className="relative w-full aspect-[3/4] rounded-t-[999px] overflow-hidden p-3 pt-4">
-                    <div className="relative w-full h-full rounded-t-[999px] overflow-hidden">
-                      <EditableImage
-                        src={mentor.imageSrc}
-                        alt={mentor.imageAlt}
-                        fill
-                        className="object-cover object-top"
-                        sectionLabel={`Mentor \u2014 ${mentor.name.split(" \u2013")[0].split(" -")[0]}`}
-                      />
-                    </div>
-                  </div>
-                  <div className="p-6 flex flex-col gap-3">
-                    <div className="w-8 h-[2px] rounded-full" style={{ background: "linear-gradient(to right, transparent, white, transparent)" }} />
-                    <h3 className="text-white font-semibold text-sm md:text-base uppercase tracking-tight leading-snug">
-                      {mentor.name}
-                    </h3>
-                    <p className="text-zinc-400 text-sm leading-relaxed">
-                      {mentor.description}
-                    </p>
-                    <div className="w-6 h-[1px] rounded-full mt-2" style={{ background: "linear-gradient(to right, transparent, #52525b, transparent)" }} />
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+          <p className="text-zinc-500 text-sm px-6 mb-4">
+            Add, edit, or remove mentor cards shown on the homepage. Hover over a card to edit or delete it.
+          </p>
+          <MentorsManager />
         </div>
       </section>
 

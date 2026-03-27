@@ -17,7 +17,7 @@ const DEFAULT_SLIDES: Slide[] = [
 export default function HeroSection() {
   const [show, setShow] = useState(false)
   const [current, setCurrent] = useState(0)
-  const [slides, setSlides] = useState<Slide[]>(DEFAULT_SLIDES)
+  const [slides, setSlides] = useState<Slide[] | null>(null)
 
   useEffect(() => {
     const t = setTimeout(() => setShow(true), 100)
@@ -29,34 +29,34 @@ export default function HeroSection() {
     fetch("/api/hero-slides")
       .then((res) => res.json())
       .then((data) => {
-        if (Array.isArray(data) && data.length > 0) {
-          setSlides(data)
-        }
+        setSlides(Array.isArray(data) && data.length > 0 ? data : DEFAULT_SLIDES)
       })
-      .catch(() => {})
+      .catch(() => setSlides(DEFAULT_SLIDES))
   }, [])
 
+  const items = slides ?? []
+
   const next = useCallback(() => {
-    setCurrent((prev) => (prev + 1) % slides.length)
-  }, [slides.length])
+    setCurrent((prev) => (prev + 1) % items.length)
+  }, [items.length])
 
   const prev = useCallback(() => {
-    setCurrent((prev) => (prev - 1 + slides.length) % slides.length)
-  }, [slides.length])
+    setCurrent((prev) => (prev - 1 + items.length) % items.length)
+  }, [items.length])
 
   // Auto-slide every 5 seconds
   useEffect(() => {
-    if (slides.length <= 1) return
+    if (items.length <= 1) return
     const interval = setInterval(next, 5000)
     return () => clearInterval(interval)
-  }, [next, slides.length])
+  }, [next, items.length])
 
   return (
     <section className="relative flex flex-col items-center min-h-[auto] md:min-h-screen bg-black text-center overflow-hidden">
       {/* Image Carousel — full width, starts right below navbar */}
       <div className="relative w-full h-[45vh] md:h-auto md:flex-1 mt-16 md:mt-[72px]">
         <div className="absolute inset-0 overflow-hidden">
-          {slides.map((slide, i) => (
+          {items.map((slide, i) => (
             <div
               key={slide.src}
               className="absolute inset-0 transition-opacity duration-700 ease-in-out"
@@ -75,7 +75,7 @@ export default function HeroSection() {
         </div>
 
         {/* Navigation arrows */}
-        {slides.length > 1 && (
+        {items.length > 1 && (
           <>
             <button
               onClick={prev}
@@ -98,7 +98,7 @@ export default function HeroSection() {
 
             {/* Slide indicators — inside carousel */}
             <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 flex gap-2">
-              {slides.map((_, i) => (
+              {items.map((_, i) => (
                 <button
                   key={i}
                   onClick={() => setCurrent(i)}

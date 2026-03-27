@@ -203,29 +203,32 @@ export default function GalleryPageContent() {
   const heading = useReveal();
   const photosHeading = useReveal();
   const videosHeading = useReveal();
-  const [galleryImages, setGalleryImages] = useState<GalleryImage[]>(DEFAULT_IMAGES);
-  const [videoUrls, setVideoUrls] = useState<string[]>(DEFAULT_VIDEOS);
+  const [galleryImages, setGalleryImages] = useState<GalleryImage[] | null>(null);
+  const [videoUrls, setVideoUrls] = useState<string[] | null>(null);
 
   useEffect(() => {
     fetch("/api/gallery-images")
       .then((res) => res.json())
       .then((data) => {
-        if (Array.isArray(data) && data.length > 0) setGalleryImages(data);
+        setGalleryImages(Array.isArray(data) && data.length > 0 ? data : DEFAULT_IMAGES);
       })
-      .catch(() => {});
+      .catch(() => setGalleryImages(DEFAULT_IMAGES));
 
     fetch("/api/gallery-videos")
       .then((res) => res.json())
       .then((data) => {
         if (Array.isArray(data) && data.length > 0) {
           setVideoUrls(data.map((v: { src: string }) => v.src));
+        } else {
+          setVideoUrls(DEFAULT_VIDEOS);
         }
       })
-      .catch(() => {});
+      .catch(() => setVideoUrls(DEFAULT_VIDEOS));
   }, []);
 
-  const topRow = [...galleryImages, ...galleryImages];
-  const bottomRow = [...galleryImages.slice().reverse(), ...galleryImages.slice().reverse()];
+  const images = galleryImages ?? [];
+  const topRow = [...images, ...images];
+  const bottomRow = [...images.slice().reverse(), ...images.slice().reverse()];
 
   return (
     <section className="relative min-h-screen overflow-hidden">
@@ -302,7 +305,7 @@ export default function GalleryPageContent() {
       </div>
 
       {/* ─── Videos ─── */}
-      {videoUrls.length > 0 && (
+      {videoUrls && videoUrls.length > 0 && (
         <VideoCarousel videosHeading={videosHeading} videos={videoUrls} />
       )}
     </section>
