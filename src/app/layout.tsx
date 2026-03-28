@@ -8,20 +8,20 @@ const siteUrl = "https://arsmusicaacademy.com";
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Ars Musica Academy — Music Classes in Faridabad",
+    default: "Ars Musica Academy — Music Classes in Gurgaon",
     template: "%s | Ars Musica Academy",
   },
   description:
-    "Ars Musica Academy offers professional music classes in Faridabad — Guitar, Piano, Drums, Vocals, Keyboard, Ukulele & more. Trinity, Rockschool & ABRSM exam preparation. Enroll today!",
+    "Ars Musica Academy offers professional music classes in Gurgaon — Guitar, Piano, Drums, Vocals, Keyboard, Ukulele & more. Trinity, Rockschool & ABRSM exam preparation. Enroll today!",
   keywords: [
-    "music classes Faridabad",
-    "guitar classes Faridabad",
-    "piano classes Faridabad",
-    "drum classes Faridabad",
-    "vocal training Faridabad",
-    "keyboard classes Faridabad",
-    "ukulele classes Faridabad",
-    "music academy Faridabad",
+    "music classes Gurgaon",
+    "guitar classes Gurgaon",
+    "piano classes Gurgaon",
+    "drum classes Gurgaon",
+    "vocal training Gurgaon",
+    "keyboard classes Gurgaon",
+    "ukulele classes Gurgaon",
+    "music academy Gurgaon",
     "Trinity exam preparation",
     "Rockschool exam",
     "ABRSM exam India",
@@ -37,9 +37,9 @@ export const metadata: Metadata = {
     locale: "en_IN",
     url: siteUrl,
     siteName: "Ars Musica Academy",
-    title: "Ars Musica Academy — Music Classes in Faridabad",
+    title: "Ars Musica Academy — Music Classes in Gurgaon",
     description:
-      "Professional music classes in Faridabad — Guitar, Piano, Drums, Vocals & more. Trinity, Rockschool & ABRSM exam preparation.",
+      "Professional music classes in Gurgaon — Guitar, Piano, Drums, Vocals & more. Trinity, Rockschool & ABRSM exam preparation.",
     images: [
       {
         url: "/logo/logo.jpeg",
@@ -51,9 +51,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Ars Musica Academy — Music Classes in Faridabad",
+    title: "Ars Musica Academy — Music Classes in Gurgaon",
     description:
-      "Professional music classes in Faridabad — Guitar, Piano, Drums, Vocals & more. Trinity, Rockschool & ABRSM exam preparation.",
+      "Professional music classes in Gurgaon — Guitar, Piano, Drums, Vocals & more. Trinity, Rockschool & ABRSM exam preparation.",
     images: ["/logo/logo.jpeg"],
   },
   robots: {

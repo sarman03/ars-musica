@@ -7,7 +7,7 @@ import FaqSection from "@/components/FaqSection";
 export const metadata: Metadata = {
   title: "Contact Us",
   description:
-    "Get in touch with Ars Musica Academy, Faridabad. Enquire about music classes, exam prep, fees, and schedule. Call, email, or visit us today!",
+    "Get in touch with Ars Musica Academy, Gurgaon. Enquire about music classes, exam prep, fees, and schedule. Call, email, or visit us today!",
   alternates: {
     canonical: "https://arsmusicaacademy.com/contact",
   },

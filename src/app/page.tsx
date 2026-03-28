@@ -20,10 +20,10 @@ const jsonLd = {
   logo: "https://arsmusicaacademy.com/logo/logo.jpeg",
   image: "https://arsmusicaacademy.com/logo/logo.jpeg",
   description:
-    "Professional music classes in Faridabad — Guitar, Piano, Drums, Vocals, Keyboard, Ukulele & more. Trinity, Rockschool & ABRSM exam preparation.",
+    "Professional music classes in Gurgaon — Guitar, Piano, Drums, Vocals, Keyboard, Ukulele & more. Trinity, Rockschool & ABRSM exam preparation.",
   address: {
     "@type": "PostalAddress",
-    addressLocality: "Faridabad",
+    addressLocality: "Gurgaon",
     addressRegion: "Haryana",
     addressCountry: "IN",
   },

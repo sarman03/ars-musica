@@ -7,7 +7,7 @@ import LightRaysBackground from "@/components/LightRaysBackground";
 export const metadata: Metadata = {
   title: "Gallery",
   description:
-    "Photos and videos from Ars Musica Academy — performances, classes, events, and student showcases in Faridabad.",
+    "Photos and videos from Ars Musica Academy — performances, classes, events, and student showcases in Gurgaon.",
   alternates: {
     canonical: "https://arsmusicaacademy.com/gallery",
   },
