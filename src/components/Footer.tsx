@@ -34,7 +34,6 @@ export default function Footer() {
             <h4 className="text-zinc-300 font-medium text-sm mb-4">Socials</h4>
             <ul className="flex flex-col gap-3">
               <li><a href="https://www.instagram.com/arsmusica.academy?igsh=Zno2MXZxcXNrNmNu" target="_blank" rel="noopener noreferrer" className="text-zinc-500 text-sm hover:text-zinc-300 transition-colors">Instagram</a></li>
-              <li><a href="#" className="text-zinc-500 text-sm hover:text-zinc-300 transition-colors">Twitter</a></li>
               <li><a href="https://www.youtube.com/@Arsmusicaacademy" target="_blank" rel="noopener noreferrer" className="text-zinc-500 text-sm hover:text-zinc-300 transition-colors">Youtube</a></li>
               <li><a href="https://www.facebook.com/profile.php?id=61579686133656" target="_blank" rel="noopener noreferrer" className="text-zinc-500 text-sm hover:text-zinc-300 transition-colors">Facebook</a></li>
             </ul>

@@ -12,7 +12,7 @@ interface MentorData {
 
 const DEFAULT_MENTORS: MentorData[] = [
   {
-    name: "Nawin Rai - Ars Musica Academy",
+    name: "Navin Rai - Founder / Director / Drummer / Performer / Educator / Producer / Recording Artist",
     description:
       "He is also an accomplished drummer and percussionist, Nawin performs with well-known rock bands such as Squarez Attached and Esmond Lama. He is regularly invited for collaborations and special sessions with leading bands and artists across the NCR music scene, earning him respect as both a performer and a collaborator.",
     imageSrc: "/mentors/mentor_1.jpeg",
@@ -120,7 +120,7 @@ function MentorCard({
       </div>
       <div className="p-6 flex flex-col gap-3">
         <div className="w-8 h-[2px] rounded-full" style={{ background: "linear-gradient(to right, transparent, white, transparent)" }} />
-        <h3 className="text-white font-semibold text-sm md:text-base uppercase tracking-tight leading-snug">
+        <h3 className="text-white font-semibold text-sm md:text-base capitalize tracking-tight leading-snug">
           {mentor.name}
         </h3>
         <p className="text-zinc-400 text-sm leading-relaxed">

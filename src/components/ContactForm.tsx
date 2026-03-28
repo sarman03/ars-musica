@@ -51,18 +51,6 @@ export default function ContactForm() {
           }`}
         >
           <div className="inline-flex items-center gap-4 bg-zinc-800/80 rounded-full px-5 py-2.5">
-            {/* TikTok */}
-            <a href="#" className="flex items-center justify-center hover:opacity-80 transition-opacity">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" className="text-zinc-300">
-                <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 00-.79-.05A6.34 6.34 0 003.15 15.2a6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.34-6.34V8.73a8.19 8.19 0 004.76 1.52V6.8a4.84 4.84 0 01-1-.11z" />
-              </svg>
-            </a>
-            {/* X / Twitter */}
-            <a href="#" className="flex items-center justify-center hover:opacity-80 transition-opacity">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" className="text-zinc-300">
-                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-              </svg>
-            </a>
             {/* Instagram */}
             <a href="https://www.instagram.com/arsmusica.academy?igsh=Zno2MXZxcXNrNmNu" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center hover:opacity-80 transition-opacity">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" className="text-zinc-300">

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useImageOverride } from "@/components/ImageOverrideProvider";
 import ImageCropModal from "./ImageCropModal";
 import { convertIfHeic } from "../utils/convertHeic";
 
@@ -137,6 +138,12 @@ function MentorModal({
   );
 }
 
+function ResolvedImg({ src, alt, className }: { src: string; alt: string; className?: string }) {
+  const resolved = useImageOverride(src);
+  /* eslint-disable-next-line @next/next/no-img-element */
+  return <img src={resolved} alt={alt} className={className} />;
+}
+
 export default function MentorsManager() {
   const [mentors, setMentors] = useState<Mentor[]>([]);
   const [loading, setLoading] = useState(true);
@@ -216,8 +223,7 @@ export default function MentorsManager() {
           {mentors.map((mentor, i) => (
             <div key={`${mentor.name}-${i}`} className="relative group rounded-xl overflow-hidden border border-zinc-700/40 bg-zinc-900">
               <div className="relative aspect-[3/4]">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={mentor.imageSrc} alt={mentor.imageAlt} className="w-full h-full object-cover object-top" />
+                <ResolvedImg src={mentor.imageSrc} alt={mentor.imageAlt} className="w-full h-full object-cover object-top" />
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/60 transition-all duration-200 flex items-center justify-center gap-2">
                   <button onClick={() => openEdit(i)} className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-zinc-700 hover:bg-zinc-600 text-white font-semibold px-4 py-2 rounded-lg text-sm flex items-center gap-2">
                     <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
