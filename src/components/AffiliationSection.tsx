@@ -84,7 +84,9 @@ export default function AffiliationSection() {
               <img
                 src={item.src}
                 alt={item.alt}
-                className="w-full h-full object-contain rounded-2xl"
+                className={`w-full h-full rounded-2xl ${
+                  item.alt === "Rockschool" ? "object-contain" : "object-cover"
+                }`}
               />
             </div>
           ))}

@@ -25,7 +25,7 @@ export default function InstrumentCard({
               src={imageSrc}
               alt={imageAlt}
               fill
-              className="object-cover"
+              className={title === "Exam" ? "object-contain" : "object-cover"}
             />
           </div>
         </div>

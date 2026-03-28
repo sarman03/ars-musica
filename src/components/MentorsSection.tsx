@@ -12,7 +12,7 @@ interface MentorData {
 
 const DEFAULT_MENTORS: MentorData[] = [
   {
-    name: "Navin Rai - Founder / Director / Drummer / Performer / Educator / Producer / Recording Artist",
+    name: "Navin Rai – Founder | Director | Drummer | Performer | Educator | Producer | Recording Artist",
     description:
       "He is also an accomplished drummer and percussionist, Nawin performs with well-known rock bands such as Squarez Attached and Esmond Lama. He is regularly invited for collaborations and special sessions with leading bands and artists across the NCR music scene, earning him respect as both a performer and a collaborator.",
     imageSrc: "/mentors/mentor_1.jpeg",
@@ -26,14 +26,14 @@ const DEFAULT_MENTORS: MentorData[] = [
     imageAlt: "Rosemary Deosa performing",
   },
   {
-    name: "Ranjan Dewan \u2013 Guitar Educator",
+    name: "Ranjan Dewan – Guitar Educator | Performer",
     description:
       "Ranjan Dewan is a dedicated guitar educator and performer originally from Darjeeling, with over two decades of experience in teaching and performing music. He holds an ATCL certification in Western Classical Guitar from Trinity College London, which laid the foundation for his strong musical training and technical expertise.",
     imageSrc: "/mentors/mentor_3.jpeg",
     imageAlt: "Ranjan Dewan with guitar",
   },
   {
-    name: "Aro Phungshok \u2013 Piano Instructor",
+    name: "Aro Phungshok – Piano Instructor | Educator",
     description:
       "Aro Phungshok is a passionate and dedicated piano teacher with a strong commitment to nurturing musical talent and inspiring students through the art of piano. With a warm and encouraging teaching approach, she focuses on helping students develop not only strong technical skills but also confidence, creativity, and a deep appreciation for music.",
     imageSrc: "/mentors/mentor_2.jpeg",
@@ -47,7 +47,7 @@ const DEFAULT_MENTORS: MentorData[] = [
     imageAlt: "Bonita Solomon",
   },
   {
-    name: "Ahao Gachui \u2013 Guitar Instructor",
+    name: "Ahao Gachui – Guitar Instructor | Performer | Educator",
     description:
       "Ahao Gachui is a passionate music educator with over 25 years of experience, specializing in guitar. He holds a Grade 8 Guitar Certification from Trinity College London. With extensive experience performing in gospel and contemporary bands, Ahao brings real-world musical insight into his teaching. He currently serves as Music Director at New Life Church, Gurgaon.",
     imageSrc: "/mentors/mentor_6.jpg",
