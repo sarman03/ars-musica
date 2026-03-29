@@ -83,7 +83,7 @@ export default function AdminDashboard() {
         <div className="max-w-6xl mx-auto">
           <div className="flex items-center gap-3 px-6 mb-2">
             <div className="w-12 h-[2px] rounded-full" style={{ background: "linear-gradient(to right, transparent, white, transparent)" }} />
-            <h2 className="text-brand-red font-semibold text-2xl tracking-tight uppercase">
+            <h2 className="text-brand-red font-semibold text-2xl tracking-wide uppercase">
               Hero Carousel
             </h2>
           </div>
@@ -99,7 +99,7 @@ export default function AdminDashboard() {
         <div className="max-w-6xl mx-auto">
           <div className="flex items-center gap-3 px-6 mb-2">
             <div className="w-12 h-[2px] rounded-full" style={{ background: "linear-gradient(to right, transparent, white, transparent)" }} />
-            <h2 className="text-brand-red font-semibold text-2xl tracking-tight uppercase">
+            <h2 className="text-brand-red font-semibold text-2xl tracking-wide uppercase">
               What We Do — Courses
             </h2>
           </div>
@@ -113,13 +113,13 @@ export default function AdminDashboard() {
       {/* ─── Quote Section ─── */}
       <section className="bg-black flex items-end min-h-screen px-6 pb-16">
         <div className="w-full flex flex-col items-center text-center gap-1">
-          <p className="font-heading text-brand-red/80 font-semibold text-xl md:text-3xl lg:text-4xl tracking-tight uppercase">
+          <p className="font-heading text-brand-red/80 font-semibold text-xl md:text-3xl lg:text-4xl tracking-wide uppercase">
             Every Musician Starts With A Single Note
           </p>
-          <p className="font-heading text-brand-red/30 font-semibold text-xl md:text-3xl lg:text-4xl tracking-tight uppercase">
+          <p className="font-heading text-brand-red/30 font-semibold text-xl md:text-3xl lg:text-4xl tracking-wide uppercase">
             Practice Turns Notes Into Music
           </p>
-          <p className="font-heading text-brand-red/15 font-semibold text-xl md:text-3xl lg:text-4xl tracking-tight uppercase">
+          <p className="font-heading text-brand-red/15 font-semibold text-xl md:text-3xl lg:text-4xl tracking-wide uppercase">
             Confidence Turns Music Into Performance
           </p>
         </div>
@@ -130,7 +130,7 @@ export default function AdminDashboard() {
         <div className="max-w-6xl mx-auto px-6">
           <div className="flex items-center gap-3 mb-2">
             <div className="w-12 h-[2px] rounded-full" style={{ background: "linear-gradient(to right, transparent, white, transparent)" }} />
-            <h2 className="text-brand-red font-semibold text-2xl tracking-tight uppercase">
+            <h2 className="text-brand-red font-semibold text-2xl tracking-wide uppercase">
               Home Page Gallery
             </h2>
             <span className="bg-red-700/20 text-brand-red text-xs font-bold px-2.5 py-1 rounded">
@@ -164,7 +164,7 @@ export default function AdminDashboard() {
         <div className="max-w-6xl mx-auto">
           <div className="flex items-center gap-3 px-6 mb-2">
             <div className="w-12 h-[2px] rounded-full" style={{ background: "linear-gradient(to right, transparent, white, transparent)" }} />
-            <h2 className="text-brand-red font-semibold text-2xl tracking-tight uppercase">
+            <h2 className="text-brand-red font-semibold text-2xl tracking-wide uppercase">
               Gallery Page — Photos
             </h2>
           </div>
@@ -179,7 +179,7 @@ export default function AdminDashboard() {
         <div className="max-w-6xl mx-auto">
           <div className="flex items-center gap-3 px-6 mb-2">
             <div className="w-12 h-[2px] rounded-full" style={{ background: "linear-gradient(to right, transparent, white, transparent)" }} />
-            <h2 className="text-brand-red font-semibold text-2xl tracking-tight uppercase">
+            <h2 className="text-brand-red font-semibold text-2xl tracking-wide uppercase">
               Gallery Page — Videos
             </h2>
           </div>
@@ -196,7 +196,7 @@ export default function AdminDashboard() {
           <div className="flex flex-col items-center mb-20">
             <div className="w-12 h-[2px] rounded-full mb-4" style={{ background: "linear-gradient(to right, transparent, white, transparent)" }} />
             <div className="flex items-center gap-3">
-              <h2 className="text-brand-red font-semibold text-4xl md:text-6xl lg:text-7xl tracking-tight uppercase text-center">
+              <h2 className="text-brand-red font-semibold text-4xl md:text-6xl lg:text-7xl tracking-wide uppercase text-center">
                 About Ars Musica
               </h2>
               <span className="bg-red-700/20 text-brand-red text-xs font-bold px-2.5 py-1 rounded">
@@ -214,7 +214,7 @@ export default function AdminDashboard() {
                     <span className="text-zinc-700 font-semibold text-8xl md:text-9xl leading-none select-none">
                       {item.number}
                     </span>
-                    <h3 className="text-brand-red font-semibold text-xl md:text-2xl uppercase tracking-tight absolute bottom-1 left-1/2 -translate-x-1/2">
+                    <h3 className="text-brand-red font-semibold text-xl md:text-2xl uppercase tracking-wide absolute bottom-1 left-1/2 -translate-x-1/2">
                       {item.title}
                     </h3>
                   </div>
@@ -244,7 +244,7 @@ export default function AdminDashboard() {
                     <span className="text-zinc-700 font-semibold text-8xl md:text-9xl leading-none select-none">
                       {item.number}
                     </span>
-                    <h3 className="text-brand-red font-semibold text-xl md:text-2xl uppercase tracking-tight absolute bottom-1 left-1/2 -translate-x-1/2">
+                    <h3 className="text-brand-red font-semibold text-xl md:text-2xl uppercase tracking-wide absolute bottom-1 left-1/2 -translate-x-1/2">
                       {item.title}
                     </h3>
                   </div>
@@ -263,7 +263,7 @@ export default function AdminDashboard() {
         <div className="grid grid-cols-2 md:grid-cols-4 w-full">
           {stats.map((stat) => (
             <div key={stat.label} className="flex flex-col items-center justify-center text-center py-4">
-              <p className="text-zinc-300 font-semibold text-4xl md:text-5xl lg:text-6xl tracking-tight">
+              <p className="text-zinc-300 font-semibold text-4xl md:text-5xl lg:text-6xl tracking-wide">
                 {stat.value}
               </p>
               <p className="text-zinc-400 text-sm md:text-base mt-3 font-normal">
@@ -280,7 +280,7 @@ export default function AdminDashboard() {
         <div className="max-w-6xl mx-auto">
           <div className="flex items-center gap-3 px-6 mb-2">
             <div className="w-12 h-[2px] rounded-full" style={{ background: "linear-gradient(to right, transparent, white, transparent)" }} />
-            <h2 className="text-brand-red font-semibold text-2xl tracking-tight uppercase">
+            <h2 className="text-brand-red font-semibold text-2xl tracking-wide uppercase">
               Affiliations
             </h2>
           </div>
@@ -296,7 +296,7 @@ export default function AdminDashboard() {
         <div className="max-w-6xl mx-auto">
           <div className="flex items-center gap-3 px-6 mb-2">
             <div className="w-12 h-[2px] rounded-full" style={{ background: "linear-gradient(to right, transparent, white, transparent)" }} />
-            <h2 className="text-brand-red font-semibold text-2xl tracking-tight uppercase">
+            <h2 className="text-brand-red font-semibold text-2xl tracking-wide uppercase">
               Our Mentors
             </h2>
           </div>

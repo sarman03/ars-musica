@@ -32,7 +32,7 @@ export default function ContactSection() {
         }}
         className="relative z-10 text-center"
       >
-        <h2 className="text-white font-semibold text-4xl md:text-5xl lg:text-6xl tracking-tight uppercase leading-tight">
+        <h2 className="text-white font-semibold text-4xl md:text-5xl lg:text-6xl tracking-wide uppercase leading-tight">
           Let&apos;s Get
           <br />
           In Touch

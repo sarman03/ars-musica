@@ -59,7 +59,7 @@ export default function AffiliationSection() {
           }`}
         >
           <div className="w-12 h-[2px] rounded-full mb-6" style={{ background: "linear-gradient(to right, transparent, white, transparent)" }} />
-          <h2 className="text-brand-red font-semibold text-4xl md:text-6xl tracking-tight uppercase">
+          <h2 className="text-brand-red font-semibold text-4xl md:text-6xl tracking-wide uppercase">
             Our Affiliations
           </h2>
           <p className="text-zinc-400 text-sm md:text-base mt-4 max-w-xl">

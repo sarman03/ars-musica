@@ -59,7 +59,7 @@ export default function AdminLogin() {
         </div>
 
         <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-8">
-          <h1 className="text-white font-black text-2xl tracking-tight uppercase text-center mb-1">
+          <h1 className="text-white font-black text-2xl tracking-wide uppercase text-center mb-1">
             Admin Panel
           </h1>
           <p className="text-zinc-500 text-sm text-center mb-8">

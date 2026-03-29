@@ -2,7 +2,7 @@ export default function MapSection() {
   return (
     <section className="bg-zinc-950 px-6 md:px-16 lg:px-24 pt-16">
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-white font-semibold text-2xl md:text-3xl tracking-tight uppercase text-center mb-8">
+        <h2 className="text-white font-semibold text-2xl md:text-3xl tracking-wide uppercase text-center mb-8">
           Find Us Here
         </h2>
         <div className="w-full h-[300px] md:h-[400px] rounded-xl overflow-hidden">

@@ -102,7 +102,7 @@ function VideoCarousel({ videosHeading, videos }: { videosHeading: { ref: React.
           videosHeading.visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
         }`}
       >
-        <h2 className="text-white font-semibold text-2xl md:text-3xl tracking-tight uppercase">
+        <h2 className="text-white font-semibold text-2xl md:text-3xl tracking-wide uppercase">
           Videos
         </h2>
       </div>
@@ -245,7 +245,7 @@ export default function GalleryPageContent() {
               className="w-12 h-[2px] rounded-full mb-6"
               style={{ background: "linear-gradient(to right, transparent, white, transparent)" }}
             />
-            <h1 className="text-brand-red font-semibold text-4xl md:text-6xl tracking-tight uppercase">
+            <h1 className="text-brand-red font-semibold text-4xl md:text-6xl tracking-wide uppercase">
               Gallery
             </h1>
           </div>
@@ -260,7 +260,7 @@ export default function GalleryPageContent() {
             photosHeading.visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
         >
-          <h2 className="text-white font-semibold text-2xl md:text-3xl tracking-tight uppercase">
+          <h2 className="text-white font-semibold text-2xl md:text-3xl tracking-wide uppercase">
             Photos
           </h2>
         </div>

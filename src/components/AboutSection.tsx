@@ -60,7 +60,7 @@ function ValueCard({ item, delay = 0 }: { item: (typeof values)[0]; delay?: numb
         <span className="text-zinc-700 font-semibold text-8xl md:text-9xl leading-none select-none">
           {item.number}
         </span>
-        <h3 className="text-brand-red font-semibold text-xl md:text-2xl uppercase tracking-tight absolute bottom-1 left-1/2 -translate-x-1/2">
+        <h3 className="text-brand-red font-semibold text-xl md:text-2xl uppercase tracking-wide absolute bottom-1 left-1/2 -translate-x-1/2">
           {item.title}
         </h3>
       </div>
@@ -86,7 +86,7 @@ export default function AboutSection() {
           }`}
         >
           <div className="w-12 h-[2px] rounded-full mb-4" style={{ background: "linear-gradient(to right, transparent, white, transparent)" }} />
-          <h2 className="text-brand-red font-semibold text-4xl md:text-6xl lg:text-7xl tracking-tight uppercase text-center">
+          <h2 className="text-brand-red font-semibold text-4xl md:text-6xl lg:text-7xl tracking-wide uppercase text-center">
             About Ars Musica
           </h2>
         </div>

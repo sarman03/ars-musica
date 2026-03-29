@@ -96,7 +96,7 @@ export default function FaqSection() {
           }`}
         >
           <div className="w-12 h-[2px] rounded-full mb-6" style={{ background: "linear-gradient(to right, transparent, white, transparent)" }} />
-          <h2 className="text-brand-red font-semibold text-3xl md:text-5xl lg:text-6xl tracking-tight uppercase leading-none whitespace-nowrap">
+          <h2 className="text-brand-red font-semibold text-3xl md:text-5xl lg:text-6xl tracking-wide uppercase leading-none md:whitespace-nowrap">
             Everything You Need To Know
           </h2>
         </div>

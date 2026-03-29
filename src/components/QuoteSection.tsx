@@ -40,7 +40,7 @@ export default function QuoteSection() {
           {lines.map((line, i) => (
             <p
               key={i}
-              className="font-heading font-semibold text-xl md:text-3xl lg:text-4xl tracking-tight uppercase transition-opacity duration-500"
+              className="font-heading font-semibold text-xl md:text-3xl lg:text-4xl tracking-wide uppercase transition-opacity duration-500"
               style={{
                 color: "var(--color-brand-red)",
                 opacity: i === activeIndex ? 0.9 : 0.12,
