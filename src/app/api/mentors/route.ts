@@ -23,7 +23,7 @@ async function getMentors(): Promise<Mentor[]> {
   try {
     const { blobs } = await list({ prefix: MENTORS_JSON_PATH });
     if (blobs.length > 0) {
-      const res = await fetch(blobs[0].url);
+      const res = await fetch(blobs[0].url, { cache: "no-store" });
       return await res.json();
     }
   } catch {
@@ -44,9 +44,13 @@ async function saveMentors(mentors: Mentor[]) {
   });
 }
 
+export const dynamic = "force-dynamic";
+
 export async function GET() {
   const mentors = await getMentors();
-  return NextResponse.json(mentors);
+  return NextResponse.json(mentors, {
+    headers: { "Cache-Control": "no-store, max-age=0" },
+  });
 }
 
 export async function POST(req: NextRequest) {

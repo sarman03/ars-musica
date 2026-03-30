@@ -44,6 +44,7 @@ export default function QuoteSection() {
               style={{
                 color: "var(--color-brand-red)",
                 opacity: i === activeIndex ? 0.9 : 0.12,
+                wordSpacing: "0.3em",
               }}
             >
               {line}

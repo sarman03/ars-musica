@@ -113,14 +113,14 @@ export default function AdminDashboard() {
       {/* ─── Quote Section ─── */}
       <section className="bg-black flex items-end min-h-screen px-6 pb-16">
         <div className="w-full flex flex-col items-center text-center gap-1">
-          <p className="font-heading text-brand-red/80 font-semibold text-xl md:text-3xl lg:text-4xl tracking-wide uppercase">
-            Every Musician Starts With A Single Note
+          <p className="font-heading text-brand-red/80 font-semibold text-xl md:text-3xl lg:text-4xl tracking-wide uppercase" style={{ wordSpacing: "2rem" }}>
+            Every  Musician  Starts  With  A  Single  Note
           </p>
-          <p className="font-heading text-brand-red/30 font-semibold text-xl md:text-3xl lg:text-4xl tracking-wide uppercase">
-            Practice Turns Notes Into Music
+          <p className="font-heading text-brand-red/30 font-semibold text-xl md:text-3xl lg:text-4xl tracking-wide uppercase" style={{ wordSpacing: "0.3em" }}>
+            Practice  Turns  Notes  Into  Music
           </p>
-          <p className="font-heading text-brand-red/15 font-semibold text-xl md:text-3xl lg:text-4xl tracking-wide uppercase">
-            Confidence Turns Music Into Performance
+          <p className="font-heading text-brand-red/15 font-semibold text-xl md:text-3xl lg:text-4xl tracking-wide uppercase" style={{ wordSpacing: "0.3em" }}>
+            Confidence  Turns  Music  Into Performance
           </p>
         </div>
       </section>
