@@ -10,7 +10,7 @@ export default function Footer() {
           <div className="flex items-center gap-2 mb-4">
             <Image src="/logo/logo.jpeg" alt="Ars Musica" width={24} height={24} className="rounded-sm" />
             <span className="text-white font-bold text-lg tracking-wide">
-              ARS <span className="text-brand-red">MUSICA</span>
+              ARS <span className="text-brand-red">MUSICA</span> ACADEMY
             </span>
           </div>
           <p className="text-zinc-500 text-sm leading-relaxed">

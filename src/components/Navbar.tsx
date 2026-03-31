@@ -9,7 +9,7 @@ export default function Navbar() {
   return (
     <>
       <nav className="fixed top-0 left-0 w-full z-20 px-4 md:px-0 pt-3 md:pt-0">
-        <div className="flex items-center justify-between px-5 md:px-10 py-4 md:py-5 md:bg-transparent bg-white/10 backdrop-blur-xl md:backdrop-blur-none rounded-xl md:rounded-none border border-white/15 md:border-0">
+        <div className="flex items-center justify-between px-5 md:px-10 py-4 md:py-5 bg-black/60 backdrop-blur-xl rounded-xl md:rounded-none border border-white/15 md:border-0">
           {/* Logo */}
           <a href="/" className="flex items-center gap-2">
             <Image
@@ -20,7 +20,7 @@ export default function Navbar() {
               className="rounded-sm"
             />
             <span className="text-white font-bold text-lg tracking-wide">
-              ARS <span className="text-brand-red">MUSICA</span>
+              ARS <span className="text-brand-red">MUSICA</span> ACADEMY
             </span>
           </a>
 
@@ -87,7 +87,7 @@ export default function Navbar() {
               className="rounded-sm"
             />
             <span className="text-white font-bold text-lg tracking-wide">
-              ARS <span className="text-brand-red">MUSICA</span>
+              ARS <span className="text-brand-red">MUSICA</span> ACADEMY
             </span>
           </a>
           <button
