@@ -1,17 +1,72 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 interface GalleryVideo {
   src: string;
   title: string;
 }
 
+const MAX_UPLOAD_SIZE = 50 * 1024 * 1024; // 50 MB
+
+async function compressVideo(
+  file: File,
+  onProgress: (msg: string, pct: number) => void
+): Promise<File> {
+  // If already under limit, skip compression
+  if (file.size <= MAX_UPLOAD_SIZE) return file;
+
+  onProgress("Loading video compressor...", 5);
+
+  const { FFmpeg } = await import("@ffmpeg/ffmpeg");
+  const { fetchFile } = await import("@ffmpeg/util");
+
+  const ffmpeg = new FFmpeg();
+
+  ffmpeg.on("progress", ({ progress }) => {
+    const pct = Math.min(Math.round(progress * 100), 99);
+    onProgress(`Compressing video... ${pct}%`, pct);
+  });
+
+  onProgress("Initializing compressor...", 10);
+  await ffmpeg.load();
+
+  const inputName = "input" + (file.name.match(/\.[^.]+$/)?.[0] || ".mp4");
+  const outputName = "output.mp4";
+
+  onProgress("Reading video file...", 15);
+  await ffmpeg.writeFile(inputName, await fetchFile(file));
+
+  onProgress("Compressing video... 0%", 20);
+  await ffmpeg.exec([
+    "-i", inputName,
+    "-c:v", "libx264",
+    "-crf", "28",
+    "-preset", "fast",
+    "-c:a", "aac",
+    "-b:a", "128k",
+    "-movflags", "+faststart",
+    outputName,
+  ]);
+
+  onProgress("Finalizing...", 99);
+  const data = await ffmpeg.readFile(outputName);
+  const blob = new Blob([new Uint8Array(data as Uint8Array)], { type: "video/mp4" });
+  const compressedFile = new File([blob], file.name.replace(/\.[^.]+$/, ".mp4"), {
+    type: "video/mp4",
+  });
+
+  await ffmpeg.terminate();
+
+  return compressedFile;
+}
+
 export default function GalleryVideosManager() {
   const [videos, setVideos] = useState<GalleryVideo[]>([]);
   const [loading, setLoading] = useState(true);
   const [uploading, setUploading] = useState(false);
-  const [uploadProgress, setUploadProgress] = useState("");
+  const [progressMsg, setProgressMsg] = useState("");
+  const [progressPct, setProgressPct] = useState(0);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const fetchVideos = () => {
@@ -28,6 +83,11 @@ export default function GalleryVideosManager() {
     fetchVideos();
   }, []);
 
+  const handleProgress = useCallback((msg: string, pct: number) => {
+    setProgressMsg(msg);
+    setProgressPct(pct);
+  }, []);
+
   const handleFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -35,13 +95,40 @@ export default function GalleryVideosManager() {
     if (fileInputRef.current) fileInputRef.current.value = "";
 
     setUploading(true);
-    setUploadProgress(`Uploading ${file.name} (${(file.size / 1024 / 1024).toFixed(1)} MB)...`);
-
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("title", file.name.replace(/\.[^.]+$/, ""));
+    setProgressPct(0);
 
     try {
+      // Compress if needed
+      let videoFile = file;
+      if (file.size > MAX_UPLOAD_SIZE) {
+        handleProgress(
+          `Video is ${(file.size / 1024 / 1024).toFixed(0)} MB — compressing to under 50 MB...`,
+          5
+        );
+        videoFile = await compressVideo(file, handleProgress);
+
+        if (videoFile.size > MAX_UPLOAD_SIZE) {
+          alert(
+            `Compressed video is still ${(videoFile.size / 1024 / 1024).toFixed(0)} MB. Please use a shorter clip or lower resolution.`
+          );
+          setUploading(false);
+          setProgressMsg("");
+          return;
+        }
+
+        handleProgress(
+          `Compressed: ${(file.size / 1024 / 1024).toFixed(0)} MB → ${(videoFile.size / 1024 / 1024).toFixed(1)} MB`,
+          100
+        );
+      }
+
+      // Upload
+      handleProgress(`Uploading ${videoFile.name} (${(videoFile.size / 1024 / 1024).toFixed(1)} MB)...`, 0);
+
+      const formData = new FormData();
+      formData.append("file", videoFile);
+      formData.append("title", file.name.replace(/\.[^.]+$/, ""));
+
       const res = await fetch("/api/gallery-videos", {
         method: "POST",
         body: formData,
@@ -52,11 +139,13 @@ export default function GalleryVideosManager() {
       } else {
         alert("Upload failed: " + (data.error || "Unknown error"));
       }
-    } catch {
-      alert("Upload failed. Please try again.");
+    } catch (err) {
+      console.error("Video processing error:", err);
+      alert("Video processing failed. Please try again or use a pre-compressed video.");
     } finally {
       setUploading(false);
-      setUploadProgress("");
+      setProgressMsg("");
+      setProgressPct(0);
     }
   };
 
@@ -105,7 +194,7 @@ export default function GalleryVideosManager() {
                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
               </svg>
-              Uploading...
+              Processing...
             </>
           ) : (
             <>
@@ -125,9 +214,20 @@ export default function GalleryVideosManager() {
         />
       </div>
 
-      {uploadProgress && (
-        <div className="mb-4 px-4 py-3 bg-zinc-800 rounded-lg text-zinc-300 text-sm">
-          {uploadProgress}
+      {/* Progress bar */}
+      {uploading && progressMsg && (
+        <div className="mb-4 rounded-lg overflow-hidden border border-zinc-700/40 bg-zinc-800">
+          <div className="px-4 py-3 text-zinc-300 text-sm">
+            {progressMsg}
+          </div>
+          {progressPct > 0 && (
+            <div className="h-2 bg-zinc-700">
+              <div
+                className="h-full bg-red-600 transition-all duration-300 ease-out"
+                style={{ width: `${progressPct}%` }}
+              />
+            </div>
+          )}
         </div>
       )}
 

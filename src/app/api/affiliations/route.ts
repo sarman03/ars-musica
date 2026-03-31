@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { put, list, del } from "@vercel/blob";
+import { uploadImage, deleteFile, readJSON, writeJSON } from "@/lib/supabase";
 
 const AFFILIATIONS_JSON_PATH = "affiliations/affiliations.json";
 
@@ -17,11 +17,8 @@ interface Affiliation {
 
 async function getAffiliations(): Promise<Affiliation[]> {
   try {
-    const { blobs } = await list({ prefix: AFFILIATIONS_JSON_PATH });
-    if (blobs.length > 0) {
-      const res = await fetch(blobs[0].url);
-      return await res.json();
-    }
+    const data = await readJSON<Affiliation[]>(AFFILIATIONS_JSON_PATH);
+    if (data && data.length > 0) return data;
   } catch {
     // fall through to defaults
   }
@@ -29,15 +26,7 @@ async function getAffiliations(): Promise<Affiliation[]> {
 }
 
 async function saveAffiliations(affiliations: Affiliation[]) {
-  const { blobs } = await list({ prefix: AFFILIATIONS_JSON_PATH });
-  for (const blob of blobs) {
-    await del(blob.url);
-  }
-  await put(AFFILIATIONS_JSON_PATH, JSON.stringify(affiliations), {
-    access: "public",
-    addRandomSuffix: false,
-    contentType: "application/json",
-  });
+  await writeJSON(AFFILIATIONS_JSON_PATH, affiliations);
 }
 
 export async function GET() {
@@ -65,16 +54,10 @@ export async function POST(req: NextRequest) {
 
   try {
     const timestamp = Date.now();
-    const ext = file.name.split(".").pop() || "png";
-    const blobPath = `affiliation-images/affiliation_${timestamp}.${ext}`;
-
-    const blob = await put(blobPath, file, {
-      access: "public",
-      addRandomSuffix: false,
-    });
+    const url = await uploadImage("affiliation-images", `affiliation_${timestamp}`, file);
 
     const affiliations = await getAffiliations();
-    affiliations.push({ src: blob.url, alt });
+    affiliations.push({ src: url, alt });
     await saveAffiliations(affiliations);
 
     return NextResponse.json({ success: true, affiliations });
@@ -99,12 +82,8 @@ export async function DELETE(req: NextRequest) {
     }
 
     const removed = affiliations[index];
-    if (removed.src.includes("blob.vercel-storage.com")) {
-      try {
-        await del(removed.src);
-      } catch {
-        // ignore delete errors for blob cleanup
-      }
+    if (removed.src.includes("supabase.co")) {
+      try { await deleteFile(extractStoragePath(removed.src)); } catch { /* ignore */ }
     }
 
     affiliations.splice(index, 1);
@@ -115,4 +94,11 @@ export async function DELETE(req: NextRequest) {
     console.error("Affiliation delete error:", error);
     return NextResponse.json({ error: "Delete failed" }, { status: 500 });
   }
+}
+
+function extractStoragePath(url: string): string {
+  const marker = "/object/public/assets/";
+  const idx = url.indexOf(marker);
+  if (idx === -1) return url;
+  return url.slice(idx + marker.length);
 }

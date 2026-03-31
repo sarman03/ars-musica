@@ -1,9 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
-import { put, list, del } from "@vercel/blob";
+import { uploadImage, deleteFile, readJSON, writeJSON } from "@/lib/supabase";
 
 const SLIDES_JSON_PATH = "hero-slides/slides.json";
 
-// Default slides (used when no blob data exists yet)
 const DEFAULT_SLIDES = [
   { src: "/hero/AAAArs.png", alt: "Ars Musica Academy" },
   { src: "/hero/coming soon.png", alt: "Summer Camp Coming Soon" },
@@ -16,11 +15,8 @@ interface Slide {
 
 async function getSlides(): Promise<Slide[]> {
   try {
-    const { blobs } = await list({ prefix: SLIDES_JSON_PATH });
-    if (blobs.length > 0) {
-      const res = await fetch(blobs[0].url);
-      return await res.json();
-    }
+    const data = await readJSON<Slide[]>(SLIDES_JSON_PATH);
+    if (data && data.length > 0) return data;
   } catch {
     // fall through to defaults
   }
@@ -28,26 +24,14 @@ async function getSlides(): Promise<Slide[]> {
 }
 
 async function saveSlides(slides: Slide[]) {
-  // Delete existing
-  const { blobs } = await list({ prefix: SLIDES_JSON_PATH });
-  for (const blob of blobs) {
-    await del(blob.url);
-  }
-  // Save new
-  await put(SLIDES_JSON_PATH, JSON.stringify(slides), {
-    access: "public",
-    addRandomSuffix: false,
-    contentType: "application/json",
-  });
+  await writeJSON(SLIDES_JSON_PATH, slides);
 }
 
-// GET — return current slides
 export async function GET() {
   const slides = await getSlides();
   return NextResponse.json(slides);
 }
 
-// POST — add a new slide (upload image + add to list)
 export async function POST(req: NextRequest) {
   const session = req.cookies.get("admin_session");
   if (!session || session.value !== "authenticated") {
@@ -67,19 +51,11 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    // Upload image to blob
     const timestamp = Date.now();
-    const ext = file.name.split(".").pop() || "jpg";
-    const blobPath = `hero-images/slide_${timestamp}.${ext}`;
+    const url = await uploadImage("hero-images", `slide_${timestamp}`, file);
 
-    const blob = await put(blobPath, file, {
-      access: "public",
-      addRandomSuffix: false,
-    });
-
-    // Add to slides list
     const slides = await getSlides();
-    slides.push({ src: blob.url, alt });
+    slides.push({ src: url, alt });
     await saveSlides(slides);
 
     return NextResponse.json({ success: true, slides });
@@ -89,7 +65,6 @@ export async function POST(req: NextRequest) {
   }
 }
 
-// DELETE — remove a slide by index
 export async function DELETE(req: NextRequest) {
   const session = req.cookies.get("admin_session");
   if (!session || session.value !== "authenticated") {
@@ -104,14 +79,9 @@ export async function DELETE(req: NextRequest) {
       return NextResponse.json({ error: "Invalid index" }, { status: 400 });
     }
 
-    // If it's a blob URL, delete the blob too
     const removed = slides[index];
-    if (removed.src.includes("blob.vercel-storage.com")) {
-      try {
-        await del(removed.src);
-      } catch {
-        // ignore delete errors for blob cleanup
-      }
+    if (removed.src.includes("supabase.co")) {
+      try { await deleteFile(extractStoragePath(removed.src)); } catch { /* ignore */ }
     }
 
     slides.splice(index, 1);
@@ -122,4 +92,11 @@ export async function DELETE(req: NextRequest) {
     console.error("Hero slide delete error:", error);
     return NextResponse.json({ error: "Delete failed" }, { status: 500 });
   }
+}
+
+function extractStoragePath(url: string): string {
+  const marker = "/object/public/assets/";
+  const idx = url.indexOf(marker);
+  if (idx === -1) return url;
+  return url.slice(idx + marker.length);
 }

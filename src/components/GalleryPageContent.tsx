@@ -3,9 +3,9 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
 const DEFAULT_VIDEOS = [
-  "https://c1tjfnbjayx7u69m.public.blob.vercel-storage.com/gallery-videos/VID-20230718-WA0002_1.mp4",
-  "https://c1tjfnbjayx7u69m.public.blob.vercel-storage.com/gallery-videos/VID-20230718-WA0002_2.mp4",
-  "https://c1tjfnbjayx7u69m.public.blob.vercel-storage.com/gallery-videos/IMG_1865.MOV",
+  "https://evvnbosyzxickfzxumai.supabase.co/storage/v1/object/public/assets/gallery-videos/VID-20230718-WA0002_1.mp4",
+  "https://evvnbosyzxickfzxumai.supabase.co/storage/v1/object/public/assets/gallery-videos/VID-20230718-WA0002_2.mp4",
+  "https://evvnbosyzxickfzxumai.supabase.co/storage/v1/object/public/assets/gallery-videos/IMG_1865.mp4",
 ];
 
 const DEFAULT_IMAGES = [

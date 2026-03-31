@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { put, list, del } from "@vercel/blob";
+import { uploadImage, deleteFile, readJSON, writeJSON } from "@/lib/supabase";
 
 const MENTORS_JSON_PATH = "mentors/mentors.json";
 
@@ -21,11 +21,8 @@ interface Mentor {
 
 async function getMentors(): Promise<Mentor[]> {
   try {
-    const { blobs } = await list({ prefix: MENTORS_JSON_PATH });
-    if (blobs.length > 0) {
-      const res = await fetch(blobs[0].url, { cache: "no-store" });
-      return await res.json();
-    }
+    const data = await readJSON<Mentor[]>(MENTORS_JSON_PATH);
+    if (data && data.length > 0) return data;
   } catch {
     // fall through to defaults
   }
@@ -33,15 +30,7 @@ async function getMentors(): Promise<Mentor[]> {
 }
 
 async function saveMentors(mentors: Mentor[]) {
-  const { blobs } = await list({ prefix: MENTORS_JSON_PATH });
-  for (const blob of blobs) {
-    await del(blob.url);
-  }
-  await put(MENTORS_JSON_PATH, JSON.stringify(mentors), {
-    access: "public",
-    addRandomSuffix: false,
-    contentType: "application/json",
-  });
+  await writeJSON(MENTORS_JSON_PATH, mentors);
 }
 
 export const dynamic = "force-dynamic";
@@ -71,11 +60,10 @@ export async function POST(req: NextRequest) {
 
   try {
     const timestamp = Date.now();
-    const ext = file.name.split(".").pop() || "jpeg";
-    const blob = await put(`mentor-images/mentor_${timestamp}.${ext}`, file, { access: "public", addRandomSuffix: false });
+    const url = await uploadImage("mentor-images", `mentor_${timestamp}`, file);
 
     const mentors = await getMentors();
-    mentors.push({ name, description, imageSrc: blob.url, imageAlt });
+    mentors.push({ name, description, imageSrc: url, imageAlt });
     await saveMentors(mentors);
 
     return NextResponse.json({ success: true, mentors });
@@ -111,13 +99,12 @@ export async function PUT(req: NextRequest) {
 
     if (file && file.type.startsWith("image/")) {
       const oldSrc = mentors[index].imageSrc;
-      if (oldSrc.includes("blob.vercel-storage.com")) {
-        try { await del(oldSrc); } catch { /* ignore */ }
+      if (oldSrc.includes("supabase.co")) {
+        try { await deleteFile(extractStoragePath(oldSrc)); } catch { /* ignore */ }
       }
       const timestamp = Date.now();
-      const ext = file.name.split(".").pop() || "jpeg";
-      const blob = await put(`mentor-images/mentor_${timestamp}.${ext}`, file, { access: "public", addRandomSuffix: false });
-      mentors[index].imageSrc = blob.url;
+      const url = await uploadImage("mentor-images", `mentor_${timestamp}`, file);
+      mentors[index].imageSrc = url;
     }
 
     await saveMentors(mentors);
@@ -143,8 +130,8 @@ export async function DELETE(req: NextRequest) {
     }
 
     const removed = mentors[index];
-    if (removed.imageSrc.includes("blob.vercel-storage.com")) {
-      try { await del(removed.imageSrc); } catch { /* ignore */ }
+    if (removed.imageSrc.includes("supabase.co")) {
+      try { await deleteFile(extractStoragePath(removed.imageSrc)); } catch { /* ignore */ }
     }
 
     mentors.splice(index, 1);
@@ -155,4 +142,11 @@ export async function DELETE(req: NextRequest) {
     console.error("Mentor delete error:", error);
     return NextResponse.json({ error: "Delete failed" }, { status: 500 });
   }
+}
+
+function extractStoragePath(url: string): string {
+  const marker = "/object/public/assets/";
+  const idx = url.indexOf(marker);
+  if (idx === -1) return url;
+  return url.slice(idx + marker.length);
 }

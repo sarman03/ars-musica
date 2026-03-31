@@ -1,16 +1,14 @@
 import { NextResponse } from "next/server";
-import { list } from "@vercel/blob";
+import { listFiles, getPublicUrl } from "@/lib/supabase";
 
 export async function GET() {
   try {
-    const { blobs } = await list({ prefix: "images/" });
+    const files = await listFiles("images");
 
-    // Build a map: original path -> blob URL
-    // e.g. "images/about_cards/drums.jpeg" -> strip "images" prefix -> "/about_cards/drums.jpeg"
     const overrides: Record<string, string> = {};
-    for (const blob of blobs) {
-      const originalPath = blob.pathname.replace(/^images/, "");
-      overrides[originalPath] = blob.url;
+    for (const filePath of files) {
+      const originalPath = filePath.replace(/^images/, "");
+      overrides[originalPath] = getPublicUrl(filePath);
     }
 
     return NextResponse.json(overrides);

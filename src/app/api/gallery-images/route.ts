@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { put, list, del } from "@vercel/blob";
+import { uploadImage, deleteFile, readJSON, writeJSON } from "@/lib/supabase";
 
 const GALLERY_JSON_PATH = "gallery-images/gallery.json";
 
@@ -19,11 +19,8 @@ interface GalleryImage {
 
 async function getImages(): Promise<GalleryImage[]> {
   try {
-    const { blobs } = await list({ prefix: GALLERY_JSON_PATH });
-    if (blobs.length > 0) {
-      const res = await fetch(blobs[0].url);
-      return await res.json();
-    }
+    const data = await readJSON<GalleryImage[]>(GALLERY_JSON_PATH);
+    if (data && data.length > 0) return data;
   } catch {
     // fall through to defaults
   }
@@ -31,15 +28,7 @@ async function getImages(): Promise<GalleryImage[]> {
 }
 
 async function saveImages(images: GalleryImage[]) {
-  const { blobs } = await list({ prefix: GALLERY_JSON_PATH });
-  for (const blob of blobs) {
-    await del(blob.url);
-  }
-  await put(GALLERY_JSON_PATH, JSON.stringify(images), {
-    access: "public",
-    addRandomSuffix: false,
-    contentType: "application/json",
-  });
+  await writeJSON(GALLERY_JSON_PATH, images);
 }
 
 export async function GET() {
@@ -67,16 +56,10 @@ export async function POST(req: NextRequest) {
 
   try {
     const timestamp = Date.now();
-    const ext = file.name.split(".").pop() || "jpg";
-    const blobPath = `gallery-uploads/gallery_${timestamp}.${ext}`;
-
-    const blob = await put(blobPath, file, {
-      access: "public",
-      addRandomSuffix: false,
-    });
+    const url = await uploadImage("gallery-uploads", `gallery_${timestamp}`, file);
 
     const images = await getImages();
-    images.push({ src: blob.url, alt });
+    images.push({ src: url, alt });
     await saveImages(images);
 
     return NextResponse.json({ success: true, images });
@@ -101,12 +84,8 @@ export async function DELETE(req: NextRequest) {
     }
 
     const removed = images[index];
-    if (removed.src.includes("blob.vercel-storage.com")) {
-      try {
-        await del(removed.src);
-      } catch {
-        // ignore delete errors for blob cleanup
-      }
+    if (removed.src.includes("supabase.co")) {
+      try { await deleteFile(extractStoragePath(removed.src)); } catch { /* ignore */ }
     }
 
     images.splice(index, 1);
@@ -117,4 +96,11 @@ export async function DELETE(req: NextRequest) {
     console.error("Gallery delete error:", error);
     return NextResponse.json({ error: "Delete failed" }, { status: 500 });
   }
+}
+
+function extractStoragePath(url: string): string {
+  const marker = "/object/public/assets/";
+  const idx = url.indexOf(marker);
+  if (idx === -1) return url;
+  return url.slice(idx + marker.length);
 }

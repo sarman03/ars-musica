@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { put, list, del } from "@vercel/blob";
+import { uploadImage, deleteFile, readJSON, writeJSON } from "@/lib/supabase";
 
 const COURSES_JSON_PATH = "courses/courses.json";
 
@@ -23,11 +23,8 @@ interface Course {
 
 async function getCourses(): Promise<Course[]> {
   try {
-    const { blobs } = await list({ prefix: COURSES_JSON_PATH });
-    if (blobs.length > 0) {
-      const res = await fetch(blobs[0].url);
-      return await res.json();
-    }
+    const data = await readJSON<Course[]>(COURSES_JSON_PATH);
+    if (data && data.length > 0) return data;
   } catch {
     // fall through to defaults
   }
@@ -35,15 +32,7 @@ async function getCourses(): Promise<Course[]> {
 }
 
 async function saveCourses(courses: Course[]) {
-  const { blobs } = await list({ prefix: COURSES_JSON_PATH });
-  for (const blob of blobs) {
-    await del(blob.url);
-  }
-  await put(COURSES_JSON_PATH, JSON.stringify(courses), {
-    access: "public",
-    addRandomSuffix: false,
-    contentType: "application/json",
-  });
+  await writeJSON(COURSES_JSON_PATH, courses);
 }
 
 export async function GET() {
@@ -69,12 +58,10 @@ export async function POST(req: NextRequest) {
 
   try {
     const timestamp = Date.now();
-    const ext = file.name.split(".").pop() || "jpeg";
-    const blobPath = `course-images/course_${timestamp}.${ext}`;
-    const blob = await put(blobPath, file, { access: "public", addRandomSuffix: false });
+    const url = await uploadImage("course-images", `course_${timestamp}`, file);
 
     const courses = await getCourses();
-    courses.push({ title, description, imageSrc: blob.url, imageAlt });
+    courses.push({ title, description, imageSrc: url, imageAlt });
     await saveCourses(courses);
 
     return NextResponse.json({ success: true, courses });
@@ -110,13 +97,12 @@ export async function PUT(req: NextRequest) {
 
     if (file && file.type.startsWith("image/")) {
       const oldSrc = courses[index].imageSrc;
-      if (oldSrc.includes("blob.vercel-storage.com")) {
-        try { await del(oldSrc); } catch { /* ignore */ }
+      if (oldSrc.includes("supabase.co")) {
+        try { await deleteFile(extractStoragePath(oldSrc)); } catch { /* ignore */ }
       }
       const timestamp = Date.now();
-      const ext = file.name.split(".").pop() || "jpeg";
-      const blob = await put(`course-images/course_${timestamp}.${ext}`, file, { access: "public", addRandomSuffix: false });
-      courses[index].imageSrc = blob.url;
+      const url = await uploadImage("course-images", `course_${timestamp}`, file);
+      courses[index].imageSrc = url;
     }
 
     await saveCourses(courses);
@@ -142,8 +128,8 @@ export async function DELETE(req: NextRequest) {
     }
 
     const removed = courses[index];
-    if (removed.imageSrc.includes("blob.vercel-storage.com")) {
-      try { await del(removed.imageSrc); } catch { /* ignore */ }
+    if (removed.imageSrc.includes("supabase.co")) {
+      try { await deleteFile(extractStoragePath(removed.imageSrc)); } catch { /* ignore */ }
     }
 
     courses.splice(index, 1);
@@ -154,4 +140,11 @@ export async function DELETE(req: NextRequest) {
     console.error("Course delete error:", error);
     return NextResponse.json({ error: "Delete failed" }, { status: 500 });
   }
+}
+
+function extractStoragePath(url: string): string {
+  const marker = "/object/public/assets/";
+  const idx = url.indexOf(marker);
+  if (idx === -1) return url;
+  return url.slice(idx + marker.length);
 }
