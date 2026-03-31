@@ -20,7 +20,8 @@ export default function Navbar() {
               className="rounded-sm"
             />
             <span className="text-white font-bold text-lg tracking-wide">
-              ARS <span className="text-brand-red">MUSICA</span> ACADEMY
+               <span className="text-brand-red">ARS MUSICA ACADEMY</span> 
+              {/* ARS MUSICA ACADEMY */}
             </span>
           </a>
 
