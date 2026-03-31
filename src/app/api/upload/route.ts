@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { uploadImage } from "@/lib/supabase";
+import { compressAndUpload } from "@/lib/supabase";
 
 export async function POST(req: NextRequest) {
   const session = req.cookies.get("admin_session");
@@ -24,7 +24,9 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const url = await uploadImage("images", targetPath.replace(/^\//, ""), file);
+    // Keep the original path so the override key matches exactly
+    const storagePath = `images${targetPath}`;
+    const url = await compressAndUpload(storagePath, file);
 
     return NextResponse.json({ success: true, path: targetPath, url });
   } catch (error) {

@@ -62,6 +62,19 @@ export async function uploadImage(
   return getPublicUrl(path);
 }
 
+export async function compressAndUpload(path: string, file: File): Promise<string> {
+  const buffer = Buffer.from(await file.arrayBuffer());
+  const compressed = await compressImage(buffer);
+  const { error } = await supabase.storage
+    .from(BUCKET)
+    .upload(path, compressed.data, {
+      contentType: compressed.contentType,
+      upsert: true,
+    });
+  if (error) throw error;
+  return getPublicUrl(path);
+}
+
 export async function deleteFile(path: string): Promise<void> {
   await supabase.storage.from(BUCKET).remove([path]);
 }
@@ -84,7 +97,19 @@ export async function writeJSON(path: string, obj: unknown): Promise<void> {
 export async function listFiles(prefix: string): Promise<string[]> {
   const { data, error } = await supabase.storage.from(BUCKET).list(prefix);
   if (error || !data) return [];
-  return data
-    .filter((f) => f.name)
-    .map((f) => `${prefix}/${f.name}`);
+
+  const results: string[] = [];
+  for (const item of data) {
+    if (!item.name) continue;
+    const fullPath = `${prefix}/${item.name}`;
+    if (item.id) {
+      // It's a file
+      results.push(fullPath);
+    } else {
+      // It's a folder — recurse
+      const nested = await listFiles(fullPath);
+      results.push(...nested);
+    }
+  }
+  return results;
 }
