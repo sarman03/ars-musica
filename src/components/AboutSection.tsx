@@ -87,7 +87,7 @@ export default function AboutSection() {
         >
           <div className="w-12 h-[2px] rounded-full mb-4" style={{ background: "linear-gradient(to right, transparent, white, transparent)" }} />
           <h2 className="text-brand-red font-semibold text-4xl md:text-6xl lg:text-7xl tracking-wide uppercase text-center">
-            About Ars Musica Acadamy
+            About Ars Musica Academy
           </h2>
         </div>
 
