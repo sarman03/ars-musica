@@ -25,11 +25,9 @@ export function ImageOverrideProvider({ children }: { children: React.ReactNode 
   const [overrides, setOverrides] = useState<Record<string, string>>({});
 
   const fetchOverrides = useCallback(() => {
-    console.log("[ImageOverrideProvider] Fetching overrides from /api/images...");
     fetch("/api/images")
       .then((res) => res.json())
       .then((data) => {
-        console.log("[ImageOverrideProvider] Overrides received:", data);
         // Append cache-busting param so the browser doesn't serve stale images
         const bustCache = `?t=${Date.now()}`;
         const busted: Record<string, string> = {};
@@ -38,9 +36,7 @@ export function ImageOverrideProvider({ children }: { children: React.ReactNode 
         }
         setOverrides(busted);
       })
-      .catch((err) => {
-        console.error("[ImageOverrideProvider] Fetch failed:", err);
-      });
+      .catch(() => {});
   }, []);
 
   useEffect(() => {

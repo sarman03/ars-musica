@@ -1,5 +1,3 @@
-import Image from "next/image";
-
 export default function Footer() {
   return (
     <footer className="bg-zinc-950 px-6 md:px-16 lg:px-24 pt-0 pb-16">
@@ -7,11 +5,8 @@ export default function Footer() {
       <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between gap-12 mt-12">
         {/* Brand */}
         <div className="max-w-sm">
-          <div className="flex items-center gap-2 mb-4">
-            <Image src="/logo/logo.jpeg" alt="Ars Musica" width={24} height={24} className="rounded-sm" />
-            <span className="text-white font-bold text-lg tracking-wide">
-               <span className="text-brand-red">ARS MUSICA ACADEMY</span> 
-            </span>
+          <div className="mb-4">
+            <img src="/logo/Logo%20for%20website.svg" alt="Ars Musica" width={200} height={48} />
           </div>
           <p className="text-zinc-500 text-sm leading-relaxed">
             Your ideas deserve more than a demo.

@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useState } from "react";
 
 export default function Navbar() {
@@ -11,18 +10,13 @@ export default function Navbar() {
       <nav className="fixed top-0 left-0 w-full z-20 px-4 md:px-0 pt-3 md:pt-0">
         <div className="flex items-center justify-between px-5 md:px-10 py-4 md:py-5 bg-black/60 backdrop-blur-xl rounded-xl md:rounded-none border border-white/15 md:border-0">
           {/* Logo */}
-          <a href="/" className="flex items-center gap-2">
-            <Image
-              src="/logo/logo.jpeg"
+          <a href="/" className="flex items-center">
+            <img
+              src="/logo/Logo%20for%20website.svg"
               alt="Ars Musica"
-              width={24}
-              height={24}
-              className="rounded-sm"
+              width={220}
+              height={52}
             />
-            <span className="text-white font-bold text-lg tracking-wide">
-               <span className="text-brand-red">ARS MUSICA ACADEMY</span> 
-              {/* ARS MUSICA ACADEMY */}
-            </span>
           </a>
 
           {/* Desktop links */}
@@ -79,17 +73,13 @@ export default function Navbar() {
       >
         {/* Panel header */}
         <div className="flex items-center justify-between px-5 py-4">
-          <a href="/" className="flex items-center gap-2" onClick={() => setOpen(false)}>
-            <Image
-              src="/logo/logo.jpeg"
+          <a href="/" className="flex items-center" onClick={() => setOpen(false)}>
+            <img
+              src="/logo/Logo%20for%20website.svg"
               alt="Ars Musica"
-              width={24}
-              height={24}
-              className="rounded-sm"
+              width={180}
+              height={42}
             />
-            <span className="text-white font-bold text-lg tracking-wide">
-              ARS <span className="text-brand-red">MUSICA</span> ACADEMY
-            </span>
           </a>
           <button
             onClick={() => setOpen(false)}

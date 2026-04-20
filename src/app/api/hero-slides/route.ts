@@ -4,23 +4,45 @@ import { uploadImage, deleteFile, readJSON, writeJSON } from "@/lib/supabase";
 const SLIDES_JSON_PATH = "hero-slides/slides.json";
 
 const DEFAULT_SLIDES = [
-  { src: "/hero/AAAArs.png", alt: "Ars Musica Academy" },
-  { src: "/hero/coming soon.png", alt: "Summer Camp Coming Soon" },
+  { src: "/hero/AAAArs.png", alt: "Ars Musica Academy", displayMode: "fill-box" as const },
+  { src: "/hero/coming soon.png", alt: "Summer Camp Coming Soon", displayMode: "fill-box" as const },
 ];
+
+type DisplayMode = "fill-box" | "show-full-image";
 
 interface Slide {
   src: string;
   alt: string;
+  displayMode: DisplayMode;
+}
+
+function normalizeDisplayMode(value: unknown): DisplayMode {
+  return value === "show-full-image" ? "show-full-image" : "fill-box";
 }
 
 async function getSlides(): Promise<Slide[]> {
-  try {
-    const data = await readJSON<Slide[]>(SLIDES_JSON_PATH);
-    if (data && data.length > 0) return data;
-  } catch {
-    // fall through to defaults
+  const data = await readJSON<unknown>(SLIDES_JSON_PATH);
+  if (data === null) {
+    await saveSlides(DEFAULT_SLIDES);
+    return [...DEFAULT_SLIDES];
   }
-  return DEFAULT_SLIDES;
+  if (!Array.isArray(data)) {
+    throw new Error("Invalid hero slides data format");
+  }
+
+  return data
+    .filter(
+      (item): item is { src: string; alt: string; displayMode?: unknown } =>
+        typeof item === "object" &&
+        item !== null &&
+        typeof (item as { src?: unknown }).src === "string" &&
+        typeof (item as { alt?: unknown }).alt === "string"
+    )
+    .map((slide) => ({
+      src: slide.src,
+      alt: slide.alt,
+      displayMode: normalizeDisplayMode(slide.displayMode),
+    }));
 }
 
 async function saveSlides(slides: Slide[]) {
@@ -28,8 +50,13 @@ async function saveSlides(slides: Slide[]) {
 }
 
 export async function GET() {
-  const slides = await getSlides();
-  return NextResponse.json(slides);
+  try {
+    const slides = await getSlides();
+    return NextResponse.json(slides);
+  } catch (error) {
+    console.error("Hero slides fetch error:", error);
+    return NextResponse.json({ error: "Failed to load hero slides" }, { status: 500 });
+  }
 }
 
 export async function POST(req: NextRequest) {
@@ -41,6 +68,7 @@ export async function POST(req: NextRequest) {
   const formData = await req.formData();
   const file = formData.get("file") as File | null;
   const alt = (formData.get("alt") as string) || "Hero slide";
+  const displayMode = normalizeDisplayMode(formData.get("displayMode"));
 
   if (!file) {
     return NextResponse.json({ error: "File is required" }, { status: 400 });
@@ -55,7 +83,7 @@ export async function POST(req: NextRequest) {
     const url = await uploadImage("hero-images", `slide_${timestamp}`, file);
 
     const slides = await getSlides();
-    slides.push({ src: url, alt });
+    slides.push({ src: url, alt, displayMode });
     await saveSlides(slides);
 
     return NextResponse.json({ success: true, slides });
@@ -81,7 +109,7 @@ export async function DELETE(req: NextRequest) {
 
     const removed = slides[index];
     if (removed.src.includes("supabase.co")) {
-      try { await deleteFile(extractStoragePath(removed.src)); } catch { /* ignore */ }
+      await deleteFile(extractStoragePath(removed.src));
     }
 
     slides.splice(index, 1);

@@ -8,6 +8,12 @@ export const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
 const BUCKET = "assets";
 
+function isStorageNotFoundError(error: { statusCode?: string | number; message?: string } | null): boolean {
+  if (!error) return false;
+  if (String(error.statusCode) === "404") return true;
+  return error.message?.toLowerCase().includes("not found") ?? false;
+}
+
 export function getPublicUrl(path: string): string {
   const { data } = supabase.storage.from(BUCKET).getPublicUrl(path);
   return data.publicUrl;
@@ -76,22 +82,30 @@ export async function compressAndUpload(path: string, file: File): Promise<strin
 }
 
 export async function deleteFile(path: string): Promise<void> {
-  await supabase.storage.from(BUCKET).remove([path]);
+  const { error } = await supabase.storage.from(BUCKET).remove([path]);
+  if (error && !isStorageNotFoundError(error)) {
+    throw error;
+  }
 }
 
 export async function readJSON<T>(path: string): Promise<T | null> {
   const { data, error } = await supabase.storage.from(BUCKET).download(path);
-  if (error || !data) return null;
+  if (error) {
+    if (isStorageNotFoundError(error)) return null;
+    throw error;
+  }
+  if (!data) return null;
   const text = await data.text();
   return JSON.parse(text) as T;
 }
 
 export async function writeJSON(path: string, obj: unknown): Promise<void> {
   const body = Buffer.from(JSON.stringify(obj));
-  await supabase.storage.from(BUCKET).upload(path, body, {
+  const { error } = await supabase.storage.from(BUCKET).upload(path, body, {
     contentType: "application/json",
     upsert: true,
   });
+  if (error) throw error;
 }
 
 export async function listFiles(prefix: string): Promise<string[]> {

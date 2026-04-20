@@ -4,9 +4,12 @@ import { useEffect, useRef, useState } from "react";
 import ImageCropModal from "./ImageCropModal";
 import { convertIfHeic } from "../utils/convertHeic";
 
+type DisplayMode = "fill-box" | "show-full-image";
+
 interface GalleryImage {
   src: string;
   alt: string;
+  displayMode?: DisplayMode;
 }
 
 export default function GalleryImagesManager() {
@@ -15,10 +18,12 @@ export default function GalleryImagesManager() {
   const [uploading, setUploading] = useState(false);
   const [cropSrc, setCropSrc] = useState<string | null>(null);
   const [cropFileName, setCropFileName] = useState("");
+  const [displayMode, setDisplayMode] = useState<DisplayMode>("fill-box");
+  const [pendingDisplayMode, setPendingDisplayMode] = useState<DisplayMode>("fill-box");
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const fetchImages = () => {
-    fetch("/api/gallery-images")
+    fetch("/api/gallery-images", { cache: "no-store" })
       .then((res) => res.json())
       .then((data) => {
         if (Array.isArray(data)) setImages(data);
@@ -31,30 +36,12 @@ export default function GalleryImagesManager() {
     fetchImages();
   }, []);
 
-  const handleFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    setCropFileName(file.name.replace(/\.[^.]+$/, ""));
-    if (fileInputRef.current) fileInputRef.current.value = "";
-
-    try {
-      const converted = await convertIfHeic(file);
-      const preview = URL.createObjectURL(converted);
-      setCropSrc(preview);
-    } catch {
-      alert("Could not load this image. Please try a different format.");
-    }
-  };
-
-  const handleCropComplete = async (croppedBlob: Blob) => {
-    if (cropSrc) URL.revokeObjectURL(cropSrc);
-    setCropSrc(null);
-
+  const uploadImageFile = async (file: Blob, mode: DisplayMode, altText: string) => {
     setUploading(true);
     const formData = new FormData();
-    formData.append("file", croppedBlob, "cropped.jpg");
-    formData.append("alt", cropFileName);
+    formData.append("file", file, "uploaded.jpg");
+    formData.append("alt", altText);
+    formData.append("displayMode", mode);
 
     try {
       const res = await fetch("/api/gallery-images", {
@@ -72,6 +59,35 @@ export default function GalleryImagesManager() {
     } finally {
       setUploading(false);
     }
+  };
+
+  const handleFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const altText = file.name.replace(/\.[^.]+$/, "");
+    setCropFileName(altText);
+    if (fileInputRef.current) fileInputRef.current.value = "";
+
+    try {
+      const converted = await convertIfHeic(file);
+      if (displayMode === "show-full-image") {
+        await uploadImageFile(converted, "show-full-image", altText);
+        return;
+      }
+
+      setPendingDisplayMode(displayMode);
+      const preview = URL.createObjectURL(converted);
+      setCropSrc(preview);
+    } catch {
+      alert("Could not load this image. Please try a different format.");
+    }
+  };
+
+  const handleCropComplete = async (croppedBlob: Blob) => {
+    if (cropSrc) URL.revokeObjectURL(cropSrc);
+    setCropSrc(null);
+    await uploadImageFile(croppedBlob, pendingDisplayMode, cropFileName);
   };
 
   const handleCropCancel = () => {
@@ -114,28 +130,47 @@ export default function GalleryImagesManager() {
           <h3 className="text-white font-semibold text-lg">
             Gallery Images ({images.length})
           </h3>
-          <button
-            onClick={() => fileInputRef.current?.click()}
-            disabled={uploading}
-            className="bg-red-700 hover:bg-red-600 disabled:opacity-50 text-white font-semibold px-5 py-2.5 rounded-lg text-sm transition-colors flex items-center gap-2"
-          >
-            {uploading ? (
-              <>
-                <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
-                </svg>
-                Uploading...
-              </>
-            ) : (
-              <>
-                <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-                </svg>
-                Add Image
-              </>
-            )}
-          </button>
+          <div className="flex items-center gap-3">
+            <div className="flex rounded-lg border border-zinc-700/50 overflow-hidden text-xs">
+              <button
+                type="button"
+                onClick={() => setDisplayMode("fill-box")}
+                className={`px-3 py-2 transition-colors ${displayMode === "fill-box" ? "bg-red-700 text-white" : "bg-zinc-900 text-zinc-400 hover:text-white"}`}
+              >
+                Fill Box
+              </button>
+              <button
+                type="button"
+                onClick={() => setDisplayMode("show-full-image")}
+                className={`px-3 py-2 transition-colors ${displayMode === "show-full-image" ? "bg-red-700 text-white" : "bg-zinc-900 text-zinc-400 hover:text-white"}`}
+              >
+                Show Full Image
+              </button>
+            </div>
+
+            <button
+              onClick={() => fileInputRef.current?.click()}
+              disabled={uploading}
+              className="bg-red-700 hover:bg-red-600 disabled:opacity-50 text-white font-semibold px-5 py-2.5 rounded-lg text-sm transition-colors flex items-center gap-2"
+            >
+              {uploading ? (
+                <>
+                  <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                  </svg>
+                  Uploading...
+                </>
+              ) : (
+                <>
+                  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                  </svg>
+                  Add Image
+                </>
+              )}
+            </button>
+          </div>
           <input
             ref={fileInputRef}
             type="file"
@@ -151,12 +186,15 @@ export default function GalleryImagesManager() {
               key={`${image.src}-${i}`}
               className="relative group rounded-xl overflow-hidden border border-zinc-700/40 bg-zinc-900"
             >
-              <div className="relative aspect-square">
+              <div
+                className="relative aspect-square"
+                style={{ backgroundColor: image.displayMode === "show-full-image" ? "#000" : undefined }}
+              >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={image.src}
                   alt={image.alt}
-                  className="absolute inset-0 w-full h-full object-cover"
+                  className={`absolute inset-0 w-full h-full ${image.displayMode === "show-full-image" ? "object-contain object-center" : "object-cover"}`}
                 />
                 {/* Hover overlay */}
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/60 transition-all duration-200 flex items-center justify-center">

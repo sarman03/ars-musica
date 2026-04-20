@@ -4,27 +4,49 @@ import { uploadImage, deleteFile, readJSON, writeJSON } from "@/lib/supabase";
 const GALLERY_JSON_PATH = "gallery-images/gallery.json";
 
 const DEFAULT_IMAGES = [
-  { src: "/gallery/gallery_1.jpeg", alt: "Student receiving certificate" },
-  { src: "/gallery/gallery-2.jpg", alt: "Young student playing drums" },
-  { src: "/gallery/gallery_3.jpeg", alt: "Student with music instructor" },
-  { src: "/gallery/gallery_4.jpeg", alt: "Certificate presentation" },
-  { src: "/gallery/gallery_5.jpeg", alt: "Student practicing drums" },
-  { src: "/gallery/gallery_last.jpg", alt: "Young singer performing" },
+  { src: "/gallery/gallery_1.jpeg", alt: "Student receiving certificate", displayMode: "fill-box" as const },
+  { src: "/gallery/gallery-2.jpg", alt: "Young student playing drums", displayMode: "fill-box" as const },
+  { src: "/gallery/gallery_3.jpeg", alt: "Student with music instructor", displayMode: "fill-box" as const },
+  { src: "/gallery/gallery_4.jpeg", alt: "Certificate presentation", displayMode: "fill-box" as const },
+  { src: "/gallery/gallery_5.jpeg", alt: "Student practicing drums", displayMode: "fill-box" as const },
+  { src: "/gallery/gallery_last.jpg", alt: "Young singer performing", displayMode: "fill-box" as const },
 ];
+
+type DisplayMode = "fill-box" | "show-full-image";
 
 interface GalleryImage {
   src: string;
   alt: string;
+  displayMode: DisplayMode;
+}
+
+function normalizeDisplayMode(value: unknown): DisplayMode {
+  return value === "show-full-image" ? "show-full-image" : "fill-box";
 }
 
 async function getImages(): Promise<GalleryImage[]> {
-  try {
-    const data = await readJSON<GalleryImage[]>(GALLERY_JSON_PATH);
-    if (data && data.length > 0) return data;
-  } catch {
-    // fall through to defaults
+  const data = await readJSON<unknown>(GALLERY_JSON_PATH);
+  if (data === null) {
+    await saveImages(DEFAULT_IMAGES);
+    return [...DEFAULT_IMAGES];
   }
-  return DEFAULT_IMAGES;
+  if (!Array.isArray(data)) {
+    throw new Error("Invalid gallery images data format");
+  }
+
+  return data
+    .filter(
+      (item): item is { src: string; alt: string; displayMode?: unknown } =>
+        typeof item === "object" &&
+        item !== null &&
+        typeof (item as { src?: unknown }).src === "string" &&
+        typeof (item as { alt?: unknown }).alt === "string"
+    )
+    .map((image) => ({
+      src: image.src,
+      alt: image.alt,
+      displayMode: normalizeDisplayMode(image.displayMode),
+    }));
 }
 
 async function saveImages(images: GalleryImage[]) {
@@ -32,8 +54,13 @@ async function saveImages(images: GalleryImage[]) {
 }
 
 export async function GET() {
-  const images = await getImages();
-  return NextResponse.json(images);
+  try {
+    const images = await getImages();
+    return NextResponse.json(images);
+  } catch (error) {
+    console.error("Gallery images fetch error:", error);
+    return NextResponse.json({ error: "Failed to load gallery images" }, { status: 500 });
+  }
 }
 
 export async function POST(req: NextRequest) {
@@ -45,6 +72,7 @@ export async function POST(req: NextRequest) {
   const formData = await req.formData();
   const file = formData.get("file") as File | null;
   const alt = (formData.get("alt") as string) || "Gallery image";
+  const displayMode = normalizeDisplayMode(formData.get("displayMode"));
 
   if (!file) {
     return NextResponse.json({ error: "File is required" }, { status: 400 });
@@ -59,7 +87,7 @@ export async function POST(req: NextRequest) {
     const url = await uploadImage("gallery-uploads", `gallery_${timestamp}`, file);
 
     const images = await getImages();
-    images.push({ src: url, alt });
+    images.push({ src: url, alt, displayMode });
     await saveImages(images);
 
     return NextResponse.json({ success: true, images });
@@ -85,7 +113,7 @@ export async function DELETE(req: NextRequest) {
 
     const removed = images[index];
     if (removed.src.includes("supabase.co")) {
-      try { await deleteFile(extractStoragePath(removed.src)); } catch { /* ignore */ }
+      await deleteFile(extractStoragePath(removed.src));
     }
 
     images.splice(index, 1);

@@ -24,8 +24,7 @@ export default function QuoteSection() {
       const progress = Math.min(0.999, Math.max(0, -rect.top / scrollableHeight));
 
       const index = Math.min(lines.length - 1, Math.floor(progress * lines.length));
-      console.log("QuoteSection scroll:", { rectTop: rect.top, rectHeight: rect.height, scrollableHeight, progress, index, activeIndex });
-      setActiveIndex(index);
+      setActiveIndex((prev) => (prev === index ? prev : index));
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });

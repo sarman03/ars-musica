@@ -60,14 +60,14 @@ export default function Home() {
       />
       <Navbar />
       <HeroSection />
+      <AffiliationSection />
       <WhatWeDoSection />
       <QuoteSection />
       <div className="relative z-[2]">
-        <GallerySection />
+        <MentorsSection />
         <AboutSection />
         <StatsSection />
-        <AffiliationSection />
-        <MentorsSection />
+        <GallerySection />
         <FaqSection />
         <ContactSection />
         <MapSection />

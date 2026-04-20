@@ -9,17 +9,18 @@ const DEFAULT_VIDEOS = [
 ];
 
 const DEFAULT_IMAGES = [
-  { src: "/gallery/gallery_1.jpeg", alt: "Student receiving certificate" },
+  { src: "/gallery/gallery_1.jpeg", alt: "Student receiving certificate", displayMode: "fill-box" as const },
   // { src: "/gallery/gallery-2.jpg", alt: "Young student playing drums" },
-  { src: "/gallery/gallery_3.jpeg", alt: "Student with music instructor" },
-  { src: "/gallery/gallery_4.jpeg", alt: "Certificate presentation" },
-  { src: "/gallery/gallery_5.jpeg", alt: "Student practicing drums" },
-  { src: "/gallery/gallery_last.jpg", alt: "Young singer performing" },
+  { src: "/gallery/gallery_3.jpeg", alt: "Student with music instructor", displayMode: "fill-box" as const },
+  { src: "/gallery/gallery_4.jpeg", alt: "Certificate presentation", displayMode: "fill-box" as const },
+  { src: "/gallery/gallery_5.jpeg", alt: "Student practicing drums", displayMode: "fill-box" as const },
+  { src: "/gallery/gallery_last.jpg", alt: "Young singer performing", displayMode: "fill-box" as const },
 ];
 
 interface GalleryImage {
   src: string;
   alt: string;
+  displayMode?: "fill-box" | "show-full-image";
 }
 
 function useReveal(threshold = 0.15) {
@@ -272,12 +273,13 @@ export default function GalleryPageContent() {
               <div
                 key={`top-${i}`}
                 className="flex-shrink-0 w-[200px] md:w-[260px] aspect-square relative overflow-hidden rounded-lg"
+                style={{ backgroundColor: img.displayMode === "show-full-image" ? "#000" : undefined }}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={img.src}
                   alt={img.alt}
-                  className="absolute inset-0 w-full h-full object-cover"
+                  className={`absolute inset-0 w-full h-full ${img.displayMode === "show-full-image" ? "object-contain object-center" : "object-cover"}`}
                 />
               </div>
             ))}
@@ -291,12 +293,13 @@ export default function GalleryPageContent() {
               <div
                 key={`bottom-${i}`}
                 className="flex-shrink-0 w-[200px] md:w-[260px] aspect-square relative overflow-hidden rounded-lg"
+                style={{ backgroundColor: img.displayMode === "show-full-image" ? "#000" : undefined }}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={img.src}
                   alt={img.alt}
-                  className="absolute inset-0 w-full h-full object-cover"
+                  className={`absolute inset-0 w-full h-full ${img.displayMode === "show-full-image" ? "object-contain object-center" : "object-cover"}`}
                 />
               </div>
             ))}

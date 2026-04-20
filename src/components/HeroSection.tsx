@@ -7,11 +7,12 @@ import WaveBars from "@/components/WaveBars"
 interface Slide {
   src: string
   alt: string
+  displayMode?: "fill-box" | "show-full-image"
 }
 
 const DEFAULT_SLIDES: Slide[] = [
-  { src: "/hero/AAAArs.png", alt: "Ars Musica Academy" },
-  { src: "/hero/coming soon.png", alt: "Summer Camp Coming Soon" },
+  { src: "/hero/AAAArs.png", alt: "Ars Musica Academy", displayMode: "fill-box" },
+  { src: "/hero/coming soon.png", alt: "Summer Camp Coming Soon", displayMode: "fill-box" },
 ]
 
 export default function HeroSection() {
@@ -29,7 +30,7 @@ export default function HeroSection() {
     fetch("/api/hero-slides")
       .then((res) => res.json())
       .then((data) => {
-        setSlides(Array.isArray(data) && data.length > 0 ? data : DEFAULT_SLIDES)
+        setSlides(Array.isArray(data) ? data : DEFAULT_SLIDES)
       })
       .catch(() => setSlides(DEFAULT_SLIDES))
   }, [])
@@ -66,7 +67,8 @@ export default function HeroSection() {
                 src={slide.src}
                 alt={slide.alt}
                 fill
-                className="object-contain md:object-cover"
+                sizes="100vw"
+                className={slide.displayMode === "show-full-image" ? "object-contain object-center" : "object-contain md:object-cover"}
                 priority={i === 0}
                 unoptimized={slide.src.startsWith("http")}
               />
