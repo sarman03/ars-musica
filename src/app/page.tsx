@@ -61,12 +61,12 @@ export default function Home() {
       <Navbar />
       <HeroSection />
       <AffiliationSection />
+      <StatsSection />
       <WhatWeDoSection />
       <QuoteSection />
       <div className="relative z-[2]">
         <MentorsSection />
         <AboutSection />
-        <StatsSection />
         <GallerySection />
         <FaqSection />
         <ContactSection />
