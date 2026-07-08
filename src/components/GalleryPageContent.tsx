@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import Image from "next/image";
 
 const DEFAULT_VIDEOS = [
   "https://evvnbosyzxickfzxumai.supabase.co/storage/v1/object/public/assets/gallery-videos/VID-20230718-WA0002_1.mp4",
@@ -386,11 +387,13 @@ export default function GalleryPageContent() {
                 className="flex-shrink-0 w-[200px] md:w-[260px] aspect-square relative overflow-hidden rounded-lg cursor-pointer group/photo"
                 style={{ backgroundColor: img.displayMode === "show-full-image" ? "#000" : undefined }}
               >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
+                <Image
                   src={img.src}
                   alt={img.alt}
-                  className={`absolute inset-0 w-full h-full transition-transform duration-500 group-hover/photo:scale-105 ${img.displayMode === "show-full-image" ? "object-contain object-center" : "object-cover"}`}
+                  fill
+                  sizes="(max-width: 768px) 200px, 260px"
+                  className={`absolute inset-0 transition-transform duration-500 group-hover/photo:scale-105 ${img.displayMode === "show-full-image" ? "object-contain object-center" : "object-cover"}`}
+                  priority={i < 4}
                 />
               </div>
             ))}
@@ -407,11 +410,13 @@ export default function GalleryPageContent() {
                 className="flex-shrink-0 w-[200px] md:w-[260px] aspect-square relative overflow-hidden rounded-lg cursor-pointer group/photo"
                 style={{ backgroundColor: img.displayMode === "show-full-image" ? "#000" : undefined }}
               >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
+                <Image
                   src={img.src}
                   alt={img.alt}
-                  className={`absolute inset-0 w-full h-full transition-transform duration-500 group-hover/photo:scale-105 ${img.displayMode === "show-full-image" ? "object-contain object-center" : "object-cover"}`}
+                  fill
+                  sizes="(max-width: 768px) 200px, 260px"
+                  className={`absolute inset-0 transition-transform duration-500 group-hover/photo:scale-105 ${img.displayMode === "show-full-image" ? "object-contain object-center" : "object-cover"}`}
+                  priority={i < 4}
                 />
               </div>
             ))}
@@ -463,13 +468,15 @@ export default function GalleryPageContent() {
             {/* Image Wrapper */}
             <div 
               onClick={(e) => e.stopPropagation()}
-              className="relative max-w-full max-h-[70vh] md:max-h-[78vh] flex items-center justify-center select-none"
+              className="relative w-[90vw] h-[70vh] md:h-[78vh] select-none"
             >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+              <Image
                 src={galleryImages[activeImageIndex].src}
                 alt={galleryImages[activeImageIndex].alt}
-                className="max-w-[95vw] max-h-[70vh] md:max-h-[78vh] object-contain rounded-lg shadow-2xl transition-all duration-300"
+                fill
+                sizes="(max-width: 768px) 90vw, 85vw"
+                className="object-contain rounded-lg shadow-2xl transition-all duration-300"
+                priority
               />
             </div>
 
