@@ -52,6 +52,8 @@ function VideoCarousel({ videosHeading, videos }: { videosHeading: { ref: React.
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
   const [inView, setInView] = useState(false);
   const [hasBeenInView, setHasBeenInView] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const prevActiveRef = useRef(active);
 
   const prev = (active - 1 + videos.length) % videos.length;
   const next = (active + 1) % videos.length;
@@ -63,6 +65,18 @@ function VideoCarousel({ videosHeading, videos }: { videosHeading: { ref: React.
   const handleEnded = useCallback(() => {
     setActive((a) => (a + 1) % videos.length);
   }, [videos.length]);
+
+  // Reset play state when active video changes
+  useEffect(() => {
+    setIsPlaying(false);
+  }, [active]);
+
+  // Pause video when section goes out of view
+  useEffect(() => {
+    if (!inView) {
+      setIsPlaying(false);
+    }
+  }, [inView]);
 
   // Detect when section enters viewport — lazy load videos
   useEffect(() => {
@@ -79,21 +93,28 @@ function VideoCarousel({ videosHeading, videos }: { videosHeading: { ref: React.
     return () => obs.disconnect();
   }, []);
 
-  // Control playback and audio — only play the active video
+  // Control playback and audio — only play the active video when isPlaying is true
   useEffect(() => {
     if (!hasBeenInView) return;
     videoRefs.current.forEach((vid, i) => {
       if (!vid) return;
       if (i === active) {
-        vid.muted = !inView;
-        vid.currentTime = 0;
-        vid.play().catch(() => {});
+        if (prevActiveRef.current !== active) {
+          vid.currentTime = 0;
+          prevActiveRef.current = active;
+        }
+        if (isPlaying && inView) {
+          vid.muted = false;
+          vid.play().catch(() => {});
+        } else {
+          vid.pause();
+        }
       } else {
         vid.muted = true;
         vid.pause();
       }
     });
-  }, [active, inView, hasBeenInView]);
+  }, [active, isPlaying, inView, hasBeenInView]);
 
   return (
     <div ref={sectionRef} className="py-16 w-full">
@@ -113,7 +134,7 @@ function VideoCarousel({ videosHeading, videos }: { videosHeading: { ref: React.
         {/* Previous (left) */}
         <div
           onClick={() => goTo(prev)}
-          className="flex-shrink-0 w-[20%] aspect-video bg-zinc-900 rounded-2xl border border-zinc-700/40 overflow-hidden cursor-pointer opacity-50 hover:opacity-70 transition-all duration-500 scale-90"
+          className="hidden md:block flex-shrink-0 w-[20%] aspect-video bg-zinc-900 rounded-2xl border border-zinc-700/40 overflow-hidden cursor-pointer opacity-50 hover:opacity-70 transition-all duration-500 scale-90"
         >
           {hasBeenInView && (
             <video
@@ -128,7 +149,7 @@ function VideoCarousel({ videosHeading, videos }: { videosHeading: { ref: React.
         </div>
 
         {/* Center (active) */}
-        <div className="relative flex-1 aspect-video bg-zinc-900 rounded-2xl border border-zinc-700/40 overflow-hidden transition-all duration-500">
+        <div className="relative w-full max-w-2xl mx-auto md:max-w-none md:flex-1 aspect-video bg-zinc-900 rounded-2xl border border-zinc-700/40 overflow-hidden transition-all duration-500">
           {hasBeenInView && (
             <video
               ref={(el) => { videoRefs.current[active] = el; }}
@@ -141,12 +162,31 @@ function VideoCarousel({ videosHeading, videos }: { videosHeading: { ref: React.
             />
           )}
 
+          {/* Play/Pause Button Overlay */}
+          <div 
+            onClick={() => setIsPlaying(!isPlaying)}
+            className="absolute inset-0 flex items-center justify-center bg-black/10 hover:bg-black/35 transition-all duration-300 cursor-pointer group z-20"
+          >
+            <div className={`w-16 h-16 flex items-center justify-center rounded-full bg-black/50 hover:bg-black/70 backdrop-blur-sm border border-white/20 text-white transition-all duration-300 transform ${isPlaying ? "opacity-0 group-hover:opacity-100 scale-90 hover:scale-100" : "opacity-100 scale-100 hover:scale-110"}`}>
+              {isPlaying ? (
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" className="text-white">
+                  <rect x="6" y="4" width="4" height="16" rx="1" />
+                  <rect x="14" y="4" width="4" height="16" rx="1" />
+                </svg>
+              ) : (
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" className="text-white translate-x-0.5">
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+              )}
+            </div>
+          </div>
+
           {/* Navigation arrows */}
           {videos.length > 1 && (
             <>
               <button
-                onClick={() => goTo(prev)}
-                className="absolute left-4 md:left-6 top-1/2 -translate-y-1/2 z-10 w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full bg-black/40 hover:bg-black/70 border border-white/20 text-white transition-all"
+                onClick={(e) => { e.stopPropagation(); goTo(prev); }}
+                className="absolute left-4 md:left-6 top-1/2 -translate-y-1/2 z-30 w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full bg-black/40 hover:bg-black/70 border border-white/20 text-white transition-all"
                 aria-label="Previous video"
               >
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -154,8 +194,8 @@ function VideoCarousel({ videosHeading, videos }: { videosHeading: { ref: React.
                 </svg>
               </button>
               <button
-                onClick={() => goTo(next)}
-                className="absolute right-4 md:right-6 top-1/2 -translate-y-1/2 z-10 w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full bg-black/40 hover:bg-black/70 border border-white/20 text-white transition-all"
+                onClick={(e) => { e.stopPropagation(); goTo(next); }}
+                className="absolute right-4 md:right-6 top-1/2 -translate-y-1/2 z-30 w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full bg-black/40 hover:bg-black/70 border border-white/20 text-white transition-all"
                 aria-label="Next video"
               >
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -169,7 +209,7 @@ function VideoCarousel({ videosHeading, videos }: { videosHeading: { ref: React.
         {/* Next (right) */}
         <div
           onClick={() => goTo(next)}
-          className="flex-shrink-0 w-[20%] aspect-video bg-zinc-900 rounded-2xl border border-zinc-700/40 overflow-hidden cursor-pointer opacity-50 hover:opacity-70 transition-all duration-500 scale-90"
+          className="hidden md:block flex-shrink-0 w-[20%] aspect-video bg-zinc-900 rounded-2xl border border-zinc-700/40 overflow-hidden cursor-pointer opacity-50 hover:opacity-70 transition-all duration-500 scale-90"
         >
           {hasBeenInView && (
             <video
@@ -206,6 +246,7 @@ export default function GalleryPageContent() {
   const videosHeading = useReveal();
   const [galleryImages, setGalleryImages] = useState<GalleryImage[] | null>(null);
   const [videoUrls, setVideoUrls] = useState<string[] | null>(null);
+  const [activeImageIndex, setActiveImageIndex] = useState<number | null>(null);
 
   useEffect(() => {
     fetch("/api/gallery-images")
@@ -226,6 +267,75 @@ export default function GalleryPageContent() {
       })
       .catch(() => setVideoUrls(DEFAULT_VIDEOS));
   }, []);
+
+  const showPrevImage = useCallback(() => {
+    if (activeImageIndex === null || !galleryImages) return;
+    setActiveImageIndex((prevIndex) => {
+      if (prevIndex === null) return null;
+      return (prevIndex - 1 + galleryImages.length) % galleryImages.length;
+    });
+  }, [activeImageIndex, galleryImages]);
+
+  const showNextImage = useCallback(() => {
+    if (activeImageIndex === null || !galleryImages) return;
+    setActiveImageIndex((prevIndex) => {
+      if (prevIndex === null) return null;
+      return (prevIndex + 1) % galleryImages.length;
+    });
+  }, [activeImageIndex, galleryImages]);
+
+  // Keyboard navigation
+  useEffect(() => {
+    if (activeImageIndex === null) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setActiveImageIndex(null);
+      } else if (e.key === "ArrowLeft") {
+        showPrevImage();
+      } else if (e.key === "ArrowRight") {
+        showNextImage();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [activeImageIndex, showPrevImage, showNextImage]);
+
+  // Disable body scroll when lightbox is open
+  useEffect(() => {
+    if (activeImageIndex !== null) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [activeImageIndex]);
+
+  // Touch handlers for swipe navigation
+  const touchStartX = useRef<number | null>(null);
+  const touchEndX = useRef<number | null>(null);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    touchEndX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = () => {
+    if (touchStartX.current === null || touchEndX.current === null) return;
+    const diff = touchStartX.current - touchEndX.current;
+    const threshold = 50;
+    if (diff > threshold) {
+      showNextImage();
+    } else if (diff < -threshold) {
+      showPrevImage();
+    }
+    touchStartX.current = null;
+    touchEndX.current = null;
+  };
 
   const images = galleryImages ?? [];
   const topRow = [...images, ...images];
@@ -268,18 +378,19 @@ export default function GalleryPageContent() {
 
         {/* Top row — right to left */}
         <div className="relative w-full mb-2">
-          <div className="flex w-max animate-marquee gap-2">
+          <div className="flex w-max animate-marquee-slow gap-2">
             {topRow.map((img, i) => (
               <div
                 key={`top-${i}`}
-                className="flex-shrink-0 w-[200px] md:w-[260px] aspect-square relative overflow-hidden rounded-lg"
+                onClick={() => setActiveImageIndex(i % images.length)}
+                className="flex-shrink-0 w-[200px] md:w-[260px] aspect-square relative overflow-hidden rounded-lg cursor-pointer group/photo"
                 style={{ backgroundColor: img.displayMode === "show-full-image" ? "#000" : undefined }}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={img.src}
                   alt={img.alt}
-                  className={`absolute inset-0 w-full h-full ${img.displayMode === "show-full-image" ? "object-contain object-center" : "object-cover"}`}
+                  className={`absolute inset-0 w-full h-full transition-transform duration-500 group-hover/photo:scale-105 ${img.displayMode === "show-full-image" ? "object-contain object-center" : "object-cover"}`}
                 />
               </div>
             ))}
@@ -288,18 +399,19 @@ export default function GalleryPageContent() {
 
         {/* Bottom row — left to right */}
         <div className="relative w-full">
-          <div className="flex w-max animate-marquee-reverse gap-2">
+          <div className="flex w-max animate-marquee-slow-reverse gap-2">
             {bottomRow.map((img, i) => (
               <div
                 key={`bottom-${i}`}
-                className="flex-shrink-0 w-[200px] md:w-[260px] aspect-square relative overflow-hidden rounded-lg"
+                onClick={() => setActiveImageIndex(images.length - 1 - (i % images.length))}
+                className="flex-shrink-0 w-[200px] md:w-[260px] aspect-square relative overflow-hidden rounded-lg cursor-pointer group/photo"
                 style={{ backgroundColor: img.displayMode === "show-full-image" ? "#000" : undefined }}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={img.src}
                   alt={img.alt}
-                  className={`absolute inset-0 w-full h-full ${img.displayMode === "show-full-image" ? "object-contain object-center" : "object-cover"}`}
+                  className={`absolute inset-0 w-full h-full transition-transform duration-500 group-hover/photo:scale-105 ${img.displayMode === "show-full-image" ? "object-contain object-center" : "object-cover"}`}
                 />
               </div>
             ))}
@@ -310,6 +422,79 @@ export default function GalleryPageContent() {
       {/* ─── Videos ─── */}
       {videoUrls && videoUrls.length > 0 && (
         <VideoCarousel videosHeading={videosHeading} videos={videoUrls} />
+      )}
+
+      {/* ─── Lightbox Modal ─── */}
+      {activeImageIndex !== null && galleryImages && (
+        <div 
+          onClick={() => setActiveImageIndex(null)}
+          className="fixed inset-0 z-50 flex flex-col items-center justify-between bg-black/90 backdrop-blur-xl transition-all duration-300 py-6 md:py-10"
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+        >
+          {/* Top Bar with Close Button */}
+          <div className="w-full flex justify-end px-6 md:px-10 z-55">
+            <button
+              onClick={() => setActiveImageIndex(null)}
+              className="w-12 h-12 flex items-center justify-center rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-white transition-all cursor-pointer focus:outline-none"
+              aria-label="Close modal"
+            >
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+          </div>
+
+          {/* Main Content Area (Image + Floating Navigation Arrows) */}
+          <div className="relative flex-1 w-full flex items-center justify-center px-4 md:px-20">
+            {/* Left Floating Arrow */}
+            <button
+              onClick={(e) => { e.stopPropagation(); showPrevImage(); }}
+              className="absolute left-4 md:left-8 z-55 w-12 h-12 md:w-14 md:h-14 flex items-center justify-center rounded-full bg-black/40 hover:bg-black/60 md:bg-white/5 md:hover:bg-white/10 border border-white/10 text-white transition-all cursor-pointer focus:outline-none hover:scale-105"
+              aria-label="Previous image"
+            >
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="15 18 9 12 15 6"></polyline>
+              </svg>
+            </button>
+
+            {/* Image Wrapper */}
+            <div 
+              onClick={(e) => e.stopPropagation()}
+              className="relative max-w-full max-h-[70vh] md:max-h-[78vh] flex items-center justify-center select-none"
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={galleryImages[activeImageIndex].src}
+                alt={galleryImages[activeImageIndex].alt}
+                className="max-w-[95vw] max-h-[70vh] md:max-h-[78vh] object-contain rounded-lg shadow-2xl transition-all duration-300"
+              />
+            </div>
+
+            {/* Right Floating Arrow */}
+            <button
+              onClick={(e) => { e.stopPropagation(); showNextImage(); }}
+              className="absolute right-4 md:right-8 z-55 w-12 h-12 md:w-14 md:h-14 flex items-center justify-center rounded-full bg-black/40 hover:bg-black/60 md:bg-white/5 md:hover:bg-white/10 border border-white/10 text-white transition-all cursor-pointer focus:outline-none hover:scale-105"
+              aria-label="Next image"
+            >
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </button>
+          </div>
+
+          {/* Bottom Bar (Counter) */}
+          <div 
+            onClick={(e) => e.stopPropagation()}
+            className="w-full text-center px-6 mt-4 z-55"
+          >
+            <p className="text-white/40 text-xs md:text-sm tracking-wider">
+              {activeImageIndex + 1} / {galleryImages.length}
+            </p>
+          </div>
+        </div>
       )}
     </section>
   );
