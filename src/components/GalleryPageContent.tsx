@@ -54,6 +54,7 @@ function VideoCarousel({ videosHeading, videos }: { videosHeading: { ref: React.
   const [inView, setInView] = useState(false);
   const [hasBeenInView, setHasBeenInView] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isVideoLoading, setIsVideoLoading] = useState(false);
   const prevActiveRef = useRef(active);
 
   const prev = (active - 1 + videos.length) % videos.length;
@@ -67,15 +68,17 @@ function VideoCarousel({ videosHeading, videos }: { videosHeading: { ref: React.
     setActive((a) => (a + 1) % videos.length);
   }, [videos.length]);
 
-  // Reset play state when active video changes
+  // Reset play state and loading state when active video changes
   useEffect(() => {
     setIsPlaying(false);
+    setIsVideoLoading(false);
   }, [active]);
 
   // Pause video when section goes out of view
   useEffect(() => {
     if (!inView) {
       setIsPlaying(false);
+      setIsVideoLoading(false);
     }
   }, [inView]);
 
@@ -93,6 +96,25 @@ function VideoCarousel({ videosHeading, videos }: { videosHeading: { ref: React.
     obs.observe(el);
     return () => obs.disconnect();
   }, []);
+
+  // Video element event handlers to track buffering/loading
+  const handleLoadStart = () => {
+    if (isPlaying) {
+      setIsVideoLoading(true);
+    }
+  };
+
+  const handleWaiting = () => {
+    setIsVideoLoading(true);
+  };
+
+  const handlePlaying = () => {
+    setIsVideoLoading(false);
+  };
+
+  const handleCanPlay = () => {
+    setIsVideoLoading(false);
+  };
 
   // Control playback and audio — only play the active video when isPlaying is true
   useEffect(() => {
@@ -140,7 +162,7 @@ function VideoCarousel({ videosHeading, videos }: { videosHeading: { ref: React.
           {hasBeenInView && (
             <video
               ref={(el) => { videoRefs.current[prev] = el; }}
-              src={videos[prev]}
+              src={`${videos[prev]}#t=0.1`}
               className="w-full h-full object-cover"
               muted
               playsInline
@@ -150,22 +172,38 @@ function VideoCarousel({ videosHeading, videos }: { videosHeading: { ref: React.
         </div>
 
         {/* Center (active) */}
-        <div className="relative w-full max-w-2xl mx-auto md:max-w-none md:flex-1 aspect-video bg-zinc-900 rounded-2xl border border-zinc-700/40 overflow-hidden transition-all duration-500">
+        <div className="relative w-full max-w-2xl mx-auto md:max-w-none md:flex-1 aspect-video bg-zinc-900 rounded-2xl border border-zinc-700/40 overflow-hidden transition-all duration-500 flex items-center justify-center">
           {hasBeenInView && (
             <video
               ref={(el) => { videoRefs.current[active] = el; }}
               key={`center-${active}`}
-              src={videos[active]}
+              src={`${videos[active]}#t=0.1`}
               className="w-full h-full object-cover"
               playsInline
               preload="auto"
               onEnded={handleEnded}
+              onLoadStart={handleLoadStart}
+              onWaiting={handleWaiting}
+              onPlaying={handlePlaying}
+              onCanPlay={handleCanPlay}
             />
+          )}
+
+          {/* Video Loading Spinner */}
+          {isVideoLoading && (
+            <div className="absolute inset-0 flex items-center justify-center z-30 pointer-events-none bg-black/30">
+              <div className="w-12 h-12 border-4 border-t-white border-white/20 rounded-full animate-spin"></div>
+            </div>
           )}
 
           {/* Play/Pause Button Overlay */}
           <div 
-            onClick={() => setIsPlaying(!isPlaying)}
+            onClick={() => {
+              setIsPlaying(!isPlaying);
+              if (isPlaying) {
+                setIsVideoLoading(false);
+              }
+            }}
             className="absolute inset-0 flex items-center justify-center bg-black/10 hover:bg-black/35 transition-all duration-300 cursor-pointer group z-20"
           >
             <div className={`w-16 h-16 flex items-center justify-center rounded-full bg-black/50 hover:bg-black/70 backdrop-blur-sm border border-white/20 text-white transition-all duration-300 transform ${isPlaying ? "opacity-0 group-hover:opacity-100 scale-90 hover:scale-100" : "opacity-100 scale-100 hover:scale-110"}`}>
@@ -215,7 +253,7 @@ function VideoCarousel({ videosHeading, videos }: { videosHeading: { ref: React.
           {hasBeenInView && (
             <video
               ref={(el) => { videoRefs.current[next] = el; }}
-              src={videos[next]}
+              src={`${videos[next]}#t=0.1`}
               className="w-full h-full object-cover"
               muted
               playsInline
@@ -248,6 +286,12 @@ export default function GalleryPageContent() {
   const [galleryImages, setGalleryImages] = useState<GalleryImage[] | null>(null);
   const [videoUrls, setVideoUrls] = useState<string[] | null>(null);
   const [activeImageIndex, setActiveImageIndex] = useState<number | null>(null);
+  const [isImageLoading, setIsImageLoading] = useState(true);
+
+  // Reset loading state when active index changes
+  useEffect(() => {
+    setIsImageLoading(true);
+  }, [activeImageIndex]);
 
   useEffect(() => {
     fetch("/api/gallery-images")
@@ -472,15 +516,21 @@ export default function GalleryPageContent() {
             {/* Image Wrapper */}
             <div 
               onClick={(e) => e.stopPropagation()}
-              className="relative w-[90vw] h-[70vh] md:h-[78vh] select-none"
+              className="relative w-[90vw] h-[70vh] md:h-[78vh] select-none flex items-center justify-center"
             >
+              {isImageLoading && (
+                <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none">
+                  <div className="w-12 h-12 border-4 border-t-white border-white/20 rounded-full animate-spin"></div>
+                </div>
+              )}
               <Image
                 src={galleryImages[activeImageIndex].src}
                 alt={galleryImages[activeImageIndex].alt}
                 fill
                 sizes="(max-width: 768px) 90vw, 85vw"
-                className="object-contain rounded-lg shadow-2xl transition-all duration-300"
+                className={`object-contain rounded-lg shadow-2xl transition-all duration-300 ${isImageLoading ? "opacity-0" : "opacity-100"}`}
                 priority
+                onLoad={() => setIsImageLoading(false)}
               />
             </div>
 
