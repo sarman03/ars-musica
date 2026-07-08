@@ -393,7 +393,7 @@ export default function GalleryPageContent() {
                   fill
                   sizes="(max-width: 768px) 200px, 260px"
                   className={`absolute inset-0 transition-transform duration-500 group-hover/photo:scale-105 ${img.displayMode === "show-full-image" ? "object-contain object-center" : "object-cover"}`}
-                  priority={i < 4}
+                  loading="eager"
                 />
               </div>
             ))}
@@ -416,7 +416,7 @@ export default function GalleryPageContent() {
                   fill
                   sizes="(max-width: 768px) 200px, 260px"
                   className={`absolute inset-0 transition-transform duration-500 group-hover/photo:scale-105 ${img.displayMode === "show-full-image" ? "object-contain object-center" : "object-cover"}`}
-                  priority={i < 4}
+                  loading="eager"
                 />
               </div>
             ))}
