@@ -378,49 +378,53 @@ export default function GalleryPageContent() {
         </div>
 
         {/* Top row — right to left */}
-        <div className="relative w-full mb-2">
-          <div className="flex w-max animate-marquee-slow gap-2">
-            {topRow.map((img, i) => (
-              <div
-                key={`top-${i}`}
-                onClick={() => setActiveImageIndex(i % images.length)}
-                className="flex-shrink-0 w-[200px] md:w-[260px] aspect-square relative overflow-hidden rounded-lg cursor-pointer group/photo"
-                style={{ backgroundColor: img.displayMode === "show-full-image" ? "#000" : undefined }}
-              >
-                <Image
-                  src={img.src}
-                  alt={img.alt}
-                  fill
-                  sizes="(max-width: 768px) 200px, 260px"
-                  className={`absolute inset-0 transition-transform duration-500 group-hover/photo:scale-105 ${img.displayMode === "show-full-image" ? "object-contain object-center" : "object-cover"}`}
-                  loading="eager"
-                />
-              </div>
-            ))}
-          </div>
+        <div className="relative w-full mb-2 min-h-[200px] md:min-h-[260px]">
+          {galleryImages && galleryImages.length > 0 && (
+            <div className="flex w-max animate-marquee-slow gap-2">
+              {topRow.map((img, i) => (
+                <div
+                  key={`top-${i}`}
+                  onClick={() => setActiveImageIndex(i % images.length)}
+                  className="flex-shrink-0 w-[200px] md:w-[260px] aspect-square relative overflow-hidden rounded-lg cursor-pointer group/photo"
+                  style={{ backgroundColor: img.displayMode === "show-full-image" ? "#000" : undefined }}
+                >
+                  <Image
+                    src={img.src}
+                    alt={img.alt}
+                    fill
+                    sizes="(max-width: 768px) 200px, 260px"
+                    className={`absolute inset-0 transition-transform duration-500 group-hover/photo:scale-105 ${img.displayMode === "show-full-image" ? "object-contain object-center" : "object-cover"}`}
+                    loading="eager"
+                  />
+                </div>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Bottom row — left to right */}
-        <div className="relative w-full">
-          <div className="flex w-max animate-marquee-slow-reverse gap-2">
-            {bottomRow.map((img, i) => (
-              <div
-                key={`bottom-${i}`}
-                onClick={() => setActiveImageIndex(images.length - 1 - (i % images.length))}
-                className="flex-shrink-0 w-[200px] md:w-[260px] aspect-square relative overflow-hidden rounded-lg cursor-pointer group/photo"
-                style={{ backgroundColor: img.displayMode === "show-full-image" ? "#000" : undefined }}
-              >
-                <Image
-                  src={img.src}
-                  alt={img.alt}
-                  fill
-                  sizes="(max-width: 768px) 200px, 260px"
-                  className={`absolute inset-0 transition-transform duration-500 group-hover/photo:scale-105 ${img.displayMode === "show-full-image" ? "object-contain object-center" : "object-cover"}`}
-                  loading="eager"
-                />
-              </div>
-            ))}
-          </div>
+        <div className="relative w-full min-h-[200px] md:min-h-[260px]">
+          {galleryImages && galleryImages.length > 0 && (
+            <div className="flex w-max animate-marquee-slow-reverse gap-2">
+              {bottomRow.map((img, i) => (
+                <div
+                  key={`bottom-${i}`}
+                  onClick={() => setActiveImageIndex(images.length - 1 - (i % images.length))}
+                  className="flex-shrink-0 w-[200px] md:w-[260px] aspect-square relative overflow-hidden rounded-lg cursor-pointer group/photo"
+                  style={{ backgroundColor: img.displayMode === "show-full-image" ? "#000" : undefined }}
+                >
+                  <Image
+                    src={img.src}
+                    alt={img.alt}
+                    fill
+                    sizes="(max-width: 768px) 200px, 260px"
+                    className={`absolute inset-0 transition-transform duration-500 group-hover/photo:scale-105 ${img.displayMode === "show-full-image" ? "object-contain object-center" : "object-cover"}`}
+                    loading="eager"
+                  />
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
 
