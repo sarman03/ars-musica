@@ -72,6 +72,8 @@ export const metadata: Metadata = {
   },
 };
 
+import FloatingContactButtons from "@/components/FloatingContactButtons";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -108,7 +110,10 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-full flex flex-col">
-        <ImageOverrideProvider>{children}</ImageOverrideProvider>
+        <ImageOverrideProvider>
+          {children}
+          <FloatingContactButtons />
+        </ImageOverrideProvider>
       </body>
     </html>
   );
