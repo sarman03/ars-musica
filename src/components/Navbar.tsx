@@ -67,7 +67,7 @@ export default function Navbar() {
 
       {/* Mobile dropdown panel */}
       <div
-        className={`md:hidden absolute top-3 left-4 right-4 z-50 bg-zinc-900 rounded-2xl border border-zinc-700/40 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+        className={`md:hidden fixed top-3 left-4 right-4 z-50 bg-zinc-900 rounded-2xl border border-zinc-700/40 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
           open ? "opacity-100 visible translate-y-0" : "opacity-0 invisible -translate-y-4"
         }`}
       >
