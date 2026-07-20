@@ -25,12 +25,11 @@ interface GalleryImage {
 }
 
 function useReveal(threshold = 0.15) {
-  const ref = useRef<HTMLDivElement>(null);
+  const [element, setElement] = useState<HTMLDivElement | null>(null);
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
+    if (!element) return;
     const obs = new IntersectionObserver(
       ([e]) => {
         if (e.isIntersecting) {
@@ -40,14 +39,14 @@ function useReveal(threshold = 0.15) {
       },
       { threshold }
     );
-    obs.observe(el);
+    obs.observe(element);
     return () => obs.disconnect();
-  }, [threshold]);
+  }, [element, threshold]);
 
-  return { ref, visible };
+  return { ref: setElement, visible };
 }
 
-function VideoCarousel({ videosHeading, videos }: { videosHeading: { ref: React.RefObject<HTMLDivElement | null>; visible: boolean }; videos: string[] }) {
+function VideoCarousel({ videosHeading, videos }: { videosHeading: { ref: React.Ref<HTMLDivElement>; visible: boolean }; videos: string[] }) {
   const [active, setActive] = useState(0);
   const sectionRef = useRef<HTMLDivElement>(null);
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
@@ -148,7 +147,7 @@ function VideoCarousel({ videosHeading, videos }: { videosHeading: { ref: React.
         }`}
       >
         <h2 className="text-white font-semibold text-2xl md:text-3xl tracking-wide uppercase">
-          Videos
+          Our Student Performances
         </h2>
       </div>
 
