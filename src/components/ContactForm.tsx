@@ -106,8 +106,8 @@ export default function ContactForm() {
               <span className="text-zinc-300 text-sm">+91 98187 59189</span>
             </div>
           </div>
-          <div className="flex items-center justify-center gap-2 max-w-lg text-center px-4">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-zinc-400 flex-shrink-0">
+          <div className="flex items-start justify-center gap-2 max-w-lg text-center px-4">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-zinc-400 flex-shrink-0 mt-[3px]">
               <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
               <circle cx="12" cy="10" r="3" />
             </svg>
