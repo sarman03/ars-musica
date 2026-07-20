@@ -23,14 +23,16 @@ const jsonLd = {
     "Professional music classes in Gurgaon — Guitar, Piano, Drums, Vocals, Keyboard, Ukulele & more. Trinity, Rockschool & ABRSM exam preparation.",
   address: {
     "@type": "PostalAddress",
-    addressLocality: "Gurgaon",
+    streetAddress: "B-8, Pocket C, Mayfield Garden, Sector 50",
+    addressLocality: "Gurugram",
+    postalCode: "122018",
     addressRegion: "Haryana",
     addressCountry: "IN",
   },
   geo: {
     "@type": "GeoCoordinates",
-    latitude: 28.42506,
-    longitude: 77.056213,
+    latitude: 28.425366,
+    longitude: 77.0562705,
   },
   sameAs: [
     "https://www.instagram.com/arsmusica.academy",

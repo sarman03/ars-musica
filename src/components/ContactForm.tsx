@@ -86,23 +86,32 @@ export default function ContactForm() {
 
         {/* Contact info */}
         <div
-          className={`flex items-center justify-center gap-6 mb-12 transition-[opacity,transform] duration-[1.2s] ease-[cubic-bezier(0.16,1,0.3,1)] delay-[500ms] will-change-[opacity,transform] ${
+          className={`flex flex-col items-center gap-4 mb-12 transition-[opacity,transform] duration-[1.2s] ease-[cubic-bezier(0.16,1,0.3,1)] delay-[500ms] will-change-[opacity,transform] ${
             show ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
           }`}
         >
-          <div className="flex items-center gap-2">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-zinc-400">
-              <rect x="2" y="4" width="20" height="16" rx="2" />
-              <path d="M22 4L12 13 2 4" />
-            </svg>
-            <span className="text-zinc-300 text-sm">arsmusica.academy@gmail.com</span>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6">
+            <div className="flex items-center gap-2">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-zinc-400">
+                <rect x="2" y="4" width="20" height="16" rx="2" />
+                <path d="M22 4L12 13 2 4" />
+              </svg>
+              <span className="text-zinc-300 text-sm">arsmusica.academy@gmail.com</span>
+            </div>
+            <div className="hidden sm:block w-px h-4 bg-zinc-700" />
+            <div className="flex items-center gap-2">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-zinc-400">
+                <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" />
+              </svg>
+              <span className="text-zinc-300 text-sm">+91 98187 59189</span>
+            </div>
           </div>
-          <div className="w-px h-4 bg-zinc-700" />
-          <div className="flex items-center gap-2">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-zinc-400">
-              <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" />
+          <div className="flex items-center justify-center gap-2 max-w-lg text-center px-4">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-zinc-400 flex-shrink-0">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
+              <circle cx="12" cy="10" r="3" />
             </svg>
-            <span className="text-zinc-300 text-sm">+91 98187 59189</span>
+            <span className="text-zinc-300 text-sm">B-8, Pocket C, Mayfield Garden, Sector 50, Gurugram, Haryana 122018</span>
           </div>
         </div>
 
