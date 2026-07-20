@@ -10,7 +10,7 @@ export default function ContactSection() {
     >
       {/* Background image */}
       <div
-        className="absolute inset-0 bg-contain bg-center bg-no-repeat"
+        className="absolute inset-0 bg-cover md:bg-contain bg-center bg-no-repeat"
         style={{
           backgroundImage:
             "url('/Gemini_Generated_Image_t2zuzet2zuzet2zu@1.5x.jpg')",
