@@ -8,6 +8,7 @@ import GalleryImagesManager from "../components/GalleryImagesManager";
 import GalleryVideosManager from "../components/GalleryVideosManager";
 import CoursesManager from "../components/CoursesManager";
 import MentorsManager from "../components/MentorsManager";
+import ReviewsManager from "../components/ReviewsManager";
 
 // ─── Data (mirrored exactly from main site components) ──────────────────────
 
@@ -304,6 +305,22 @@ export default function AdminDashboard() {
             Add, edit, or remove mentor cards shown on the homepage. Hover over a card to edit or delete it.
           </p>
           <MentorsManager />
+        </div>
+      </section>
+
+      {/* ─── Reviews Section ─── */}
+      <section className="bg-black py-8">
+        <div className="max-w-6xl mx-auto">
+          <div className="flex items-center gap-3 px-6 mb-2">
+            <div className="w-12 h-[2px] rounded-full" style={{ background: "linear-gradient(to right, transparent, white, transparent)" }} />
+            <h2 className="text-brand-red font-semibold text-2xl tracking-wide uppercase">
+              Reviews
+            </h2>
+          </div>
+          <p className="text-zinc-500 text-sm px-6 mb-4">
+            Add, edit, or remove reviews shown on the homepage. Only reviews added here will be displayed — paste them in from Google Reviews.
+          </p>
+          <ReviewsManager />
         </div>
       </section>
 

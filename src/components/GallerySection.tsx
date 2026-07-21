@@ -78,7 +78,7 @@ export default function GallerySection() {
     <section className="bg-black px-6 md:px-24 lg:px-24 py-12">
       <div className=" mx-auto">
         {/* Heading */}
-        <div className="mb-10">
+        <div className="mb-10 flex flex-col items-center text-center">
           <div className="w-12 h-[2px] rounded-full mb-4" style={{ background: "linear-gradient(to right, transparent, white, transparent)" }} />
           <h2 className="text-brand-red font-semibold text-4xl md:text-6xl tracking-wide uppercase">
             Gallery

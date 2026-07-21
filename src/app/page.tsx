@@ -10,6 +10,7 @@ import MentorsSection from "@/components/MentorsSection";
 import FaqSection from "@/components/FaqSection";
 import ContactSection from "@/components/ContactSection";
 import MapSection from "@/components/MapSection";
+import ReviewsSection from "@/components/ReviewsSection";
 import Footer from "@/components/Footer";
 
 const jsonLd = {
@@ -70,6 +71,7 @@ export default function Home() {
         <MentorsSection />
         <AboutSection />
         <GallerySection />
+        <ReviewsSection />
         <FaqSection />
         <ContactSection />
         <MapSection />
