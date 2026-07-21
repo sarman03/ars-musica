@@ -74,6 +74,7 @@ export const metadata: Metadata = {
 
 import FloatingContactButtons from "@/components/FloatingContactButtons";
 import BookDemoBar from "@/components/BookDemoBar";
+import WelcomeModal from "@/components/WelcomeModal";
 
 export default function RootLayout({
   children,
@@ -115,6 +116,7 @@ export default function RootLayout({
           {children}
           <FloatingContactButtons />
           <BookDemoBar />
+          <WelcomeModal />
         </ImageOverrideProvider>
       </body>
     </html>
