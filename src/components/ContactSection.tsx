@@ -10,7 +10,7 @@ export default function ContactSection() {
     >
       {/* Background image */}
       <div
-        className="absolute inset-0 bg-cover md:bg-contain bg-center bg-no-repeat"
+        className="absolute inset-0 bg-cover md:bg-contain bg-center bg-no-repeat scale-125 md:scale-100"
         style={{
           backgroundImage:
             "url('/Gemini_Generated_Image_t2zuzet2zuzet2zu@1.5x.jpg')",
@@ -32,15 +32,15 @@ export default function ContactSection() {
         }}
         className="relative z-10 text-center"
       >
-        <h2 className="text-white font-semibold text-4xl md:text-5xl lg:text-6xl tracking-wide uppercase leading-tight mb-8">
+        <h2 className="text-white font-semibold text-5xl md:text-6xl lg:text-7xl tracking-wide uppercase leading-tight mb-8">
           Let&apos;s Get
           <br />
           In Touch
         </h2>
 
         {/* Contact Details */}
-        <div className="flex flex-col items-center gap-4 mt-8 px-4 text-center">
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 text-zinc-300">
+        <div className="flex flex-col items-start sm:items-center gap-4 mt-8 px-4 max-w-fit mx-auto text-zinc-300">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-start sm:justify-center gap-4 sm:gap-6">
             {/* Email */}
             <a 
               href="mailto:arsmusica.academy@gmail.com" 
@@ -68,12 +68,12 @@ export default function ContactSection() {
           </div>
 
           {/* Address */}
-          <div className="flex items-start justify-center gap-2.5 max-w-lg text-zinc-300 mt-0 sm:mt-2">
+          <div className="flex items-start justify-start sm:justify-center gap-2.5 max-w-lg mt-0 sm:mt-2">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-zinc-400 flex-shrink-0 mt-1">
               <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
               <circle cx="12" cy="10" r="3" />
             </svg>
-            <span className="text-sm md:text-base text-center font-medium">
+            <span className="text-sm md:text-base text-left font-medium">
               B-8, Pocket C, Mayfield Garden, Sector 50, Gurugram, Haryana 122018
             </span>
           </div>
