@@ -88,6 +88,16 @@ export async function deleteFile(path: string): Promise<void> {
   }
 }
 
+export async function createSignedUploadUrl(
+  path: string
+): Promise<{ signedUrl: string; token: string; path: string }> {
+  const { data, error } = await supabase.storage.from(BUCKET).createSignedUploadUrl(path);
+  if (error) throw error;
+  if (!data) throw new Error("Failed to generate signed upload URL");
+  return data;
+}
+
+
 export async function readJSON<T>(path: string): Promise<T | null> {
   const { data, error } = await supabase.storage.from(BUCKET).download(path);
   if (error) {

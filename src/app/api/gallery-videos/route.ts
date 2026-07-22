@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { uploadFile, deleteFile, readJSON, writeJSON, getPublicUrl } from "@/lib/supabase";
+import { uploadFile, deleteFile, readJSON, writeJSON, getPublicUrl, createSignedUploadUrl } from "@/lib/supabase";
 
 const VIDEOS_JSON_PATH = "gallery-videos/videos.json";
 
@@ -39,27 +39,83 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const formData = await req.formData();
-  const file = formData.get("file") as File | null;
-  const title = (formData.get("title") as string) || "Video";
+  const contentType = req.headers.get("content-type") || "";
 
-  if (!file) {
-    return NextResponse.json({ error: "File is required" }, { status: 400 });
+  if (contentType.includes("application/json")) {
+    try {
+      const body = await req.json();
+      const { action } = body;
+
+      if (action === "get-upload-url") {
+        const { fileName, fileSize } = body;
+        if (!fileName) {
+          return NextResponse.json({ error: "File name is required" }, { status: 400 });
+        }
+
+        const ext = fileName.split(".").pop()?.toLowerCase() || "mp4";
+        const allowedExts = ["mp4", "mov", "m4v", "avi", "webm"];
+        if (!allowedExts.includes(ext)) {
+          return NextResponse.json({ error: "Only video files are allowed" }, { status: 400 });
+        }
+
+        const MAX_VIDEO_SIZE = 50 * 1024 * 1024; // 50 MB
+        if (fileSize && fileSize > MAX_VIDEO_SIZE) {
+          return NextResponse.json(
+            { error: "Video file is too large. Please compress it to under 50 MB." },
+            { status: 400 }
+          );
+        }
+
+        const timestamp = Date.now();
+        const path = `gallery-videos/video_${timestamp}.${ext}`;
+        const data = await createSignedUploadUrl(path);
+
+        return NextResponse.json({ success: true, ...data });
+      }
+
+      if (action === "save-metadata") {
+        const { path, title } = body;
+        if (!path || !path.startsWith("gallery-videos/")) {
+          return NextResponse.json({ error: "Invalid file path" }, { status: 400 });
+        }
+
+        const url = getPublicUrl(path);
+        const videos = await getVideos();
+        videos.push({ src: url, title: title || "Video" });
+        await saveVideos(videos);
+
+        return NextResponse.json({ success: true, videos });
+      }
+
+      return NextResponse.json({ error: "Invalid action" }, { status: 400 });
+    } catch (error) {
+      console.error("JSON POST error:", error);
+      return NextResponse.json({ error: "Request processing failed" }, { status: 500 });
+    }
   }
 
-  if (!file.type.startsWith("video/") && !file.name.toLowerCase().endsWith(".mov")) {
-    return NextResponse.json({ error: "Only video files are allowed" }, { status: 400 });
-  }
-
-  const MAX_VIDEO_SIZE = 50 * 1024 * 1024; // 50 MB
-  if (file.size > MAX_VIDEO_SIZE) {
-    return NextResponse.json(
-      { error: "Video file is too large. Please compress it to under 50 MB before uploading." },
-      { status: 400 }
-    );
-  }
-
+  // Fallback to legacy FormData parsing (useful for small uploads or compatibility)
   try {
+    const formData = await req.formData();
+    const file = formData.get("file") as File | null;
+    const title = (formData.get("title") as string) || "Video";
+
+    if (!file) {
+      return NextResponse.json({ error: "File is required" }, { status: 400 });
+    }
+
+    if (!file.type.startsWith("video/") && !file.name.toLowerCase().endsWith(".mov")) {
+      return NextResponse.json({ error: "Only video files are allowed" }, { status: 400 });
+    }
+
+    const MAX_VIDEO_SIZE = 50 * 1024 * 1024; // 50 MB
+    if (file.size > MAX_VIDEO_SIZE) {
+      return NextResponse.json(
+        { error: "Video file is too large. Please compress it to under 50 MB before uploading." },
+        { status: 400 }
+      );
+    }
+
     const timestamp = Date.now();
     const ext = file.name.split(".").pop() || "mp4";
     const path = `gallery-videos/video_${timestamp}.${ext}`;

@@ -122,22 +122,71 @@ export default function GalleryVideosManager() {
         );
       }
 
-      // Upload
-      handleProgress(`Uploading ${videoFile.name} (${(videoFile.size / 1024 / 1024).toFixed(1)} MB)...`, 0);
-
-      const formData = new FormData();
-      formData.append("file", videoFile);
-      formData.append("title", file.name.replace(/\.[^.]+$/, ""));
-
-      const res = await fetch("/api/gallery-videos", {
+      // Step 1: Get signed upload URL
+      handleProgress("Requesting secure upload authorization...", 0);
+      const urlRes = await fetch("/api/gallery-videos", {
         method: "POST",
-        body: formData,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          action: "get-upload-url",
+          fileName: videoFile.name,
+          fileSize: videoFile.size,
+        }),
       });
-      const data = await res.json();
-      if (data.success) {
-        setVideos(data.videos);
+      const urlData = await urlRes.json();
+      if (!urlData.success) {
+        alert("Authorization failed: " + (urlData.error || "Unknown error"));
+        setUploading(false);
+        setProgressMsg("");
+        return;
+      }
+
+      const { signedUrl, path } = urlData;
+
+      // Step 2: Upload directly to Supabase storage with progress tracking
+      handleProgress(`Uploading ${videoFile.name} (${(videoFile.size / 1024 / 1024).toFixed(1)} MB)... 0%`, 0);
+
+      await new Promise<void>((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+        xhr.open("PUT", signedUrl);
+        xhr.setRequestHeader("Content-Type", videoFile.type || "video/mp4");
+        xhr.setRequestHeader("x-upsert", "true");
+
+        xhr.upload.addEventListener("progress", (event) => {
+          if (event.lengthComputable) {
+            const percent = Math.round((event.loaded / event.total) * 100);
+            handleProgress(`Uploading ${videoFile.name}... ${percent}%`, percent);
+          }
+        });
+
+        xhr.onload = () => {
+          if (xhr.status >= 200 && xhr.status < 300) {
+            resolve();
+          } else {
+            reject(new Error(`Upload failed with status ${xhr.status}`));
+          }
+        };
+
+        xhr.onerror = () => reject(new Error("Network error during upload"));
+        xhr.send(videoFile);
+      });
+
+      // Step 3: Save metadata to JSON
+      handleProgress("Saving video information...", 100);
+      const metaRes = await fetch("/api/gallery-videos", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          action: "save-metadata",
+          path,
+          title: file.name.replace(/\.[^.]+$/, ""),
+        }),
+      });
+      const metaData = await metaRes.json();
+      if (metaData.success) {
+        setVideos(metaData.videos);
       } else {
-        alert("Upload failed: " + (data.error || "Unknown error"));
+        alert("Failed to save video information: " + (metaData.error || "Unknown error"));
       }
     } catch (err) {
       console.error("Video processing error:", err);
